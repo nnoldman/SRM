@@ -15,6 +15,7 @@ namespace App
         public MainForm()
         {
             InitializeComponent();
+            this.IsMdiContainer = true;
         }
 
         private void CloseFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -30,13 +31,20 @@ namespace App
             }
         }
 
+        Plugins.Docker mEditor;
+
         private void texteditor_Click(object sender, EventArgs e)
         {
-            Plugins.Docker docker = new Plugins.Docker();
-            docker.Text = "XXX";
-            docker.BackColor = Color.Gray;
-            docker.Dock = DockStyle.Fill;
-            docker.Show();
+            if (mEditor == null || mEditor.IsDisposed)
+            {
+                mEditor = new Plugins.Docker();
+                mEditor.Text = "Editor";
+            }
+
+            if (mEditor.Visible)
+                mEditor.Hide();
+            else
+                mEditor.Show(this);
         }
 
         private void floder_Click(object sender, EventArgs e)
