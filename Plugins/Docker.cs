@@ -5,34 +5,78 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace Plugins
 {
-    public class Docker : Form
+    public class Docker : DockContent
     {
-        static List<Docker> dockers = new List<Docker>();
+        static Dictionary<string, Docker> Dockers = new Dictionary<string, Docker>();
+
+        public static void Toggler(string name, DockPanel dockPanel)
+        {
+            Docker docker = null;
+            Dockers.TryGetValue(name, out docker);
+
+            if (docker == null)
+            {
+                docker = new Docker();
+                docker.TabText = name;
+                Dockers.Add(name, docker);
+                docker.Show(dockPanel, DockState.Float);
+            }
+            else
+            {
+                if (!docker.Visible)
+                    docker.Show(dockPanel);
+                else
+                    docker.Hide();
+            }
+        }
+        public static void SetVisible(string name,DockPanel dockPanel,bool visible)
+        {
+            Docker docker = null;
+
+            Dockers.TryGetValue(name,out docker);
+
+            if(visible)
+            {
+                if (docker == null)
+                {
+                    docker = new Docker();
+                    docker.TabText = name;
+                    Dockers.Add(name,docker);
+                    docker.Show(dockPanel, DockState.Float);
+                }
+            }
+            else
+            {
+                if (docker != null)
+                    docker.Visible = false;
+            }
+        }
 
         public Docker()
         {
-            dockers.Add(this);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(292, 266);
+            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
+                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
+            this.ResumeLayout(false);
+            this.CloseButton = true;
         }
 
         ~Docker()
         {
-            dockers.Remove(this);
         }
 
-        private List<Docker> sublings = new List<Docker>();
-
-        public void Show(Form parent)
+        protected override void OnClosed(EventArgs e)
         {
-            this.MdiParent = parent;
-            this.Show();
-        }
-
-        private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
+            Dockers.Remove(this.TabText);
+            base.OnClosed(e);
         }
     }
 }

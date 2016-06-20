@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Plugins;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -7,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 namespace App
 {
@@ -15,7 +17,21 @@ namespace App
         public MainForm()
         {
             InitializeComponent();
-            this.IsMdiContainer = true;
+            InitViewMenus();
+        }
+
+        public void InitViewMenus()
+        {
+            string[] menus = new string[] {
+                "FFF","GGG","HHH"
+            };
+            foreach (var menu in menus)
+            {
+                ToolStripMenuItem item = new ToolStripMenuItem();
+                item.Text = menu;
+                item.Click += OnViewClick;
+                this.ViewToolStripMenuItem.DropDownItems.Add(item);
+            }
         }
 
         private void CloseFileToolStripMenuItem_Click(object sender, EventArgs e)
@@ -31,27 +47,14 @@ namespace App
             }
         }
 
-        Plugins.Docker mEditor;
-
-        private void texteditor_Click(object sender, EventArgs e)
+        private void OnViewClick(object sender, EventArgs e)
         {
-            if (mEditor == null || mEditor.IsDisposed)
-            {
-                mEditor = new Plugins.Docker();
-                mEditor.Text = "Editor";
-            }
-
-            if (mEditor.Visible)
-                mEditor.Hide();
-            else
-                mEditor.Show(this);
+            Docker.Toggler(sender.ToString(), this.dockPanel1);
         }
 
         private void floder_Click(object sender, EventArgs e)
         {
 
         }
-
-
     }
 }
