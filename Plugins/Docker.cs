@@ -13,17 +13,21 @@ namespace Plugins
     {
         static Dictionary<string, Docker> Dockers = new Dictionary<string, Docker>();
 
-        public static void Toggler(string name, DockPanel dockPanel)
+        public static void Toggler(string name, DockPanel dockPanel, Type tp = null)
         {
             Docker docker = null;
+
             Dockers.TryGetValue(name, out docker);
 
             if (docker == null)
             {
-                docker = new Docker();
+                if (tp != null)
+                {
+                    docker = (Docker)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
+                }
                 docker.TabText = name;
+                docker.Show(dockPanel, docker.IsDocument() ? DockState.Document : DockState.Float);
                 Dockers.Add(name, docker);
-                docker.Show(dockPanel, DockState.Float);
             }
             else
             {
@@ -33,50 +37,43 @@ namespace Plugins
                     docker.Hide();
             }
         }
-        public static void SetVisible(string name,DockPanel dockPanel,bool visible)
+
+        protected virtual bool IsDocument()
         {
-            Docker docker = null;
-
-            Dockers.TryGetValue(name,out docker);
-
-            if(visible)
-            {
-                if (docker == null)
-                {
-                    docker = new Docker();
-                    docker.TabText = name;
-                    Dockers.Add(name,docker);
-                    docker.Show(dockPanel, DockState.Float);
-                }
-            }
-            else
-            {
-                if (docker != null)
-                    docker.Visible = false;
-            }
+            return false;
         }
 
         public Docker()
         {
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(292, 266);
-            this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
-                        | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom)));
+            this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Float
+                | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft
+                | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight
+                | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop
+                | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom;
+            if (this.IsDocument())
+                this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
             this.ResumeLayout(false);
             this.CloseButton = true;
         }
 
-        ~Docker()
+        private void InitializeComponent()
         {
+            this.SuspendLayout();
+            // 
+            // Docker
+            // 
+            this.ClientSize = new System.Drawing.Size(284, 262);
+            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Name = "Docker";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OnFormClosed);
+            this.ResumeLayout(false);
+
         }
 
-        protected override void OnClosed(EventArgs e)
+        private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             Dockers.Remove(this.TabText);
-            base.OnClosed(e);
         }
     }
 }

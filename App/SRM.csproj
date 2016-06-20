@@ -48,6 +48,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="inner_plugins\Console.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="inner_plugins\Explorer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="inner_plugins\Inspector.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -56,7 +65,18 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="inner_plugins\TextEditor.cs" />
+    <Compile Include="inner_plugins\TextEditor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <EmbeddedResource Include="inner_plugins\Explorer.resx">
+      <DependentUpon>Explorer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="inner_plugins\Inspector.resx">
+      <DependentUpon>Inspector.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="inner_plugins\TextEditor.resx">
+      <DependentUpon>TextEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -83,9 +103,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plugins\Plugins.csproj">
+    <ProjectReference Include="..\Plugins\PX.csproj">
       <Project>{87c170a9-697e-44ba-b301-394c99bd7f4d}</Project>
-      <Name>Plugins</Name>
+      <Name>PX</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
