@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SRM", "App\SRM.csproj", "{AB87C035-A4F1-4F8F-A7A4-69BB75714BBF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PX", "Plugins\PX.csproj", "{87C170A9-697E-44BA-B301-394C99BD7F4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Plugins", "Plugins\Plugins.csproj", "{87C170A9-697E-44BA-B301-394C99BD7F4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

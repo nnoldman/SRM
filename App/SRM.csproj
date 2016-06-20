@@ -103,9 +103,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Plugins\PX.csproj">
+    <ProjectReference Include="..\Plugins\Plugins.csproj">
       <Project>{87c170a9-697e-44ba-b301-394c99bd7f4d}</Project>
-      <Name>PX</Name>
+      <Name>Plugins</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

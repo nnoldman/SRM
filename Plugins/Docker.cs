@@ -45,6 +45,7 @@ namespace Plugins
 
         public Docker()
         {
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Float
                 | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft
@@ -53,7 +54,6 @@ namespace Plugins
                 | WeifenLuo.WinFormsUI.Docking.DockAreas.DockBottom;
             if (this.IsDocument())
                 this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
-            this.ResumeLayout(false);
             this.CloseButton = true;
         }
 
@@ -63,6 +63,7 @@ namespace Plugins
             // 
             // Docker
             // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(284, 262);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "Docker";

@@ -22,6 +22,7 @@ namespace App
             InitializeComponent();
             InitInnerPlugins();
             LoadLayout();
+            InitSkin();
         }
 
         string mConfigFile = "567.xml";
@@ -66,6 +67,25 @@ namespace App
             //    //return dummyDoc;
             //}
             throw new Exception();
+        }
+        void InitSkin()
+        {
+            AutoHideStripSkin autoHideSkin = new AutoHideStripSkin();
+            autoHideSkin.DockStripGradient.StartColor = Color.AliceBlue;
+            autoHideSkin.DockStripGradient.EndColor = Color.Blue;
+            autoHideSkin.DockStripGradient.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.ForwardDiagonal;
+            autoHideSkin.TabGradient.StartColor = SystemColors.Control;
+            autoHideSkin.TabGradient.EndColor = SystemColors.ControlDark;
+            autoHideSkin.TabGradient.TextColor = SystemColors.ControlText;
+
+            this.dockPanel1.Skin.AutoHideStripSkin = autoHideSkin;
+
+            DockPaneStripSkin stripSkin = new DockPaneStripSkin();
+            stripSkin.DocumentGradient.ActiveTabGradient.StartColor = Color.FromArgb(255, 220, 230, 255);
+            stripSkin.DocumentGradient.ActiveTabGradient.EndColor = Color.FromArgb(255, 220, 230, 255);
+            stripSkin.ToolWindowGradient.ActiveCaptionGradient.StartColor = Color.FromArgb(255, 220, 230, 255);
+            stripSkin.ToolWindowGradient.ActiveCaptionGradient.EndColor = Color.FromArgb(255, 220, 230, 255);
+            this.dockPanel1.Skin.DockPaneStripSkin = stripSkin;
         }
         void LoadLayout()
         {
