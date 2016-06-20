@@ -118,10 +118,8 @@ namespace App
             // dockPanel1
             // 
             this.dockPanel1.ActiveAutoHideContent = null;
-            this.dockPanel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.dockPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dockPanel1.DockBackColor = System.Drawing.SystemColors.AppWorkspace;
             this.dockPanel1.Location = new System.Drawing.Point(0, 25);
             this.dockPanel1.Name = "dockPanel1";
             this.dockPanel1.Size = new System.Drawing.Size(419, 237);
@@ -175,7 +173,6 @@ namespace App
             // 
             // MainForm
             // 
-            this.BackColor = System.Drawing.SystemColors.AppWorkspace;
             this.ClientSize = new System.Drawing.Size(419, 262);
             this.Controls.Add(this.dockPanel1);
             this.Controls.Add(this.menuStrip1);

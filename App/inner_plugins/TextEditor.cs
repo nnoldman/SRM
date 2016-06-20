@@ -41,7 +41,6 @@ public class TextEditor : Docker, Plugins.Plugin
         this.richTextBox1.Size = new System.Drawing.Size(292, 331);
         this.richTextBox1.TabIndex = 0;
         this.richTextBox1.Text = "fdsafas";
-        this.richTextBox1.BackColor = Color.FromArgb(255, 220, 230, 255);
         // 
         // TextEditor
         // 
