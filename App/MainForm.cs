@@ -34,41 +34,20 @@ namespace App
 
         private IDockContent GetContentFromPersistString(string persistString)
         {
+            PersistStringParser parser = new PersistStringParser();
+            
+            if (!parser.Parse(persistString))
+                return null;
+            string stype = parser["Type"];
             Type tp = null;
-            mInnerPluginTypes.TryGetValue(persistString, out tp);
+            mInnerPluginTypes.TryGetValue(stype, out tp);
             if (tp != null)
             {
-                IDockContent contet = (IDockContent)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
+                Docker contet = (Docker)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
                 if (contet != null)
-                {
-                    contet.DockHandler.TabText=persistString;
-                }
+                    contet.TabText = parser["TabText"];
                 return contet;
             }
-            //if (persistString == typeof(Explorer).FullName)
-            //{
-            //    return new Explorer();
-            //}
-            //else
-            //{
-            //    //// DummyDoc overrides GetPersistString to add extra information into persistString.
-            //    //// Any DockContent may override this value to add any needed information for deserialization.
-
-            //    //string[] parsedStrings = persistString.Split(new char[] { ',' });
-            //    //if (parsedStrings.Length != 3)
-            //    //    return null;
-
-            //    //if (parsedStrings[0] != typeof(DummyDoc).ToString())
-            //    //    return null;
-
-            //    //DummyDoc dummyDoc = new DummyDoc();
-            //    //if (parsedStrings[1] != string.Empty)
-            //    //    dummyDoc.FileName = parsedStrings[1];
-            //    //if (parsedStrings[2] != string.Empty)
-            //    //    dummyDoc.Text = parsedStrings[2];
-
-            //    //return dummyDoc;
-            //}
             throw new Exception();
         }
         void InitSkin()
@@ -144,9 +123,9 @@ namespace App
             Docker.Toggler(sender.ToString(), this.dockPanel1, tp);
         }
 
-        private void OnFormClosed(object sender, FormClosedEventArgs e)
+        private void OnFormClosing(object sender, FormClosingEventArgs e)
         {
-            OnExit();
+            this.OnExit();
         }
     }
 }

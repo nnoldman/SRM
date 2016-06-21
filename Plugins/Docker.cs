@@ -21,10 +21,7 @@ namespace Plugins
 
             if (docker == null)
             {
-                if (tp != null)
-                {
-                    docker = (Docker)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
-                }
+                docker = (Docker)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
                 docker.TabText = name;
                 docker.Show(dockPanel, docker.IsDocument() ? DockState.Document : DockState.Float);
                 Dockers.Add(name, docker);
@@ -75,6 +72,11 @@ namespace Plugins
         private void OnFormClosed(object sender, FormClosedEventArgs e)
         {
             Dockers.Remove(this.TabText);
+        }
+
+        protected override string GetPersistString()
+        {
+            return string.Format("Type={0};TabText={1}", GetType().Name, TabText);
         }
     }
 }
