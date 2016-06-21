@@ -104,6 +104,10 @@
       <Project>{87c170a9-697e-44ba-b301-394c99bd7f4d}</Project>
       <Name>Plugins</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ScintillaNET\ScintillaNET.csproj">
+      <Project>{22AE2386-60F1-476E-9303-61CDB0AAC4CF}</Project>
+      <Name>ScintillaNET</Name>
+    </ProjectReference>
     <ProjectReference Include="..\WinFormsUI\WinFormsUI.csproj">
       <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
       <Name>WinFormsUI</Name>

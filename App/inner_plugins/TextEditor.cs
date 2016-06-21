@@ -12,16 +12,20 @@ using System.Threading.Tasks;
 
 public class TextEditor : Docker, Plugins.Plugin
 {
-    private System.Windows.Forms.RichTextBox richTextBox1;
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     private System.ComponentModel.IContainer components;
     private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
+    private ScintillaNET.Scintilla scintilla1;
 
     static List<TextEditor> mInstances = new List<TextEditor>();
 
     public TextEditor()
     {
         InitializeComponent();
+
+        this.scintilla1.EdgeMode = ScintillaNET.EdgeMode.Line;
+        this.scintilla1.Margins[1].Type = ScintillaNET.MarginType.Number;
+        this.Font = new System.Drawing.Font("courier new", 22);
         mInstances.Add(this);
     }
 
@@ -37,20 +41,11 @@ public class TextEditor : Docker, Plugins.Plugin
     private void InitializeComponent()
     {
             this.components = new System.ComponentModel.Container();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.scintilla1 = new ScintillaNET.Scintilla();
             this.contextMenuStrip1.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(0, 0);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(292, 331);
-            this.richTextBox1.TabIndex = 0;
-            this.richTextBox1.Text = "";
             // 
             // contextMenuStrip1
             // 
@@ -62,15 +57,31 @@ public class TextEditor : Docker, Plugins.Plugin
             // closeAllToolStripMenuItem
             // 
             this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
             this.closeAllToolStripMenuItem.Text = "CloseAll";
             this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click_1);
+            // 
+            // scintilla1
+            // 
+            this.scintilla1.CaretLineBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(171)))), ((int)(((byte)(171)))));
+            this.scintilla1.CaretLineVisible = true;
+            this.scintilla1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.scintilla1.EdgeColor = System.Drawing.Color.LightGray;
+            this.scintilla1.EdgeMode = ScintillaNET.EdgeMode.Line;
+            this.scintilla1.FontQuality = ScintillaNET.FontQuality.AntiAliased;
+            this.scintilla1.Lexer = ScintillaNET.Lexer.Cpp;
+            this.scintilla1.Location = new System.Drawing.Point(0, 0);
+            this.scintilla1.Margin = new System.Windows.Forms.Padding(1);
+            this.scintilla1.Name = "scintilla1";
+            this.scintilla1.Size = new System.Drawing.Size(292, 331);
+            this.scintilla1.TabIndex = 1;
+            this.scintilla1.Text = "scintilla1";
             // 
             // TextEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.ClientSize = new System.Drawing.Size(292, 331);
-            this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.scintilla1);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.Name = "TextEditor";
             this.TabPageContextMenuStrip = this.contextMenuStrip1;
