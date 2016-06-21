@@ -29,9 +29,16 @@ namespace Plugins
             else
             {
                 if (!docker.Visible)
+                {
                     docker.Show(dockPanel);
+                }
                 else
+                {
+                    Dockers.Remove(name);
                     docker.Hide();
+                    docker.Dispose();
+                    docker = null;
+                }
             }
         }
 
