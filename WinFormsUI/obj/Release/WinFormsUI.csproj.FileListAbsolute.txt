@@ -1,0 +1,12 @@
+D:\src\dockpanelsuite\bin\net20\license.txt
+D:\src\dockpanelsuite\bin\net20\WeifenLuo.WinFormsUI.Docking.dll
+D:\src\dockpanelsuite\bin\net20\WeifenLuo.WinFormsUI.Docking.pdb
+D:\src\dockpanelsuite\bin\net40\license.txt
+D:\src\dockpanelsuite\bin\net40\WeifenLuo.WinFormsUI.Docking.dll
+D:\src\dockpanelsuite\bin\net40\WeifenLuo.WinFormsUI.Docking.pdb
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WinFormsUI.csprojResolveAssemblyReference.cache
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.Resources.resources
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.Strings.resources
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WinFormsUI.csproj.GenerateResource.Cache
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.dll
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.pdb

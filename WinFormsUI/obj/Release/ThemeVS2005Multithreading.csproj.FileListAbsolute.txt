@@ -1,0 +1,11 @@
+D:\src\dockpanelsuite\bin\net20\license.txt
+D:\src\dockpanelsuite\bin\net20\WeifenLuo.WinFormsUI.Docking.ThemeVS2005Multithreading.dll
+D:\src\dockpanelsuite\bin\net20\WeifenLuo.WinFormsUI.Docking.ThemeVS2005Multithreading.pdb
+D:\src\dockpanelsuite\bin\net40\license.txt
+D:\src\dockpanelsuite\bin\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2005Multithreading.dll
+D:\src\dockpanelsuite\bin\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2005Multithreading.pdb
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.ThemeVS2005Multithreading.Resources.resources
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.ThemeVS2005Multithreading.Strings.resources
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\ThemeVS2005Multithreading.csproj.GenerateResource.Cache
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.ThemeVS2005Multithreading.dll
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.ThemeVS2005Multithreading.pdb

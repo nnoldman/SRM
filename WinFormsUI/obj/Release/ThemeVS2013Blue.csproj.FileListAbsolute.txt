@@ -1,0 +1,13 @@
+D:\src\dockpanelsuite\bin\net20\license.txt
+D:\src\dockpanelsuite\bin\net20\WeifenLuo.WinFormsUI.Docking.ThemeVS2013Blue.dll
+D:\src\dockpanelsuite\bin\net20\WeifenLuo.WinFormsUI.Docking.ThemeVS2013Blue.pdb
+D:\src\dockpanelsuite\bin\net40\license.txt
+D:\src\dockpanelsuite\bin\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2013Blue.dll
+D:\src\dockpanelsuite\bin\net40\WeifenLuo.WinFormsUI.Docking.ThemeVS2013Blue.pdb
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.ThemeVS2012Light.Resources.resources
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.ThemeVS2012Light.Strings.resources
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.ThemeVS2013Blue.Resources.resources
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.ThemeVS2013Blue.Strings.resources
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\ThemeVS2013Blue.csproj.GenerateResource.Cache
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.ThemeVS2013Blue.dll
+D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.ThemeVS2013Blue.pdb

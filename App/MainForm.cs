@@ -17,9 +17,12 @@ namespace App
 {
     public partial class MainForm : Form
     {
+        public static DockPanel docker;
+
         public MainForm()
         {
             InitializeComponent();
+            docker = this.dockPanel1;
             InitInnerPlugins();
             LoadLayout();
             InitSkin();
