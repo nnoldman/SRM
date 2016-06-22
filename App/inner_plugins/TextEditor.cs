@@ -1,5 +1,6 @@
 ﻿using App;
 using Plugins;
+using ScintillaNET;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -12,6 +13,8 @@ using System.Threading.Tasks;
 
 public class TextEditor : Docker, Plugins.Plugin
 {
+    public static Color GlobalBackColor = Color.FromArgb(255, 220, 230, 255);
+
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     private System.ComponentModel.IContainer components;
     private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
@@ -23,9 +26,27 @@ public class TextEditor : Docker, Plugins.Plugin
     {
         InitializeComponent();
 
+        this.scintilla1.StyleResetDefault();
         this.scintilla1.EdgeMode = ScintillaNET.EdgeMode.Line;
         this.scintilla1.Margins[1].Type = ScintillaNET.MarginType.Number;
-        this.Font = new System.Drawing.Font("courier new", 22);
+        this.scintilla1.Styles[Style.Default].Font = "courier new";
+        this.scintilla1.Styles[Style.Default].Size = 14;
+        this.scintilla1.Styles[Style.Default].BackColor = GlobalBackColor;
+        this.scintilla1.CaretLineBackColor = GlobalBackColor;
+        this.scintilla1.BackColor = GlobalBackColor;
+
+        this.scintilla1.Styles[Style.Lua.Default].ForeColor = Color.Silver;
+        this.scintilla1.Styles[Style.Lua.Comment].ForeColor = Color.FromArgb(0, 128, 0);
+        this.scintilla1.Styles[Style.Lua.CommentLine].ForeColor = Color.FromArgb(0, 128, 0);
+        this.scintilla1.Styles[Style.Lua.Number].ForeColor = Color.Olive;
+        this.scintilla1.Styles[Style.Lua.Word].ForeColor = Color.Blue;
+        this.scintilla1.Styles[Style.Lua.Word2].ForeColor = Color.Blue;
+        this.scintilla1.Styles[Style.Lua.String].ForeColor = Color.FromArgb(163, 21, 21);
+        this.scintilla1.Styles[Style.Lua.Character].ForeColor = Color.FromArgb(163, 21, 21);
+        this.scintilla1.Styles[Style.Lua.StringEol].BackColor = Color.Pink;
+        this.scintilla1.Styles[Style.Lua.Operator].ForeColor = Color.Purple;
+        this.scintilla1.Styles[Style.Lua.Preprocessor].ForeColor = Color.Maroon;
+
         mInstances.Add(this);
     }
 
@@ -63,12 +84,12 @@ public class TextEditor : Docker, Plugins.Plugin
             // 
             // scintilla1
             // 
-            this.scintilla1.CaretLineBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(171)))), ((int)(((byte)(171)))), ((int)(((byte)(171)))));
+            this.scintilla1.AllowDrop = true;
+            this.scintilla1.CaretLineBackColor = System.Drawing.Color.Wheat;
             this.scintilla1.CaretLineVisible = true;
             this.scintilla1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scintilla1.EdgeColor = System.Drawing.Color.LightGray;
             this.scintilla1.EdgeMode = ScintillaNET.EdgeMode.Line;
-            this.scintilla1.FontQuality = ScintillaNET.FontQuality.AntiAliased;
             this.scintilla1.Lexer = ScintillaNET.Lexer.Cpp;
             this.scintilla1.Location = new System.Drawing.Point(0, 0);
             this.scintilla1.Margin = new System.Windows.Forms.Padding(1);

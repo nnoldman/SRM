@@ -102,6 +102,7 @@ namespace App
             // 
             // dockPanel1
             // 
+            this.dockPanel1.AllowDrop = true;
             this.dockPanel1.AutoSize = true;
             this.dockPanel1.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.dockPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
@@ -116,6 +117,7 @@ namespace App
             // 
             // MainForm
             // 
+            this.AllowDrop = true;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(419, 262);
@@ -127,6 +129,7 @@ namespace App
             this.Text = "r";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.MainForm_DragDrop);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUp);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

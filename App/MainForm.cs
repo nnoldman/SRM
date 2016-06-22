@@ -127,5 +127,10 @@ namespace App
         {
             this.OnExit();
         }
+
+        private void MainForm_DragDrop(object sender, DragEventArgs e)
+        {
+
+        }
     }
 }
