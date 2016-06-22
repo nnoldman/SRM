@@ -85,5 +85,10 @@ namespace Plugins
         {
             return string.Format("Type={0};TabText={1}", GetType().Name, TabText);
         }
+
+        public virtual void LoadFromPersistString(PersistStringParser parser)
+        {
+            this.TabText = parser["TabText"];
+        }
     }
 }

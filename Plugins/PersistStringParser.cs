@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-namespace App
+namespace Plugins
 {
+
     public class PersistStringParser
     {
         public string this[string key]

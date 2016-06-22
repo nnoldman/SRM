@@ -45,7 +45,7 @@ namespace App
             {
                 Docker contet = (Docker)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
                 if (contet != null)
-                    contet.TabText = parser["TabText"];
+                    contet.LoadFromPersistString(parser);
                 return contet;
             }
             throw new Exception();
@@ -67,6 +67,7 @@ namespace App
             stripSkin.DocumentGradient.ActiveTabGradient.EndColor = Color.FromArgb(255, 220, 230, 255);
             stripSkin.ToolWindowGradient.ActiveCaptionGradient.StartColor = Color.FromArgb(255, 220, 230, 255);
             stripSkin.ToolWindowGradient.ActiveCaptionGradient.EndColor = Color.FromArgb(255, 220, 230, 255);
+			
             this.dockPanel1.Skin.DockPaneStripSkin = stripSkin;
         }
         void LoadLayout()
@@ -130,7 +131,19 @@ namespace App
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
+            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            foreach (string file in files)
+            {
+                TextEditor.CreateDocument(file);
+            }
+        }
 
+        private void MainForm_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
+            {
+                e.Effect = DragDropEffects.All;
+            }
         }
     }
 }
