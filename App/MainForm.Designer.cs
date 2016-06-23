@@ -61,8 +61,8 @@ namespace App
             this.OpenToolStripMenuItem1,
             this.CloseToolStripMenuItem});
             this.FileToolStripMenuItem.Name = "FileToolStripMenuItem";
-            this.FileToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.FileToolStripMenuItem.Text = "文件";
+            this.FileToolStripMenuItem.Size = new System.Drawing.Size(58, 21);
+            this.FileToolStripMenuItem.Text = "文件(&F)";
             // 
             // OpenToolStripMenuItem1
             // 
@@ -79,26 +79,26 @@ namespace App
             // EditToolStripMenuItem
             // 
             this.EditToolStripMenuItem.Name = "EditToolStripMenuItem";
-            this.EditToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.EditToolStripMenuItem.Text = "编辑";
+            this.EditToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
+            this.EditToolStripMenuItem.Text = "编辑(&E)";
             // 
             // PluginToolStripMenuItem
             // 
             this.PluginToolStripMenuItem.Name = "PluginToolStripMenuItem";
-            this.PluginToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.PluginToolStripMenuItem.Text = "插件";
+            this.PluginToolStripMenuItem.Size = new System.Drawing.Size(59, 21);
+            this.PluginToolStripMenuItem.Text = "插件(&P)";
             // 
             // ViewToolStripMenuItem
             // 
             this.ViewToolStripMenuItem.Name = "ViewToolStripMenuItem";
-            this.ViewToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.ViewToolStripMenuItem.Text = "视图";
+            this.ViewToolStripMenuItem.Size = new System.Drawing.Size(60, 21);
+            this.ViewToolStripMenuItem.Text = "视图(&V)";
             // 
             // OptionToolStripMenuItem
             // 
             this.OptionToolStripMenuItem.Name = "OptionToolStripMenuItem";
-            this.OptionToolStripMenuItem.Size = new System.Drawing.Size(44, 21);
-            this.OptionToolStripMenuItem.Text = "设置";
+            this.OptionToolStripMenuItem.Size = new System.Drawing.Size(62, 21);
+            this.OptionToolStripMenuItem.Text = "设置(&O)";
             // 
             // dockPanel1
             // 
@@ -107,7 +107,7 @@ namespace App
             this.dockPanel1.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.dockPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dockPanel1.DockBackColor = System.Drawing.Color.Aqua;
+            this.dockPanel1.DockBackColor = System.Drawing.SystemColors.AppWorkspace;
             this.dockPanel1.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.dockPanel1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dockPanel1.Location = new System.Drawing.Point(0, 25);

@@ -83,7 +83,7 @@ public class TextEditor : Docker, Plugins.Plugin
         this.scintilla1.Styles[Style.Cpp.Default].ForeColor = Color.Blue;
         this.scintilla1.Styles[Style.Cpp.Comment].ForeColor = Color.FromArgb(0, 128, 0);
         this.scintilla1.Styles[Style.Cpp.CommentLine].ForeColor = Color.FromArgb(0, 128, 0);
-        this.scintilla1.Styles[Style.Cpp.Number].ForeColor = Color.Olive;
+        this.scintilla1.Styles[Style.Cpp.Number].ForeColor = Color.Black;
         this.scintilla1.Styles[Style.Cpp.Word].ForeColor = Color.Blue;
         this.scintilla1.Styles[Style.Cpp.Word2].ForeColor = Color.Blue;
         this.scintilla1.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21);
@@ -92,6 +92,9 @@ public class TextEditor : Docker, Plugins.Plugin
         this.scintilla1.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
         this.scintilla1.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
         this.scintilla1.Styles[Style.Cpp.UserLiteral].ForeColor = Color.Maroon;
+        this.scintilla1.Styles[Style.Cpp.Identifier].ForeColor = Color.FromArgb(255, 0, 0, 130);
+        this.scintilla1.Styles[Style.Cpp.Identifier].Bold = false;
+        
         this.scintilla1.SetKeywords(0, "abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while");
         this.scintilla1.SetKeywords(1, "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort void");
         this.scintilla1.Lexer = Lexer.Cpp;
@@ -99,6 +102,36 @@ public class TextEditor : Docker, Plugins.Plugin
         this.scintilla1.Delete += CharDelete;
 
         this.scintilla1.AutoCIgnoreCase = true;
+
+        this.scintilla1.SetProperty("fold", "1");
+        this.scintilla1.SetProperty("fold.compact", "1");
+
+        // Configure a margin to display folding symbols
+        this.scintilla1.Margins[2].Type = MarginType.Symbol;
+        this.scintilla1.Margins[2].Mask = Marker.MaskFolders;
+        this.scintilla1.Margins[2].Sensitive = true;
+        this.scintilla1.Margins[2].Width = 16;
+
+        // Set colors for all folding markers
+        for (int i = 25; i <= 31; i++)
+        {
+            this.scintilla1.Markers[i].SetForeColor(SystemColors.ControlLightLight);
+            this.scintilla1.Markers[i].SetBackColor(SystemColors.ControlDark);
+        }
+
+        // Configure folding markers with respective symbols
+        this.scintilla1.Markers[Marker.Folder].Symbol = MarkerSymbol.BoxPlus;
+        this.scintilla1.Markers[Marker.FolderOpen].Symbol = MarkerSymbol.BoxMinus;
+        this.scintilla1.Markers[Marker.FolderEnd].Symbol = MarkerSymbol.BoxPlusConnected;
+        this.scintilla1.Markers[Marker.FolderMidTail].Symbol = MarkerSymbol.TCorner;
+        this.scintilla1.Markers[Marker.FolderOpenMid].Symbol = MarkerSymbol.BoxMinusConnected;
+        this.scintilla1.Markers[Marker.FolderSub].Symbol = MarkerSymbol.VLine;
+        this.scintilla1.Markers[Marker.FolderTail].Symbol = MarkerSymbol.LCorner;
+
+        // Enable automatic folding
+        this.scintilla1.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
+
+        this.scintilla1.AssignCmdKey(Keys.Control | Keys.S, Command.Home);
 
         mInstances.Add(this);
     }
