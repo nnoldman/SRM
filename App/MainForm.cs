@@ -69,6 +69,10 @@ namespace App
             stripSkin.ToolWindowGradient.ActiveCaptionGradient.EndColor = Color.FromArgb(255, 220, 230, 255);
 			
             this.dockPanel1.Skin.DockPaneStripSkin = stripSkin;
+
+            this.dockPanel1.DockBackColor = Color.FromArgb(0, 220, 230, 255);
+            //this.dockPanel1.BackgroundImage = Image.FromFile("ExampleWatermark.jpg");
+            //this.dockPanel1.BackgroundImageLayout = ImageLayout.Stretch;
         }
         void LoadLayout()
         {

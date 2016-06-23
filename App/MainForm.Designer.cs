@@ -107,7 +107,7 @@ namespace App
             this.dockPanel1.BackColor = System.Drawing.SystemColors.InactiveCaption;
             this.dockPanel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.dockPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dockPanel1.DockBackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.dockPanel1.DockBackColor = System.Drawing.Color.Aqua;
             this.dockPanel1.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.dockPanel1.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dockPanel1.Location = new System.Drawing.Point(0, 25);

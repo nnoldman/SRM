@@ -2695,7 +2695,7 @@ namespace ScintillaNET
                         break;
 
                     case NativeMethods.SCN_AUTOCCHARDELETED:
-                        OnAutoCCharDeleted(EventArgs.Empty);
+                       OnAutoCCharDeleted(EventArgs.Empty);
                         break;
 
                     case NativeMethods.SCN_DWELLSTART:

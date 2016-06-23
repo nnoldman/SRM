@@ -15,7 +15,7 @@ using System.Windows.Forms;
 
 public class TextEditor : Docker, Plugins.Plugin
 {
-    public static Color GlobalBackColor = Color.FromArgb(255, 220, 230, 255);
+    public static Color GlobalBackColor = Color.FromArgb(0, 220, 230, 255);
 
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
     private System.ComponentModel.IContainer components;
@@ -57,45 +57,145 @@ public class TextEditor : Docker, Plugins.Plugin
     {
         InitializeComponent();
 
-        this.BackColor = GlobalBackColor;
-
+        //this.BackColor = GlobalBackColor;
+         
         this.scintilla1.StyleResetDefault();
-        this.scintilla1.SetWhitespaceBackColor(false, GlobalBackColor);
-        this.scintilla1.SetWhitespaceForeColor(false, GlobalBackColor);
+        this.scintilla1.SetWhitespaceBackColor(true, GlobalBackColor);
+        this.scintilla1.SetWhitespaceForeColor(true, GlobalBackColor);
 
         this.scintilla1.EdgeColor = GlobalBackColor;
         this.scintilla1.EdgeMode = ScintillaNET.EdgeMode.Background;
         this.scintilla1.CaretLineBackColor = GlobalBackColor;
         this.scintilla1.AdditionalCaretForeColor = GlobalBackColor;
         this.scintilla1.AdditionalCaretsVisible = false;
-        this.scintilla1.Document
 
         this.scintilla1.Margins[1].Type = ScintillaNET.MarginType.Number;
-        this.scintilla1.Margins[1].Width = 45;
-
-        this.scintilla1.Styles[Style.LineNumber].Size = 9;
-        this.scintilla1.Styles[Style.LineNumber].BackColor = GlobalBackColor;
+        this.scintilla1.Margins[1].Width = 60;
 
         this.scintilla1.Styles[Style.Default].Font = "courier new";
         this.scintilla1.Styles[Style.Default].Size = 14;
         this.scintilla1.Styles[Style.Default].BackColor = GlobalBackColor;
+        this.scintilla1.StyleClearAll();
 
+        //this.BackgroundImage = Image.FromFile("ExampleWatermark.jpg");
+        //this.BackgroundImageLayout = ImageLayout.Stretch;
 
-        //this.scintilla1.Styles[Style.Lua.Default].ForeColor = Color.Black;
-        //this.scintilla1.Styles[Style.Lua.Comment].ForeColor = Color.FromArgb(0, 128, 0);
-        //this.scintilla1.Styles[Style.Lua.CommentLine].ForeColor = Color.FromArgb(0, 128, 0);
-        //this.scintilla1.Styles[Style.Lua.Number].ForeColor = Color.Olive;
-        //this.scintilla1.Styles[Style.Lua.Word].ForeColor = Color.Blue;
-        //this.scintilla1.Styles[Style.Lua.Word2].ForeColor = Color.Blue;
-        //this.scintilla1.Styles[Style.Lua.String].ForeColor = Color.FromArgb(163, 21, 21);
-        //this.scintilla1.Styles[Style.Lua.Character].ForeColor = Color.FromArgb(163, 21, 21);
-        //this.scintilla1.Styles[Style.Lua.StringEol].BackColor = Color.Pink;
-        //this.scintilla1.Styles[Style.Lua.Operator].ForeColor = Color.Purple;
-        //this.scintilla1.Styles[Style.Lua.Preprocessor].ForeColor = Color.Maroon;
-
+        this.scintilla1.Styles[Style.Cpp.Default].ForeColor = Color.Blue;
+        this.scintilla1.Styles[Style.Cpp.Comment].ForeColor = Color.FromArgb(0, 128, 0);
+        this.scintilla1.Styles[Style.Cpp.CommentLine].ForeColor = Color.FromArgb(0, 128, 0);
+        this.scintilla1.Styles[Style.Cpp.Number].ForeColor = Color.Olive;
+        this.scintilla1.Styles[Style.Cpp.Word].ForeColor = Color.Blue;
+        this.scintilla1.Styles[Style.Cpp.Word2].ForeColor = Color.Blue;
+        this.scintilla1.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21);
+        this.scintilla1.Styles[Style.Cpp.Character].ForeColor = Color.FromArgb(163, 21, 21);
+        this.scintilla1.Styles[Style.Cpp.StringEol].BackColor = Color.Pink;
+        this.scintilla1.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
+        this.scintilla1.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
+        this.scintilla1.Styles[Style.Cpp.UserLiteral].ForeColor = Color.Maroon;
+        this.scintilla1.SetKeywords(0, "abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while");
+        this.scintilla1.SetKeywords(1, "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort void");
         this.scintilla1.Lexer = Lexer.Cpp;
+        this.scintilla1.CharAdded += CharAdded;
+        this.scintilla1.Delete += CharDelete;
+
+        this.scintilla1.AutoCIgnoreCase = true;
 
         mInstances.Add(this);
+    }
+
+    SortedSet<string> GetCacheWords(int startPos,int len)
+    {
+        char ch = '\0';
+        SortedSet<string> words = new SortedSet<string>();
+        string text = Text;
+        int allLen = text.Length;
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < allLen; ++i)
+        {
+            ch = text[i];
+
+            if (i == startPos)
+            {
+                goto MakeWord;
+            }
+            else if (i > startPos && i <= startPos + len)
+            {
+                continue;
+            }
+            else if ((ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z') || (ch >= '0' && ch <= '9') || ch == '_')
+            {
+                sb.Append(ch);
+                continue;
+            }
+        MakeWord:
+            if (sb.Length > 0)
+            {
+                string word = sb.ToString();
+                if (!words.Contains(word))
+                    words.Add(word);
+                sb.Clear();
+            }
+        }
+        return words;
+    }
+    bool Match(string word, string target)
+    {
+        if (target.Length > word.Length)
+            return false;
+
+        int len = Math.Min(word.Length, target.Length);
+        
+        char ch1, ch2;
+        
+        for (int i = 0; i < len; ++i)
+        {
+            ch1 = word[i];
+            ch2 = target[i];
+            if (ch1 == ch2 || ch1 + 32 == ch2 || ch1 == ch2 + 32)
+                continue;
+            else
+                return false;
+        }
+        return true;
+    }
+    string GetAutoList(string content, int startPos, int len)
+    {
+        var Words = GetCacheWords(startPos, len);
+        StringBuilder sb = new StringBuilder();
+        foreach (var word in Words)
+        {
+            if (Match(word,content))
+            {
+                sb.Append(word);
+                sb.Append(' ');
+            }
+        }
+        if (sb.Length > 0)
+            sb.Remove(sb.Length - 1, 1);
+        return sb.ToString();
+    }
+    void TryAutoComplete()
+    {
+        // Find the word start
+        var currentPos = this.scintilla1.CurrentPosition;
+        var wordStartPos = this.scintilla1.WordStartPosition(currentPos, true);
+        // Display the autocompletion list
+        var lenEntered = currentPos - wordStartPos;
+        string content = Text.Substring(wordStartPos, lenEntered);
+        if (lenEntered > 0)
+        {
+            //this.scintilla1.AutoCShow(lenEntered, "abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while");
+            this.scintilla1.AutoCShow(lenEntered, GetAutoList(content, wordStartPos, lenEntered));
+        }
+    }
+    private void CharDelete(object sender, ModificationEventArgs arg)
+    {
+        TryAutoComplete();
+    }
+    private void CharAdded(object sender, CharAddedEventArgs e)
+    {
+        TryAutoComplete();
     }
 
     public bool OnInit()
