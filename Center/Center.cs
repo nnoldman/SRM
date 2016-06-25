@@ -11,34 +11,15 @@ namespace Core
     public class Center : ATrigger.ITriggerStatic
     {
         public static DockPanel Container;
-        static DocumentManager mDocumentManager;
-        static Option mOption;
-
-        public static DocumentManager DocumentManager
-        {
-            get
-            {
-                if (mDocumentManager == null)
-                    mDocumentManager = new DocumentManager();
-                return mDocumentManager;
-            }
-        }
-        public static Option Option
-        {
-            get
-            {
-                if (mOption == null)
-                    mOption = new Option();
-                return mOption;
-            }
-            set
-            {
-                mOption = value;
-            }
-        }
+        public static Option Option = new Option();
+        public static DocumentManager DocumentManager = new DocumentManager();
+        public static Shortcut.HotkeyBinder HotKey = new Shortcut.HotkeyBinder();
 
         [Emmiter((int)DataType.ApplicationExit)]
         public static Signal OnExit = new Signal();
+
+        [Emmiter((int)DataType.ApplicationInialized)]
+        public static Signal OnInitialized = new Signal();
 
         [Emmiter((int)DataType.OpenDocument)]
         public static ATrigger<string> CurrentOpenDoucment = new ATrigger<string>();

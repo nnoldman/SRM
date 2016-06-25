@@ -70,7 +70,11 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
             }
         }
     }
-
+    [ATrigger.Receiver((int)DataType.ApplicationInialized)]
+    static void BindKey()
+    {
+        Center.HotKey.Bind(Shortcut.Modifiers.Control, Keys.S).To(SaveFile);
+    }
     public TextEditor()
     {
         InitializeComponent();
@@ -149,8 +153,8 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
 
         this.scintilla1.AssignCmdKey(Keys.Control | Keys.S, Command.Home);
 
-        Bitmap bmp = (Bitmap)Bitmap.FromFile("vol4.bmp");
-        this.scintilla1.RegisterRgbaImage(-1, bmp);
+        //Bitmap bmp = (Bitmap)Bitmap.FromFile("vol4.bmp");
+        //this.scintilla1.RegisterRgbaImage(-1, bmp);
 
         mInstances.Add(this);
     }
@@ -176,9 +180,40 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
         instance.Show(Center.Container, DockState.Document);
     }
 
-    public static void SaveFile()
+    static string GetTextFromInstances(string name)
     {
+        foreach(var inst in mInstances)
+        {
+            if (inst.TabText == name || inst.FileName == name)
+            {
+                return inst.Text;
+            }
+        }
+        return string.Empty;
+    }
 
+    static void SaveFile()
+    {
+        if (!string.IsNullOrEmpty(Center.CurrentOpenDoucment.value))
+        {
+            string text=GetTextFromInstances(Center.CurrentOpenDoucment.value);
+
+            if (File.Exists(Center.CurrentOpenDoucment.value))
+            {
+                File.WriteAllText(Center.CurrentOpenDoucment.value, text);
+            }
+            else
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+                var res = dlg.ShowDialog();
+
+                if (res == DialogResult.OK)
+                {
+                    File.WriteAllText(dlg.FileName, text);
+                    Center.CurrentOpenDoucment.value = dlg.FileName;
+                }
+            }
+        }
     }
 
     SortedSet<string> GetCacheWords(int startPos,int len)

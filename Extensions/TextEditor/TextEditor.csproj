@@ -56,6 +56,10 @@
       <Project>{349dfe1d-d3cd-4bf7-ad85-8052e81dc525}</Project>
       <Name>ATrigger</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\Libs\Shortcut\Shortcut.csproj">
+      <Project>{5deadf0b-dc7b-430f-982e-647f7b05455d}</Project>
+      <Name>Shortcut</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Libs\WinFormsUI\WinFormsUI.csproj">
       <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
       <Name>WinFormsUI</Name>
@@ -67,7 +71,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>Copy "$(TargetDir)$(ProjectName).dll" "..\..\..\..\Saber\bin\$(ConfigurationName)\Extensions\"</PostBuildEvent>
+    <PostBuildEvent>copy "$(TargetDir)$(ProjectName).dll" "..\..\..\..\Saber\bin\$(ConfigurationName)\Extensions\"</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

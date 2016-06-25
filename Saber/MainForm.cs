@@ -28,16 +28,14 @@ namespace Saber
             ATrigger.DataCenter.InstallStaticTriggers(typeof(Core.Center).Assembly);
 
             InitializeComponent();
-
             BindHotKeys();
             InitBase();
             LoadOption();
             InitExtensions();
             LoadLayout();
             InitSkin();
+            Center.OnInitialized.Trigger();
         }
-
-        
 
         void BindHotKeys()
         {
