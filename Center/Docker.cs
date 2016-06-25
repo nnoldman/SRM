@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -9,19 +10,20 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public class Docker : DockContent
+    public class Extension : DockContent
     {
-        static Dictionary<string, Docker> Dockers = new Dictionary<string, Docker>();
+        static Dictionary<string, Extension> Dockers = new Dictionary<string, Extension>();
 
         public static void Toggler(string name, DockPanel dockPanel, Type tp = null)
         {
-            Docker docker = null;
+            Extension docker = null;
 
             Dockers.TryGetValue(name, out docker);
 
             if (docker == null)
             {
-                docker = (Docker)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
+                ConstructorInfo construtor = tp.GetConstructor(Type.EmptyTypes);
+                docker = (Extension)(construtor.Invoke(null));
                 docker.TabText = name;
                 docker.Show(dockPanel, docker.IsDocument() ? DockState.Document : DockState.Float);
                 Dockers.Add(name, docker);
@@ -47,7 +49,7 @@ namespace Core
             return false;
         }
 
-        public Docker()
+        public Extension()
         {
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -86,9 +88,10 @@ namespace Core
             return string.Format("Type={0};TabText={1}", GetType().Name, TabText);
         }
 
-        public virtual void LoadFromPersistString(PersistStringParser parser)
+        public virtual bool LoadFromPersistString(PersistStringParser parser)
         {
             this.TabText = parser["TabText"];
+            return true;
         }
     }
 }

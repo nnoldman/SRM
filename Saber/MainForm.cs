@@ -19,22 +19,25 @@ namespace Saber
 {
     public partial class MainForm : Form
     {
-        public static DockPanel MainDocker;
         private static HotkeyBinder mHotKeyBinder = new HotkeyBinder();
         private int mFileMenuChldrenCount = 0;
 
         public MainForm()
         {
             ATrigger.DataCenter.AddInstance(this);
-            
+            ATrigger.DataCenter.InstallStaticTriggers(typeof(Core.Center).Assembly);
+
             InitializeComponent();
+
             BindHotKeys();
             InitBase();
-            InitInnerPlugins();
-            //LoadOption();
-            //LoadLayout();
+            LoadOption();
+            InitExtensions();
+            LoadLayout();
             InitSkin();
         }
+
+        
 
         void BindHotKeys()
         {
@@ -44,10 +47,8 @@ namespace Saber
         void InitBase()
         {
             mFileMenuChldrenCount = this.FileToolStripMenuItem.DropDownItems.Count;
-            MainDocker = this.dockPanel1;
+            Center.Container = this.dockPanel1;
         }
-
-        Dictionary<string, Type> mInnerPluginTypes = new Dictionary<string, Type>();
 
         void LoadHistry(List<string> histroy)
         {
@@ -69,23 +70,35 @@ namespace Saber
             }
         }
 
-        [ATrigger.DataReceiver((int)DataType.FileHistroyChange)]
-        public void OnHistroyFileChanged()
+        [ATrigger.Receiver((int)DataType.OpenDocument)]
+        public void OnDocumentOpen()
         {
-            LoadHistry(Option.Main.File.Histroy.value);
+            if (Center.Option.File.Histroy.Remove(Center.CurrentOpenDoucment.value))
+                LoadHistry(Center.Option.File.Histroy);
+        }
+
+        [ATrigger.Receiver((int)DataType.CloseDocument)]
+        public void OnDocumentClose()
+        {
+            while (Center.Option.File.Histroy.Count >= Center.Option.File.MaxHistroyCount)
+                Center.Option.File.Histroy.RemoveAt(0);
+            Center.Option.File.Histroy.Add(Center.CurrentCloseDoucment.value);
+            LoadHistry(Center.Option.File.Histroy);
         }
 
         void LoadOption()
         {
-            Option.Main = (Option)fastJSON.JSON.ToObject(File.ReadAllText(Option.FileName));
-
-            LoadHistry(Option.Main.File.Histroy.value);
+            if (File.Exists(Option.FileName))
+            {
+                Center.Option = (Option)fastJSON.JSON.ToObject(File.ReadAllText(Option.FileName));
+                LoadHistry(Center.Option.File.Histroy);
+            }
         }
         void SaveOption()
         {
-            this.dockPanel1.SaveAsXml(Option.Main.LayoutFile);
+            this.dockPanel1.SaveAsXml(Center.Option.LayoutFile);
 
-            string content = fastJSON.JSON.ToNiceJSON(Option.Main, new fastJSON.JSONParameters());
+            string content = fastJSON.JSON.ToNiceJSON(Center.Option, new fastJSON.JSONParameters());
 
             File.WriteAllText(Option.FileName, content);
         }
@@ -93,7 +106,7 @@ namespace Saber
         {
             int pos = sender.ToString().IndexOf(' ');
             if (pos != -1)
-                DocumentManager.CreateDocument(sender.ToString().Substring(pos + 1));
+                Center.CurrentOpenDoucment.value = sender.ToString().Substring(pos + 1);
             else
                 throw new Exception();
         }
@@ -101,17 +114,24 @@ namespace Saber
         private IDockContent GetContentFromPersistString(string persistString)
         {
             PersistStringParser parser = new PersistStringParser();
-            
+
             if (!parser.Parse(persistString))
                 return null;
             string stype = parser["Type"];
             Type tp = null;
-            mInnerPluginTypes.TryGetValue(stype, out tp);
+            ExtensionLoader.Instance.Types.TryGetValue(stype, out tp);
             if (tp != null)
             {
-                Docker contet = (Docker)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
+                Extension contet = (Extension)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
                 if (contet != null)
-                    contet.LoadFromPersistString(parser);
+                {
+                    if (!contet.LoadFromPersistString(parser))
+                    {
+                        contet.Dispose();
+                        contet = null;
+                        return null;
+                    }
+                }
                 return contet;
             }
             throw new Exception();
@@ -142,40 +162,24 @@ namespace Saber
         }
         void LoadLayout()
         {
-            if (File.Exists(Option.Main.LayoutFile))
-                this.dockPanel1.LoadFromXml(Option.Main.LayoutFile, GetContentFromPersistString);
+            if (File.Exists(Center.Option.LayoutFile))
+                this.dockPanel1.LoadFromXml(Center.Option.LayoutFile, GetContentFromPersistString);
         }
-        public bool InitInnerPlugins()
+        public bool InitExtensions()
         {
-            var asm = Assembly.GetCallingAssembly();
+            ExtensionLoader.Instance.Load();
 
-            var ptype = typeof(Core.Extension);
-
-            foreach (var tp in asm.GetTypes())
+            foreach (var extension in ExtensionLoader.Instance.Types)
             {
-                if (ptype.IsAssignableFrom(tp))
-                {
-                    if (tp.CustomAttributes != null)
-                    {
-                        var attributes = tp.GetCustomAttributes(typeof(PluginVersion), true);
-
-                        if (attributes != null && attributes.Length > 0)
-                        {
-                            PluginVersion version = (PluginVersion)attributes[0];
-
-                            ToolStripMenuItem item = new ToolStripMenuItem();
-                            item.Text = version.Name;
-                            item.Click += OnViewClick;
-                            this.ViewToolStripMenuItem.DropDownItems.Add(item);
-                            mInnerPluginTypes.Add(tp.FullName, tp);
-                        }
-                    }
-                }
+                ToolStripMenuItem item = new ToolStripMenuItem();
+                item.Text = extension.Key;
+                item.Click += OnViewClick;
+                this.ViewToolStripMenuItem.DropDownItems.Add(item);
             }
             return true;
         }
 
-        [DataReceiver((int)DataType.ApplicationExit)]
+        [Receiver((int)DataType.ApplicationExit)]
         void OnExit()
         {
             SaveOption();
@@ -191,8 +195,8 @@ namespace Saber
         {
             string text = sender.ToString();
             Type tp = null;
-            mInnerPluginTypes.TryGetValue(text, out tp);
-            Docker.Toggler(sender.ToString(), this.dockPanel1, tp);
+            ExtensionLoader.Instance.Types.TryGetValue(text, out tp);
+            Center.View.Trigger(tp);
         }
 
         private void OnFormClosing(object sender, FormClosingEventArgs e)
@@ -205,7 +209,7 @@ namespace Saber
         {
             string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
             foreach (string file in files)
-                DocumentManager.CreateDocument(file);
+                Center.CurrentOpenDoucment.value = file;
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)

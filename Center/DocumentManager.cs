@@ -13,7 +13,7 @@ public class DocumentManager
     {
         get
         {
-            return Option.Main.File.Histroy.value;
+            return Center.Option.File.Histroy;
         }
     }
 
@@ -23,29 +23,25 @@ public class DocumentManager
     {
         get
         {
-            return Option.Main.File.MaxHistroyCount;
-        }
-    }
-    static public void CreateDocument(string file)
-    {
-        if (!mActiveDocuments.Contains(file))
-        {
-            Option.Main.File.Histroy.Remove(file, true);
-            mActiveDocuments.Add(file);
+            return Center.Option.File.MaxHistroyCount;
         }
     }
 
-    static public void CloseDocument(string file)
+    [ATrigger.Receiver((int)DataType.OpenDocument)]
+    static public void CreateDocument()
     {
-        mActiveDocuments.Remove(file);
-        while (Option.Main.File.Histroy.value.Count >= Option.Main.File.MaxHistroyCount)
-            Option.Main.File.Histroy.RemoveAt(0);
-        Option.Main.File.Histroy.Add(file, true);
+        if (!mActiveDocuments.Contains(Center.CurrentOpenDoucment.value))
+            mActiveDocuments.Add(Center.CurrentOpenDoucment.value);
+    }
+
+    static public void CloseDocument()
+    {
+        mActiveDocuments.Remove(Center.CurrentCloseDoucment.value);
     }
 
     public static void OnClose()
     {
         foreach (var doc in mActiveDocuments)
-            CloseDocument(doc);
+            Center.CurrentCloseDoucment.value = doc;
     }
 }

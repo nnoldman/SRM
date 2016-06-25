@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace ATrigger
 {
-    public class TriggerObject : Signal
+    /// <summary>
+    /// add instance receiver and emitter
+    /// </summary>
+    public abstract class TriggerObject
     {
         public TriggerObject()
         {
@@ -18,5 +21,11 @@ namespace ATrigger
             DataCenter.RemoveEntityWithInstance(this);
             DataCenter.RemoveReceiversWithInstance(this);
         }
+    }
+    /// <summary>
+    /// add static receiver and emitter
+    /// </summary>
+    public interface ITriggerStatic
+    {
     }
 }

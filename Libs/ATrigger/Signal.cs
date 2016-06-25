@@ -39,6 +39,17 @@ namespace ATrigger
         {
 
         }
+        public T Arg<T>(int argIndex)
+        {
+            return DataCenter.GetParamByIndex<T>(argIndex);
+        }
+        public object[] Args
+        {
+            get
+            {
+                return DataCenter.GetParams();
+            }
+        }
     }
     public class ATrigger<T> : Signal
     {
@@ -59,11 +70,6 @@ namespace ATrigger
             {
                 return (T)mLastData;
             }
-        }
-        public override void Set(object obj)
-        {
-            value = (T)obj;
-            //Trigger();
         }
         public void Set(T data, bool trigger = true)
         {

@@ -45,11 +45,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtensionsPanel.cs">
+    <Compile Include="ExtensionLoader.cs" />
+    <Compile Include="ExtensionsManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExtensionsPanel.Designer.cs">
-      <DependentUpon>ExtensionsPanel.cs</DependentUpon>
+    <Compile Include="ExtensionsManager.Designer.cs">
+      <DependentUpon>ExtensionsManager.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -59,8 +60,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="ExtensionsPanel.resx">
-      <DependentUpon>ExtensionsPanel.cs</DependentUpon>
+    <EmbeddedResource Include="ExtensionsManager.resx">
+      <DependentUpon>ExtensionsManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
@@ -92,6 +93,10 @@
     <ProjectReference Include="..\Center\Core.csproj">
       <Project>{87c170a9-697e-44ba-b301-394c99bd7f4d}</Project>
       <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Extensions\TextEditor\TextEditor.csproj">
+      <Project>{042606a4-81da-4266-a257-93022e83246e}</Project>
+      <Name>TextEditor</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libs\ATrigger\ATrigger.csproj">
       <Project>{349dfe1d-d3cd-4bf7-ad85-8052e81dc525}</Project>

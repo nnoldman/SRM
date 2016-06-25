@@ -6,38 +6,49 @@ using DataType = System.Int32;
 namespace ATrigger
 {
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = true, Inherited = false)]
-    public class DataReceiver : Attribute
+    public class Receiver : Attribute
     {
         public DataType dataType;
 
-        public DataReceiver(DataType dataType)
+        public Receiver(DataType dataType)
         {
             this.dataType = dataType;
         }
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-    public class DataEntity : Attribute
+    public class Emmiter : Attribute
     {
         public DataType dataType;
-        public DataEntity(int dataType)
+        public Emmiter(int dataType)
         {
             this.dataType = dataType;
         }
     }
     public class DataCenter
     {
-        static Dictionary<DataType, List<Receiver>> mReceivers = new Dictionary<DataType, List<Receiver>>();
+        static Dictionary<DataType, List<ReceiverData>> mReceivers = new Dictionary<DataType, List<ReceiverData>>();
         public static DataType CurrentType;
         static Stack<object> mParamStack = new Stack<object>();
 
-        public static void OnScanType(Type tp)
+        public static void InstallStaticTriggers(Assembly asm)
         {
-            if (tp.IsSubclassOf(typeof(TriggerObject)))
+            if (asm != null)
             {
-                AddReceiversStatic(tp);
-                AddEntityStatic(tp);
+                foreach (var tp in asm.DefinedTypes)
+                {
+                    if (typeof(ATrigger.ITriggerStatic).IsAssignableFrom(tp))
+                    {
+                        ATrigger.DataCenter.ProcessStaticTrigger(tp);
+                    }
+                }
             }
+        }
+
+        static void ProcessStaticTrigger(Type tp)
+        {
+            AddReceiversStatic(tp);
+            AddEntityStatic(tp);
         }
 
         public static void AddInstance(object instance)
@@ -59,7 +70,7 @@ namespace ATrigger
                 {
                     if (field.IsStatic)
                     {
-                        object[] objs = field.GetCustomAttributes(typeof(DataEntity), true);
+                        object[] objs = field.GetCustomAttributes(typeof(Emmiter), true);
                         if (objs != null && objs.Length > 0)
                         {
                             Signal data = (Signal)field.GetValue(null);
@@ -70,7 +81,7 @@ namespace ATrigger
                             }
                             else
                             {
-                                data.dataType = ((DataEntity)objs[0]).dataType;
+                                data.dataType = ((Emmiter)objs[0]).dataType;
 
                                 Entity entity = new Entity();
                                 entity.instance = null;
@@ -82,13 +93,13 @@ namespace ATrigger
                 }
             }
         }
-        internal static void AddReceiver(Receiver act)
+        internal static void AddReceiver(ReceiverData act)
         {
-            List<Receiver> acts;
+            List<ReceiverData> acts;
 
             if (!mReceivers.TryGetValue(act.type, out acts))
             {
-                acts = new List<Receiver>();
+                acts = new List<ReceiverData>();
                 mReceivers.Add(act.type, acts);
             }
             acts.Add(act);
@@ -96,15 +107,20 @@ namespace ATrigger
 
         internal static void RemoveReceiver(DataType type, object instance)
         {
-            List<Receiver> acts;
+            List<ReceiverData> acts;
 
             if (mReceivers.TryGetValue(type, out acts))
             {
                 acts.RemoveAll((item) => item.call.instance == instance);
             }
         }
-
-        public static T GetParamByIndex<T>(int idx)
+        internal static object[] GetParams()
+        {
+            if (mParamStack.Count > 0)
+                return (object[])mParamStack.Peek();
+            return null;
+        }
+        internal static T GetParamByIndex<T>(int idx)
         {
             object[] paras = (object[])mParamStack.Peek();
             return paras != null ? (T)paras[idx] : default(T);
@@ -126,7 +142,7 @@ namespace ATrigger
             CurrentType = dataType;
             CurrentParam = args;
 
-            List<Receiver> acts;
+            List<ReceiverData> acts;
 
             if (mReceivers.TryGetValue(dataType, out acts))
             {
@@ -143,7 +159,7 @@ namespace ATrigger
             mParamStack.Pop();
         }
 
-        internal class Receiver
+        internal class ReceiverData
         {
             public DataType type = Signal.InvalidDataType;
             public CallCack call = new CallCack();
@@ -188,7 +204,7 @@ namespace ATrigger
                 {
                     if (!field.IsStatic)
                     {
-                        object[] objs = field.GetCustomAttributes(typeof(DataEntity), true);
+                        object[] objs = field.GetCustomAttributes(typeof(Emmiter), true);
                         if (objs != null && objs.Length > 0)
                         {
                             try
@@ -203,7 +219,7 @@ namespace ATrigger
                                     }
                                     else
                                     {
-                                        data.dataType = ((DataEntity)objs[0]).dataType;
+                                        data.dataType = ((Emmiter)objs[0]).dataType;
                                         if (!mDataEntities.ContainsKey(data.dataType))
                                         {
                                             Entity entity = new Entity();
@@ -238,14 +254,27 @@ namespace ATrigger
             {
                 foreach (var method in methods)
                 {
-                    object[] objs = method.GetCustomAttributes(typeof(DataReceiver), false);
+                    //var objs = method.GetCustomAttributesData();
+
+                    //foreach (var obj in objs)
+                    //{
+                    //    //Receiver attr = (Receiver)obj;
+                    //    //ReceiverData receiver = new ReceiverData();
+                    //    //receiver.call.instance = null;
+                    //    //receiver.call.method = method;
+                    //    //receiver.type = attr.dataType;
+                    //    //DataCenter.AddReceiver(receiver);
+                    //}
+
+                    object[] objs = method.GetCustomAttributes(typeof(Receiver), false);
 
                     if (objs != null && objs.Length > 0)
                     {
+
                         foreach (var obj in objs)
                         {
-                            DataReceiver attr = (DataReceiver)obj;
-                            Receiver receiver = new Receiver();
+                            Receiver attr = (Receiver)obj;
+                            ReceiverData receiver = new ReceiverData();
                             receiver.call.instance = null;
                             receiver.call.method = method;
                             receiver.type = attr.dataType;
@@ -281,7 +310,7 @@ namespace ATrigger
                 {
                     foreach (var method in methods)
                     {
-                        object[] objs = method.GetCustomAttributes(typeof(DataReceiver), true);
+                        object[] objs = method.GetCustomAttributes(typeof(Receiver), true);
 
                         if (objs != null && objs.Length > 0)
                         {
@@ -302,8 +331,8 @@ namespace ATrigger
 
                     foreach (var obj in meta.attributes)
                     {
-                        DataReceiver attr = (DataReceiver)obj;
-                        Receiver receiver = new Receiver();
+                        Receiver attr = (Receiver)obj;
+                        ReceiverData receiver = new ReceiverData();
                         receiver.call.instance = instance;
                         receiver.call.method = meta.method;
                         receiver.type = attr.dataType;
@@ -324,13 +353,13 @@ namespace ATrigger
                 {
                     if (!method.IsStatic)
                     {
-                        object[] objs = method.GetCustomAttributes(typeof(DataReceiver), true);
+                        object[] objs = method.GetCustomAttributes(typeof(Receiver), true);
 
                         if (objs != null && objs.Length > 0)
                         {
                             foreach (var obj in objs)
                             {
-                                DataReceiver attr = (DataReceiver)obj;
+                                Receiver attr = (Receiver)obj;
                                 DataCenter.RemoveReceiver(attr.dataType, instance);
                             }
                         }

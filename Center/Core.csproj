@@ -48,10 +48,9 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DocumentManager.cs" />
-    <Compile Include="IGrammar.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="PersistStringParser.cs" />
-    <Compile Include="Extension.cs" />
+    <Compile Include="ExtensionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

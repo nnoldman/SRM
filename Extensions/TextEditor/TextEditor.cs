@@ -9,20 +9,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WeifenLuo.WinFormsUI.Docking;
 
 
-[Core.PluginVersion(Name = "TextEditor", Version = 1)]
+[Core.ExtensionVersion(Name = "TextEditor")]
 
-public class TextEditor : Docker, Core.Extension
+public class TextEditor : Extension, ATrigger.ITriggerStatic
 {
-    static Dictionary<string, TextEditor> mDocuments = new Dictionary<string, TextEditor>();
-    static public TextEditor CreateDocument(string file)
-    {
-        TextEditor editor = null;
-        if (editor != null)
-            editor.Show(Center.Container, WeifenLuo.WinFormsUI.Docking.DockState.Document);
-        return editor;
-    }
     public static Color GlobalBackColor = Color.FromArgb(0, 220, 230, 255);
 
     private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
@@ -31,6 +24,17 @@ public class TextEditor : Docker, Core.Extension
     private ScintillaNET.Scintilla scintilla1;
 
     static List<TextEditor> mInstances = new List<TextEditor>();
+
+    static int CreateCount = 0;
+
+    static string NewDocuemntName
+    {
+        get
+        {
+            ++CreateCount;
+            return "New" + CreateCount.ToString();
+        }
+}
 
     public new string Text
     {
@@ -54,10 +58,16 @@ public class TextEditor : Docker, Core.Extension
         }
         set
         {
-            TabText = string.IsNullOrEmpty(value) ? "New" : Path.GetFileName(value);
-            mFileName = value;
-            if (File.Exists(mFileName))
+            if (File.Exists(value))
+            {
+                mFileName = value;
+                TabText = Path.GetFileName(value);
                 this.Text = File.ReadAllText(mFileName);
+            }
+            else
+            {
+                TabText = value;
+            }
         }
     }
 
@@ -143,6 +153,27 @@ public class TextEditor : Docker, Core.Extension
         this.scintilla1.RegisterRgbaImage(-1, bmp);
 
         mInstances.Add(this);
+    }
+
+    [ATrigger.Receiver((int)DataType.View)]
+    static void OnViewChange()
+    {
+        if (Center.View.Arg<Type>(0) == typeof(TextEditor))
+        {
+            if (mInstances.Count == 0)
+                Center.CurrentOpenDoucment.value = NewDocuemntName;
+        }
+    }
+
+    [ATrigger.Receiver((int)DataType.OpenDocument)]
+    static public void CreateDocument()
+    {
+        TextEditor instance = new TextEditor();
+        if(!File.Exists(Center.CurrentOpenDoucment.value))
+            instance.TabText = Center.CurrentOpenDoucment.value;
+        else
+            instance.FileName = Center.CurrentOpenDoucment.value;
+        instance.Show(Center.Container, DockState.Document);
     }
 
     public static void SaveFile()
@@ -320,14 +351,14 @@ public class TextEditor : Docker, Core.Extension
 
     public override void OnDBClickNC()
     {
-        DocumentManager.CreateDocument(string.Empty);
+        Center.CurrentOpenDoucment.value = NewDocuemntName;
     }
 
     static void CloseAll()
     {
         foreach (var instance in mInstances)
         {
-            DocumentManager.CloseDocument(instance.FileName);
+            Center.CurrentCloseDoucment.value = instance.FileName;
             instance.Hide();
             instance.Dispose();
         }
@@ -339,7 +370,7 @@ public class TextEditor : Docker, Core.Extension
         this.scintilla1.ClearRegisteredImages();
         mInstances.Remove(this);
         if (!string.IsNullOrEmpty(this.FileName))
-            DocumentManager.CloseDocument(this.FileName);
+            Center.CurrentCloseDoucment.value = this.FileName;
     }
 
     private void closeAllToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -350,9 +381,10 @@ public class TextEditor : Docker, Core.Extension
     {
         return string.Format("Type={0};TabText={1}", GetType().Name, FileName);
     }
-    public override void LoadFromPersistString(Core.PersistStringParser parser)
+    public override bool LoadFromPersistString(Core.PersistStringParser parser)
     {
         FileName = parser["TabText"];
+        return !string.IsNullOrEmpty(FileName);
     }
 
     private void scintilla1_DragEnter(object sender, System.Windows.Forms.DragEventArgs e)
@@ -365,6 +397,6 @@ public class TextEditor : Docker, Core.Extension
     {
         string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
         foreach (string file in files)
-            DocumentManager.CreateDocument(file);
+            Center.CurrentOpenDoucment.value = file;
     }
 }
