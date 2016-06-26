@@ -16,16 +16,22 @@ namespace Core
         public static Shortcut.HotkeyBinder HotKey = new Shortcut.HotkeyBinder();
 
         [Emmiter((int)DataType.ApplicationExit)]
-        public static Signal OnExit = new Signal();
+        public static Signal OnExit = new Signal();//para:empty
 
+        [Emmiter((int)DataType.LayoutEnd)]
+        public static Signal OnLayoutEnd = new Signal();//para:empty
+        
         [Emmiter((int)DataType.ApplicationInialized)]
-        public static Signal OnInitialized = new Signal();
+        public static Signal OnInitialized = new Signal();//para:empty
 
         [Emmiter((int)DataType.OpenDocument)]
         public static ATrigger<string> CurrentOpenDoucment = new ATrigger<string>();
 
         [Emmiter((int)DataType.CloseDocument)]
         public static ATrigger<string> CurrentCloseDoucment = new ATrigger<string>();
+
+        [Emmiter((int)DataType.ChangeDocumentName)]
+        public static Signal OnChangeDocumentName = new Signal();//para:old name,new name
 
         [Emmiter((int)DataType.View)]
         public static Signal View = new Signal();

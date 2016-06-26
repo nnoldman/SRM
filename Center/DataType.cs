@@ -10,8 +10,10 @@ namespace Core
     {
         ApplicationInialized,
         ApplicationExit,
+        LayoutEnd,
         OpenDocument,
         CloseDocument,
+        ChangeDocumentName,
         View,
         ExtensionsLoaded,
     }

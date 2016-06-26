@@ -7,9 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using WeifenLuo.WinFormsUI.Docking;
 
-public class DocumentManager
+public class DocumentManager : ATrigger.TriggerObject
 {
-    static List<string> Histroy
+    string mActiveDocument;
+    List<string> mDocuments = new List<string>();
+
+    List<string> Histroy
     {
         get
         {
@@ -17,9 +20,15 @@ public class DocumentManager
         }
     }
 
-    static List<string> mActiveDocuments = new List<string>();
+    public string ActiveDocument
+    {
+        get
+        {
+            return mActiveDocument;
+        }
+    }
 
-    static int HistroyCount
+    int HistroyCount
     {
         get
         {
@@ -28,20 +37,51 @@ public class DocumentManager
     }
 
     [ATrigger.Receiver((int)DataType.OpenDocument)]
-    static public void CreateDocument()
+    public void CreateDocument()
     {
-        if (!mActiveDocuments.Contains(Center.CurrentOpenDoucment.value))
-            mActiveDocuments.Add(Center.CurrentOpenDoucment.value);
+        if (!mDocuments.Contains(Center.CurrentOpenDoucment.value))
+            mDocuments.Add(Center.CurrentOpenDoucment.value);
     }
 
-    static public void CloseDocument()
+    [ATrigger.Receiver((int)DataType.ChangeDocumentName)]
+    public void OnNameChanged()
     {
-        mActiveDocuments.Remove(Center.CurrentCloseDoucment.value);
+        string oldname = Center.OnChangeDocumentName.Arg<string>(0);
+        string newname = Center.OnChangeDocumentName.Arg<string>(1);
+
+        mDocuments.Remove(oldname);
+
+        if (!mDocuments.Contains(newname))
+            mDocuments.Add(newname);
+        else
+            throw new Exception();
+
+        if (mActiveDocument == oldname)
+            mActiveDocument = newname;
     }
 
-    public static void OnClose()
+    public void AddHistroy(string doc)
     {
-        foreach (var doc in mActiveDocuments)
+        mDocuments.Add(doc);
+    }
+
+    public void CloseDocument()
+    {
+        mDocuments.Remove(Center.CurrentCloseDoucment.value);
+
+        if (mDocuments.Count == 0)
+            mActiveDocument = string.Empty;
+    }
+
+    public void OnClose()
+    {
+        foreach (var doc in mDocuments)
             Center.CurrentCloseDoucment.value = doc;
+    }
+
+    public void Active(string name)
+    {
+        if (mDocuments.Contains(name))
+            mActiveDocument = name;
     }
 }

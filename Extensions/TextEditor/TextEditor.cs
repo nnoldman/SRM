@@ -79,6 +79,8 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
     {
         InitializeComponent();
 
+        ATrigger.DataCenter.AddInstance(this);
+
         this.scintilla1.StyleResetDefault();
         this.scintilla1.SetWhitespaceBackColor(true, GlobalBackColor);
         this.scintilla1.SetWhitespaceForeColor(true, GlobalBackColor);
@@ -169,6 +171,17 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
         }
     }
 
+    [ATrigger.Receiver((int)DataType.LayoutEnd)]
+    static void OnLayoutEnd()
+    {
+        var histroy = new List<string>();
+        foreach (var instance in mInstances)
+        {
+            string name = string.IsNullOrEmpty(instance.FileName) ? instance.TabText : instance.FileName;
+            Center.DocumentManager.AddHistroy(name);
+        }
+    }
+
     [ATrigger.Receiver((int)DataType.OpenDocument)]
     static public void CreateDocument()
     {
@@ -178,6 +191,16 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
         else
             instance.FileName = Center.CurrentOpenDoucment.value;
         instance.Show(Center.Container, DockState.Document);
+    }
+
+    [ATrigger.Receiver((int)DataType.ChangeDocumentName)]
+     public void OnNameChaned()
+    {
+        string oldname = Center.OnChangeDocumentName.Arg<string>(0);
+        string newname = Center.OnChangeDocumentName.Arg<string>(1);
+
+        if (oldname == this.TabText || oldname == this.FileName)
+            this.FileName = newname;
     }
 
     static string GetTextFromInstances(string name)
@@ -194,13 +217,13 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
 
     static void SaveFile()
     {
-        if (!string.IsNullOrEmpty(Center.CurrentOpenDoucment.value))
+        if (!string.IsNullOrEmpty(Center.DocumentManager.ActiveDocument))
         {
-            string text=GetTextFromInstances(Center.CurrentOpenDoucment.value);
+            string text = GetTextFromInstances(Center.DocumentManager.ActiveDocument);
 
-            if (File.Exists(Center.CurrentOpenDoucment.value))
+            if (File.Exists(Center.DocumentManager.ActiveDocument))
             {
-                File.WriteAllText(Center.CurrentOpenDoucment.value, text);
+                File.WriteAllText(Center.DocumentManager.ActiveDocument, text);
             }
             else
             {
@@ -210,7 +233,8 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
                 if (res == DialogResult.OK)
                 {
                     File.WriteAllText(dlg.FileName, text);
-                    Center.CurrentOpenDoucment.value = dlg.FileName;
+
+                    Center.OnChangeDocumentName.Trigger(Center.DocumentManager.ActiveDocument, dlg.FileName);
                 }
             }
         }
@@ -308,6 +332,21 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
     }
     private void CharAdded(object sender, CharAddedEventArgs e)
     {
+        char pair='\0';
+
+        switch (e.Char)
+        {
+            case '{': pair = '}'; break;
+            case '<': pair = '>'; break;
+            case '(': pair = ')'; break;
+            case '[': pair = ']'; break;
+        }
+
+        if (pair != '\0')
+        {
+            this.scintilla1.InsertText(this.scintilla1.CurrentPosition, new string(pair, 1));
+            return;
+        }
         TryAutoComplete();
     }
 
@@ -374,6 +413,7 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
             this.Name = "TextEditor";
             this.TabPageContextMenuStrip = this.contextMenuStrip1;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TextEditor_FormClosed);
+            this.VisibleChanged += new System.EventHandler(this.TextEditor_VisibleChanged);
             this.contextMenuStrip1.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -402,6 +442,8 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
 
     private void TextEditor_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
     {
+        ATrigger.DataCenter.RemoveInstance(this);
+
         this.scintilla1.ClearRegisteredImages();
         mInstances.Remove(this);
         if (!string.IsNullOrEmpty(this.FileName))
@@ -433,5 +475,12 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
         string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
         foreach (string file in files)
             Center.CurrentOpenDoucment.value = file;
+    }
+
+    private void TextEditor_VisibleChanged(object sender, EventArgs e)
+    {
+        TextEditor editor = (TextEditor)sender;
+        if (editor.Visible)
+            Center.DocumentManager.Active(string.IsNullOrEmpty(editor.FileName) ? editor.TabText : editor.FileName);
     }
 }

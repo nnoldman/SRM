@@ -162,6 +162,7 @@ namespace Saber
         {
             if (File.Exists(Center.Option.LayoutFile))
                 this.dockPanel1.LoadFromXml(Center.Option.LayoutFile, GetContentFromPersistString);
+            Center.OnLayoutEnd.Trigger();
         }
         public bool InitExtensions()
         {

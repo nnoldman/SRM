@@ -1,4 +1,4 @@
-﻿using Core;
+using Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,6 +12,7 @@ namespace Saber
     public class ExtensionLoader
     {
         ExtensionLoader() { }
+
         public static ExtensionLoader Instance
         {
             get
@@ -24,6 +25,7 @@ namespace Saber
             }
         }
         static ExtensionLoader mInstance;
+
         public Dictionary<string, Type> Types
         {
             get
