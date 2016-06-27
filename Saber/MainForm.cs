@@ -24,6 +24,8 @@ namespace Saber
 
         public MainForm()
         {
+            Center.HotKey.Bind(Modifiers.None, Keys.Escape).To(() => Application.Exit());
+
             ATrigger.DataCenter.AddInstance(this);
             ATrigger.DataCenter.InstallStaticTriggers(typeof(Core.Center).Assembly);
 
@@ -132,7 +134,7 @@ namespace Saber
                 }
                 return contet;
             }
-            throw new Exception();
+            return null;
         }
         void InitSkin()
         {
@@ -223,6 +225,22 @@ namespace Saber
         {
             Center.OnExit.Trigger();
             Application.Exit();
+        }
+
+        private void OpenToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog dlg = new FolderBrowserDialog();
+            var result = dlg.ShowDialog();
+
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                Center.OpenFloder.value = dlg.SelectedPath;
+            }
+        }
+
+        void dlg_FileOk(object sender, CancelEventArgs e)
+        {
+            throw new NotImplementedException();
         }
     }
 }

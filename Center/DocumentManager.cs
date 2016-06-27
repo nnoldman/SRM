@@ -1,4 +1,5 @@
-﻿using Core;
+﻿using ATrigger;
+using Core;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -9,22 +10,18 @@ using WeifenLuo.WinFormsUI.Docking;
 
 public class DocumentManager : ATrigger.TriggerObject
 {
-    string mActiveDocument;
+
     List<string> mDocuments = new List<string>();
 
+    public List<string> Documents
+    {
+        get { return mDocuments; }
+    }
     List<string> Histroy
     {
         get
         {
             return Center.Option.File.Histroy;
-        }
-    }
-
-    public string ActiveDocument
-    {
-        get
-        {
-            return mActiveDocument;
         }
     }
 
@@ -56,8 +53,8 @@ public class DocumentManager : ATrigger.TriggerObject
         else
             throw new Exception();
 
-        if (mActiveDocument == oldname)
-            mActiveDocument = newname;
+        if (Center.ActiveDocument.value == oldname)
+            Center.ActiveDocument.value = newname;
     }
 
     public void AddHistroy(string doc)
@@ -70,18 +67,12 @@ public class DocumentManager : ATrigger.TriggerObject
         mDocuments.Remove(Center.CurrentCloseDoucment.value);
 
         if (mDocuments.Count == 0)
-            mActiveDocument = string.Empty;
+            Center.ActiveDocument.value = string.Empty;
     }
 
     public void OnClose()
     {
         foreach (var doc in mDocuments)
             Center.CurrentCloseDoucment.value = doc;
-    }
-
-    public void Active(string name)
-    {
-        if (mDocuments.Contains(name))
-            mActiveDocument = name;
     }
 }

@@ -13,8 +13,10 @@ namespace Core
         LayoutEnd,
         OpenDocument,
         CloseDocument,
+        ActiveDocument,
         ChangeDocumentName,
         View,
         ExtensionsLoaded,
+        OpenFloder,
     }
 }

@@ -69,6 +69,7 @@ namespace Saber
             this.OpenToolStripMenuItem1.Name = "OpenToolStripMenuItem1";
             this.OpenToolStripMenuItem1.Size = new System.Drawing.Size(152, 22);
             this.OpenToolStripMenuItem1.Text = "打开";
+            this.OpenToolStripMenuItem1.Click += new System.EventHandler(this.OpenToolStripMenuItem1_Click);
             // 
             // CloseToolStripMenuItem
             // 

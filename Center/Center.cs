@@ -30,6 +30,9 @@ namespace Core
         [Emmiter((int)DataType.CloseDocument)]
         public static ATrigger<string> CurrentCloseDoucment = new ATrigger<string>();
 
+        [Emmiter((int)DataType.ActiveDocument)]
+        public static ATrigger<string> ActiveDocument = new ATrigger<string>();
+
         [Emmiter((int)DataType.ChangeDocumentName)]
         public static Signal OnChangeDocumentName = new Signal();//para:old name,new name
 
@@ -38,5 +41,8 @@ namespace Core
 
         [Emmiter((int)DataType.ExtensionsLoaded)]
         public static Signal ExtensionsLoaded = new Signal();
+
+        [Emmiter((int)DataType.OpenFloder)]
+        public static ATrigger<string> OpenFloder = new ATrigger<string>();
     }
 }

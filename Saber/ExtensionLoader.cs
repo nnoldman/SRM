@@ -39,7 +39,8 @@ namespace Saber
         void LoadInnerExtensions()
         {
             InstallExtensions(Assembly.GetCallingAssembly());
-            InstallExtensions(typeof(TextEditor).Assembly);
+            //InstallExtensions(typeof(TextEditor).Assembly);
+            //InstallExtensions(typeof(SolutionExplorer).Assembly);
         }
         void LoadExternExtensions()
         {

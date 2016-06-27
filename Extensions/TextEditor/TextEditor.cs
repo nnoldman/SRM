@@ -34,7 +34,7 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
             ++CreateCount;
             return "New" + CreateCount.ToString();
         }
-}
+    }
 
     public new string Text
     {
@@ -75,11 +75,28 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
     {
         Center.HotKey.Bind(Shortcut.Modifiers.Control, Keys.S).To(SaveFile);
     }
+
+    [ATrigger.Receiver((int)DataType.ActiveDocument)]
+    static void OnActiveDocument()
+    {
+        foreach (var instance in mInstances)
+        {
+            string name = string.IsNullOrEmpty(instance.FileName) ? instance.TabText : instance.FileName;
+            if (name == Center.ActiveDocument.value)
+                instance.Show(Center.Container, DockState.Document);
+        }
+    }
+    void Cut()
+    {
+        this.scintilla1.Cut();
+    }
     public TextEditor()
     {
         InitializeComponent();
 
         ATrigger.DataCenter.AddInstance(this);
+
+        //Center.HotKey.Bind(Shortcut.Modifiers.Control, Keys.X).To(Cut);
 
         this.scintilla1.StyleResetDefault();
         this.scintilla1.SetWhitespaceBackColor(true, GlobalBackColor);
@@ -217,13 +234,13 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
 
     static void SaveFile()
     {
-        if (!string.IsNullOrEmpty(Center.DocumentManager.ActiveDocument))
+        if (!string.IsNullOrEmpty(Center.ActiveDocument.value))
         {
-            string text = GetTextFromInstances(Center.DocumentManager.ActiveDocument);
+            string text = GetTextFromInstances(Center.ActiveDocument.value);
 
-            if (File.Exists(Center.DocumentManager.ActiveDocument))
+            if (File.Exists(Center.ActiveDocument.value))
             {
-                File.WriteAllText(Center.DocumentManager.ActiveDocument, text);
+                File.WriteAllText(Center.ActiveDocument.value, text);
             }
             else
             {
@@ -234,7 +251,7 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
                 {
                     File.WriteAllText(dlg.FileName, text);
 
-                    Center.OnChangeDocumentName.Trigger(Center.DocumentManager.ActiveDocument, dlg.FileName);
+                    Center.OnChangeDocumentName.Trigger(Center.ActiveDocument, dlg.FileName);
                 }
             }
         }
@@ -337,7 +354,6 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
         switch (e.Char)
         {
             case '{': pair = '}'; break;
-            case '<': pair = '>'; break;
             case '(': pair = ')'; break;
             case '[': pair = ']'; break;
         }
@@ -481,6 +497,6 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
     {
         TextEditor editor = (TextEditor)sender;
         if (editor.Visible)
-            Center.DocumentManager.Active(string.IsNullOrEmpty(editor.FileName) ? editor.TabText : editor.FileName);
+            Center.ActiveDocument.value = string.IsNullOrEmpty(editor.FileName) ? editor.TabText : editor.FileName;
     }
 }

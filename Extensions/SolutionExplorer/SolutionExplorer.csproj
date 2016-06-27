@@ -61,6 +61,11 @@
       <Name>WinFormsUI</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="SolutionExplorer.resx">
+      <DependentUpon>SolutionExplorer.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>xcopy "$(TargetDir)$(ProjectName).dll" "..\..\..\..\Saber\bin\$(ConfigurationName)\Extensions\" /Y /C</PostBuildEvent>

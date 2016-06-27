@@ -13,12 +13,17 @@ namespace Core
 
         public List<string> Histroy = new List<string>();
     }
-
+    public class SolutionOption
+    {
+        public string LastSolutionPath;
+        public List<string> IgnoreExtensions = new List<string>();
+    }
     public class Option : TriggerObject
     {
         public const string FileName = "Option.json";
         public string ExtensionsPath = "Extensions";
         public string LayoutFile = "Layout.xml";
         public FileOption File = new FileOption();
+        public SolutionOption Solution = new SolutionOption();
     }
 }
