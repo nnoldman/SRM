@@ -1,4 +1,4 @@
-﻿namespace Saber
+﻿namespace Core
 {
     partial class ExtensionsManager
     {

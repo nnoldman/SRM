@@ -1,0 +1,5 @@
+D:\src\SRM\Libs\Shortcut\bin\Release\Shortcut.XML
+D:\src\SRM\Libs\Shortcut\bin\Release\Shortcut.dll
+D:\src\SRM\Libs\Shortcut\bin\Release\Shortcut.pdb
+D:\src\SRM\Libs\Shortcut\obj\Release\Shortcut.dll
+D:\src\SRM\Libs\Shortcut\obj\Release\Shortcut.pdb

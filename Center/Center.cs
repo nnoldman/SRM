@@ -4,13 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
     public class Center : ATrigger.ITriggerStatic
     {
-        public static DockPanel Container;
+        public static MainForm Form { get; internal set; }
+
         public static Option Option = new Option();
         public static DocumentManager DocumentManager = new DocumentManager();
         public static Shortcut.HotkeyBinder HotKey = new Shortcut.HotkeyBinder();
@@ -35,9 +37,6 @@ namespace Core
 
         [Emmiter((int)DataType.ChangeDocumentName)]
         public static Signal OnChangeDocumentName = new Signal();//para:old name,new name
-
-        [Emmiter((int)DataType.View)]
-        public static Signal View = new Signal();
 
         [Emmiter((int)DataType.ExtensionsLoaded)]
         public static Signal ExtensionsLoaded = new Signal();

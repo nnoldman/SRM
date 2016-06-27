@@ -12,19 +12,15 @@ using System.Windows.Forms;
 using WeifenLuo.WinFormsUI.Docking;
 
 
+namespace TextEditor
+{
+
 [Core.ExtensionVersion(Name = "TextEditor")]
 
-public class TextEditor : Extension, ATrigger.ITriggerStatic
+public partial class TextEditor : Extension, ATrigger.ITriggerStatic
 {
     public static Color GlobalBackColor = Color.FromArgb(0, 220, 230, 255);
-
-    private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
-    private System.ComponentModel.IContainer components;
-    private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
-    private ScintillaNET.Scintilla scintilla1;
-
     static List<TextEditor> mInstances = new List<TextEditor>();
-
     static int CreateCount = 0;
 
     static string NewDocuemntName
@@ -83,8 +79,14 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
         {
             string name = string.IsNullOrEmpty(instance.FileName) ? instance.TabText : instance.FileName;
             if (name == Center.ActiveDocument.value)
-                instance.Show(Center.Container, DockState.Document);
+                instance.Show(Center.Form.DockerContainer, DockState.Document);
         }
+    }
+
+    [ATrigger.Receiver((int)DataType.ExtensionsLoaded)]
+    public void OnExtensionLoaded()
+    {
+        throw new Exception();
     }
     void Cut()
     {
@@ -178,14 +180,11 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
         mInstances.Add(this);
     }
 
-    [ATrigger.Receiver((int)DataType.View)]
-    static void OnViewChange()
+    [AddMenu("View(&V)/TextEditor")]
+    static void OnOpenView()
     {
-        if (Center.View.Arg<Type>(0) == typeof(TextEditor))
-        {
-            if (mInstances.Count == 0)
-                Center.CurrentOpenDoucment.value = NewDocuemntName;
-        }
+        if (mInstances.Count == 0)
+            Center.CurrentOpenDoucment.value = NewDocuemntName;
     }
 
     [ATrigger.Receiver((int)DataType.LayoutEnd)]
@@ -197,6 +196,10 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
             string name = string.IsNullOrEmpty(instance.FileName) ? instance.TabText : instance.FileName;
             Center.DocumentManager.AddHistroy(name);
         }
+        
+        mFileMenuInitItemCount = FileToolStripMenuItem.DropDownItems.Count;
+
+        LoadHistry(Center.Option.File.Histroy);
     }
 
     [ATrigger.Receiver((int)DataType.OpenDocument)]
@@ -207,7 +210,7 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
             instance.TabText = Center.CurrentOpenDoucment.value;
         else
             instance.FileName = Center.CurrentOpenDoucment.value;
-        instance.Show(Center.Container, DockState.Document);
+        instance.Show(Center.Form.DockerContainer, DockState.Document);
     }
 
     [ATrigger.Receiver((int)DataType.ChangeDocumentName)]
@@ -220,6 +223,68 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
             this.FileName = newname;
     }
 
+    static ToolStripMenuItem FileToolStripMenuItem
+    {
+        get
+        {
+            foreach (var item in Center.Form.MainMenu.Items)
+            {
+                ToolStripMenuItem menu = (ToolStripMenuItem)item;
+                if (menu.Text == "File(&F)")
+                {
+                    mFileToolStripMenuItem = menu;
+                    break;
+                }
+            }
+            return mFileToolStripMenuItem;
+        }
+    }
+    static int mFileMenuInitItemCount = 0;
+    static ToolStripMenuItem mFileToolStripMenuItem;
+
+    static void LoadHistry(List<string> histroy)
+    {
+        while (FileToolStripMenuItem.DropDownItems.Count > mFileMenuInitItemCount)
+            FileToolStripMenuItem.DropDownItems.RemoveAt(FileToolStripMenuItem.DropDownItems.Count - 1);
+
+        if (histroy.Count == 0)
+            return;
+
+        FileToolStripMenuItem.DropDownItems.Add(new ToolStripSeparator());
+        FileToolStripMenuItem.DropDownItems.Add(new ToolStripMenuItem("Histroy"));
+
+        for (int i = 0; i < histroy.Count; ++i)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem();
+            item.Text = (i + 1).ToString() + " " + histroy[i];
+            item.Click += OpenHistroyFile;
+            FileToolStripMenuItem.DropDownItems.Add(item);
+        }
+    }
+
+    [ATrigger.Receiver((int)DataType.OpenDocument)]
+    static void OnDocumentOpen()
+    {
+        if (Center.Option.File.Histroy.Remove(Center.CurrentOpenDoucment.value))
+            LoadHistry(Center.Option.File.Histroy);
+    }
+
+    [ATrigger.Receiver((int)DataType.CloseDocument)]
+    static void OnDocumentClose()
+    {
+        while (Center.Option.File.Histroy.Count >= Center.Option.File.MaxHistroyCount)
+            Center.Option.File.Histroy.RemoveAt(0);
+        Center.Option.File.Histroy.Add(Center.CurrentCloseDoucment.value);
+        LoadHistry(Center.Option.File.Histroy);
+    }
+    static void OpenHistroyFile(object sender, EventArgs e)
+    {
+        int pos = sender.ToString().IndexOf(' ');
+        if (pos != -1)
+            Center.CurrentOpenDoucment.value = sender.ToString().Substring(pos + 1);
+        else
+            throw new Exception();
+    }
     static string GetTextFromInstances(string name)
     {
         foreach(var inst in mInstances)
@@ -230,6 +295,22 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
             }
         }
         return string.Empty;
+    }
+
+
+    private void MainForm_DragDrop(object sender, DragEventArgs e)
+    {
+        string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+        foreach (string file in files)
+            Center.CurrentOpenDoucment.value = file;
+    }
+
+    private void MainForm_DragEnter(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetDataPresent(DataFormats.FileDrop, false) == true)
+        {
+            e.Effect = DragDropEffects.All;
+        }
     }
 
     static void SaveFile()
@@ -256,6 +337,7 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
             }
         }
     }
+
 
     SortedSet<string> GetCacheWords(int startPos,int len)
     {
@@ -375,66 +457,7 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
     {
         throw new Exception("The method or operation is not implemented.");
     }
-    private void InitializeComponent()
-    {
-            this.components = new System.ComponentModel.Container();
-            this.contextMenuStrip1 = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.closeAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.scintilla1 = new ScintillaNET.Scintilla();
-            this.contextMenuStrip1.SuspendLayout();
-            this.SuspendLayout();
-            // 
-            // contextMenuStrip1
-            // 
-            this.contextMenuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.closeAllToolStripMenuItem});
-            this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(123, 26);
-            // 
-            // closeAllToolStripMenuItem
-            // 
-            this.closeAllToolStripMenuItem.Name = "closeAllToolStripMenuItem";
-            this.closeAllToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
-            this.closeAllToolStripMenuItem.Text = "CloseAll";
-            this.closeAllToolStripMenuItem.Click += new System.EventHandler(this.closeAllToolStripMenuItem_Click_1);
-            // 
-            // scintilla1
-            // 
-            this.scintilla1.AdditionalCaretsVisible = false;
-            this.scintilla1.AllowDrop = true;
-            this.scintilla1.CaretLineBackColor = System.Drawing.Color.Wheat;
-            this.scintilla1.CaretLineVisible = true;
-            this.scintilla1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.scintilla1.EdgeColor = System.Drawing.Color.LightGray;
-            this.scintilla1.EdgeMode = ScintillaNET.EdgeMode.Line;
-            this.scintilla1.Lexer = ScintillaNET.Lexer.Cpp;
-            this.scintilla1.Location = new System.Drawing.Point(0, 0);
-            this.scintilla1.Margin = new System.Windows.Forms.Padding(5);
-            this.scintilla1.Margins.Left = 3;
-            this.scintilla1.Margins.Right = 3;
-            this.scintilla1.Name = "scintilla1";
-            this.scintilla1.Size = new System.Drawing.Size(292, 331);
-            this.scintilla1.TabIndex = 1;
-            this.scintilla1.Text = "scintilla1";
-            this.scintilla1.UseTabs = true;
-            this.scintilla1.DragDrop += new System.Windows.Forms.DragEventHandler(this.scintilla1_DragDrop);
-            this.scintilla1.DragEnter += new System.Windows.Forms.DragEventHandler(this.scintilla1_DragEnter);
-            // 
-            // TextEditor
-            // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.ClientSize = new System.Drawing.Size(292, 331);
-            this.Controls.Add(this.scintilla1);
-            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.Name = "TextEditor";
-            this.TabPageContextMenuStrip = this.contextMenuStrip1;
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TextEditor_FormClosed);
-            this.VisibleChanged += new System.EventHandler(this.TextEditor_VisibleChanged);
-            this.contextMenuStrip1.ResumeLayout(false);
-            this.ResumeLayout(false);
-
-    }
-
+ 
     protected override bool IsDocument()
     {
         return true;
@@ -499,4 +522,5 @@ public class TextEditor : Extension, ATrigger.ITriggerStatic
         if (editor.Visible)
             Center.ActiveDocument.value = string.IsNullOrEmpty(editor.FileName) ? editor.TabText : editor.FileName;
     }
+}
 }

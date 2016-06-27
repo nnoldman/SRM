@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using Core;
 using WeifenLuo.WinFormsUI.Docking;
 
-namespace Saber
+namespace Core
 {
     [Core.ExtensionVersion(Name = "Extensions")]
     public partial class ExtensionsManager : Extension, ATrigger.ITriggerStatic
@@ -19,6 +19,8 @@ namespace Saber
 
         public ExtensionsManager()
         {
+            Instance = this;
+
             ATrigger.DataCenter.AddInstance(this);
 
             InitializeComponent();
@@ -28,6 +30,8 @@ namespace Saber
 
             ShowContent();
         }
+
+
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
         {
@@ -49,23 +53,20 @@ namespace Saber
             }
         }
 
-        [ATrigger.Receiver((int)DataType.View)]
-        static void OnViewChange()
+        [AddMenu("View(&V)/ExtensionsManager")]
+        static void OnOpenView()
         {
-            if (Center.View.Arg<Type>(0) == typeof(ExtensionsManager))
+            if (Instance == null)
             {
-                if (Instance == null)
-                {
-                    Instance = new ExtensionsManager();
-                    Instance.TabText = "ExtensionsManager";
-                    Instance.Show(Center.Container, DockState.Float);
-                }
-                else
-                {
-                    Instance.Hide();
-                    Instance.Dispose();
-                    Instance = null;
-                }
+                Instance = new ExtensionsManager();
+                Instance.TabText = "ExtensionsManager";
+                Instance.Show(Center.Form.DockerContainer, DockState.Float);
+            }
+            else
+            {
+                Instance.Hide();
+                Instance.Dispose();
+                Instance = null;
             }
         }
     }

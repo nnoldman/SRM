@@ -10,3 +10,11 @@ D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.String
 D:\src\dockpanelsuite\WinFormsUI\obj\Release\WinFormsUI.csproj.GenerateResource.Cache
 D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.dll
 D:\src\dockpanelsuite\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.pdb
+D:\src\SRM\Libs\WinFormsUI\bin\Release\license.txt
+D:\src\SRM\Libs\WinFormsUI\bin\Release\WeifenLuo.WinFormsUI.Docking.dll
+D:\src\SRM\Libs\WinFormsUI\bin\Release\WeifenLuo.WinFormsUI.Docking.pdb
+D:\src\SRM\Libs\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.Resources.resources
+D:\src\SRM\Libs\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.Strings.resources
+D:\src\SRM\Libs\WinFormsUI\obj\Release\WinFormsUI.csproj.GenerateResource.Cache
+D:\src\SRM\Libs\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.dll
+D:\src\SRM\Libs\WinFormsUI\obj\Release\WeifenLuo.WinFormsUI.Docking.pdb

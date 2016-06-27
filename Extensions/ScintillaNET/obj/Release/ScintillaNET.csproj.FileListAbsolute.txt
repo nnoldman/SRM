@@ -1,0 +1,5 @@
+D:\src\SRM\Extensions\ScintillaNET\bin\Release\ScintillaNET.xml
+D:\src\SRM\Extensions\ScintillaNET\bin\Release\ScintillaNET.dll
+D:\src\SRM\Extensions\ScintillaNET\bin\Release\ScintillaNET.pdb
+D:\src\SRM\Extensions\ScintillaNET\obj\Release\ScintillaNET.dll
+D:\src\SRM\Extensions\ScintillaNET\obj\Release\ScintillaNET.pdb

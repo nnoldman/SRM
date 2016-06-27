@@ -48,6 +48,20 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DocumentManager.cs" />
+    <Compile Include="ExtensionLoader.cs" />
+    <Compile Include="ExtensionsManager.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ExtensionsManager.Designer.cs">
+      <DependentUpon>ExtensionsManager.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Menu.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="PersistStringParser.cs" />
     <Compile Include="ExtensionInfo.cs" />
@@ -56,6 +70,13 @@
   <ItemGroup>
     <EmbeddedResource Include="Docker.resx">
       <DependentUpon>Docker.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ExtensionsManager.resx">
+      <DependentUpon>ExtensionsManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -62,6 +62,7 @@ public class DocumentManager : ATrigger.TriggerObject
         mDocuments.Add(doc);
     }
 
+    [ATrigger.Receiver((int)DataType.CloseDocument)]
     public void CloseDocument()
     {
         mDocuments.Remove(Center.CurrentCloseDoucment.value);
