@@ -114,14 +114,7 @@ public partial class MainForm : Form
         foreach (var extensionType in Center.ExtensionLoader.Types)
             AddShortCutFromASM(extensionType.Value.Assembly);
 
-        try
-        {
-            UnbindHotKeys();
-        }
-        catch(Exception exc)
-        {
-
-        }
+        UnbindHotKeys();
         BindHotKeys();
     }
     void InitMenus()
@@ -257,7 +250,11 @@ public partial class MainForm : Form
     static void UnbindHotKeys()
     {
         foreach (var hotkey in Center.HotKeys)
-            Center.HotKeyBinder.Unbind(new Hotkey(hotkey.Value.DefaultModifiers, hotkey.Value.DefaultKey));
+        {
+            var hk = new Hotkey(hotkey.Value.DefaultModifiers, hotkey.Value.DefaultKey);
+            if (Center.HotKeyBinder.IsHotkeyAlreadyBound(hk))
+                Center.HotKeyBinder.Unbind(hk);
+        }
     }
 
     [Receiver((int)DataType.ApplicationExit)]
