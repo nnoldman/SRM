@@ -18,12 +18,17 @@ namespace Core
         Release,
     }
 
-    public class Builder
+    public class Builder : BoolObject
     {
         public string Name;
         public string Complier;
         public string Linker;
         public string Debugger;
+
+        public void Build()
+        {
+
+        }
     }
 
     public class LaunchParams
@@ -38,5 +43,13 @@ namespace Core
         public string CurrentBuilderName;
         public BuildMode CurrentMode;
         public List<Builder> Builders;
+
+        public Builder CurrentBuilder
+        {
+            get
+            {
+                return Builders.Find((b) => b.Name == CurrentBuilderName);
+            }
+        }
     }
 }

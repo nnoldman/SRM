@@ -45,5 +45,24 @@ namespace Core
                 Instance = null;
             }
         }
+
+        [AddShortCut(ShortCutIndex.Build, Shortcut.Modifiers.Control | Shortcut.Modifiers.Shift, Keys.B, "Build")]
+        static void Build()
+        {
+            Builder builder = Center.Option.BuildOption.CurrentBuilder;
+            if (!builder)
+                return;
+            builder.Build();
+        }
+
+        [AddShortCut(ShortCutIndex.Run, Shortcut.Modifiers.None, Keys.F5, "Run")]
+        static void Run()
+        {
+        }
+
+        [AddShortCut(ShortCutIndex.Stop, Shortcut.Modifiers.Shift, Keys.F5, "Stop")]
+        static void Stop()
+        {
+        }
     }
 }

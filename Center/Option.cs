@@ -25,5 +25,6 @@ namespace Core
 
         public FileOption File = new FileOption();
         public SolutionOption Solution = new SolutionOption();
+        public BuildOption BuildOption = new BuildOption();
     }
 }

@@ -20,14 +20,14 @@ namespace Core
     }
 
     [AttributeUsage(AttributeTargets.Method)]
-    public class AddShortKey : Attribute
+    public class AddShortCut : Attribute
     {
         public ShortCutIndex Index;
         public Shortcut.Modifiers DefaultModifiers;
         public Keys DefaultKey;
         public string Text;
 
-        public AddShortKey(ShortCutIndex index, Shortcut.Modifiers defaultModifiers, Keys defaultKey, string text = "")
+        public AddShortCut(ShortCutIndex index, Shortcut.Modifiers defaultModifiers, Keys defaultKey, string text = "")
         {
             this.Index = index;
             this.DefaultModifiers = defaultModifiers;

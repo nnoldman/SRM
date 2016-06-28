@@ -16,8 +16,8 @@ namespace SolutionExplorer
     {
         static SolutionExplorer Instance;
 
-        //int mIndexDir = 0;
-        //int mIndexDirSel = 1;
+        int mIndexDir = 0;
+        int mIndexDirSel = 1;
         //int mIndexFile;
 
         public SolutionExplorer()
@@ -25,13 +25,14 @@ namespace SolutionExplorer
             Instance = this;
             InitializeComponent();
             ATrigger.DataCenter.AddInstance(this);
-            //this.fileTree.ImageList.Images.Add(Image.FromFile("./icons/ab_bottom_solid_inverse_holo.9.png"));
-            //this.fileTree.ImageList.Images.Add(Image.FromFile("./icons/ab_bottom_solid_light_holo.9.png"));
+            this.fileTree.ImageList = new ImageList();
+            this.fileTree.ImageList.Images.Add(Image.FromFile("./icons/openHS.png"));
+            this.fileTree.ImageList.Images.Add(Image.FromFile("./icons/CopyHS.png"));
             this.fileTree.NodeMouseDoubleClick += fileTree_NodeMouseDoubleClick;
             this.fileTree.KeyUp += fileTree_KeyUp;
             this.fileTree.ShowNodeToolTips = true;
             this.fileTree.ShowLines = false;
-            this.fileTree.ShowPlusMinus = true;
+            this.fileTree.ShowPlusMinus = false;
         }
 
         void fileTree_KeyUp(object sender, KeyEventArgs e)
@@ -137,6 +138,7 @@ namespace SolutionExplorer
                 var child = new TreeNode(dir.Name);
                 child.Tag = dir.FullName;
                 child.ToolTipText = dir.FullName;
+                child.ImageIndex = mIndexDir;
                 parent.Nodes.Add(child);
                 AddFiles(child, dir.FullName);
             }
@@ -147,6 +149,7 @@ namespace SolutionExplorer
                     continue;
 
                 var child = new TreeNode(f.Name);
+                child.ImageIndex = mIndexDirSel;
                 parent.Nodes.Add(child);
                 child.Tag = f.FullName;
                 child.ToolTipText = f.FullName;

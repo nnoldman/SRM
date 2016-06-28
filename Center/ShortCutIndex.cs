@@ -12,5 +12,9 @@ namespace Core
         NewDocument,
         SaveDocument,
         SaveAllDocuments,
+
+        Build,
+        Run,
+        Stop,
     }
 }

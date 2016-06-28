@@ -42,13 +42,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoolObject.cs" />
     <Compile Include="Center.cs" />
     <Compile Include="DataType.cs" />
     <Compile Include="Debugger.cs" />
-    <Compile Include="DebuggerConfiguration.cs">
+    <Compile Include="InnerExtensions\DebuggerConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DebuggerConfiguration.Designer.cs">
+    <Compile Include="InnerExtensions\DebuggerConfiguration.Designer.cs">
       <DependentUpon>DebuggerConfiguration.cs</DependentUpon>
     </Compile>
     <Compile Include="Docker.cs">
@@ -56,10 +57,10 @@
     </Compile>
     <Compile Include="DocumentManager.cs" />
     <Compile Include="ExtensionLoader.cs" />
-    <Compile Include="ExtensionsManager.cs">
+    <Compile Include="InnerExtensions\ExtensionsManager.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ExtensionsManager.Designer.cs">
+    <Compile Include="InnerExtensions\ExtensionsManager.Designer.cs">
       <DependentUpon>ExtensionsManager.cs</DependentUpon>
     </Compile>
     <Compile Include="MainForm.cs">
@@ -70,20 +71,20 @@
     </Compile>
     <Compile Include="Attributes.cs" />
     <Compile Include="Option.cs" />
-    <Compile Include="Output.cs">
+    <Compile Include="InnerExtensions\Output.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Output.Designer.cs">
+    <Compile Include="InnerExtensions\Output.Designer.cs">
       <DependentUpon>Output.cs</DependentUpon>
     </Compile>
     <Compile Include="PersistStringParser.cs" />
     <Compile Include="ExtensionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ShortCutIndex.cs" />
-    <Compile Include="ShortCutSetting.cs">
+    <Compile Include="InnerExtensions\ShortCutSetting.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ShortCutSetting.Designer.cs">
+    <Compile Include="InnerExtensions\ShortCutSetting.Designer.cs">
       <DependentUpon>ShortCutSetting.cs</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -91,7 +92,7 @@
     <EmbeddedResource Include="Docker.resx">
       <DependentUpon>Docker.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="ExtensionsManager.resx">
+    <EmbeddedResource Include="InnerExtensions\ExtensionsManager.resx">
       <DependentUpon>ExtensionsManager.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">

@@ -310,7 +310,7 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
         }
     }
 
-    [AddShortKey(ShortCutIndex.SaveDocument, Modifiers.Control, Keys.S, "SaveFile")]
+    [AddShortCut(ShortCutIndex.SaveDocument, Modifiers.Control, Keys.S, "SaveFile")]
     static void SaveFile()
     {
         if (!string.IsNullOrEmpty(Center.ActiveDocument.value))

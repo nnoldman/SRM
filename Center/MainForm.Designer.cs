@@ -33,6 +33,7 @@ partial class MainForm
             // 
             // MainMenu
             // 
+            this.MainMenu.Dock = System.Windows.Forms.DockStyle.None;
             this.MainMenu.Location = new System.Drawing.Point(0, 0);
             this.MainMenu.Name = "MainMenu";
             this.MainMenu.Size = new System.Drawing.Size(419, 24);
@@ -49,11 +50,10 @@ partial class MainForm
             this.DockerContainer.DockBackColor = System.Drawing.SystemColors.AppWorkspace;
             this.DockerContainer.DocumentStyle = WeifenLuo.WinFormsUI.Docking.DocumentStyle.DockingWindow;
             this.DockerContainer.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DockerContainer.Location = new System.Drawing.Point(0, 24);
+            this.DockerContainer.Location = new System.Drawing.Point(0, 0);
             this.DockerContainer.Name = "DockerContainer";
-            this.DockerContainer.Size = new System.Drawing.Size(419, 238);
+            this.DockerContainer.Size = new System.Drawing.Size(394, 163);
             this.DockerContainer.TabIndex = 3;
-
             // 
             // MainForm
             // 
@@ -61,8 +61,6 @@ partial class MainForm
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(419, 262);
-            this.Controls.Add(this.DockerContainer);
-            this.Controls.Add(this.MainMenu);
             this.IsMdiContainer = true;
             this.MainMenuStrip = this.MainMenu;
             this.Name = "MainForm";
@@ -71,7 +69,6 @@ partial class MainForm
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
             this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUp);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
     }
 
