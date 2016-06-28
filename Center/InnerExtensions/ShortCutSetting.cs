@@ -14,7 +14,7 @@ namespace Core
 {
     [Core.ExtensionVersion(Name = "ShortCutSetting")]
 
-    public partial class ShortCutSetting : Core.Extension, ATrigger.ITriggerStatic
+    public partial class ShortCutSetting : Extension, ATrigger.ITriggerStatic
     {
         static ShortCutSetting Instance;
 
@@ -23,6 +23,7 @@ namespace Core
             Instance = this;
             ATrigger.DataCenter.AddInstance(this);
             InitializeComponent();
+            ShowContent();
         }
 
         static void CreateInstance()
@@ -51,6 +52,20 @@ namespace Core
                 Instance.Hide();
                 Instance.Dispose();
                 Instance = null;
+            }
+        }
+
+        [ATrigger.Receiver((int)DataType.ExtensionsLoaded)]
+        public void ShowContent()
+        {
+            this.dataGridView1.Rows.Clear();
+
+            foreach (var item in Center.HotKeys)
+            {
+                int cnt = this.dataGridView1.Rows.Add();
+                this.dataGridView1[0, cnt].Value = item.Key.ToString();
+                this.dataGridView1[1, cnt].Value = item.Value.DefaultModifiers.ToString();
+                this.dataGridView1[2, cnt].Value = item.Value.DefaultKey.ToString();
             }
         }
     }

@@ -45,7 +45,7 @@ namespace Core
         {
             this.dataGridView1.Rows.Clear();
 
-            foreach (var item in ExtensionLoader.Instance.Types)
+            foreach (var item in Center.ExtensionLoader.Types)
             {
                 int cnt = this.dataGridView1.Rows.Add();
                 this.dataGridView1[0, cnt].Value = item.Key;

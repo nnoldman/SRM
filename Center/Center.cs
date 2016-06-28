@@ -1,7 +1,9 @@
 ﻿using ATrigger;
+using Shortcut;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,7 +17,11 @@ namespace Core
 
         public static Option Option = new Option();
         public static DocumentManager DocumentManager = new DocumentManager();
-        public static Shortcut.HotkeyBinder HotKey = new Shortcut.HotkeyBinder();
+        public static Shortcut.HotkeyBinder HotKeyBinder = new Shortcut.HotkeyBinder();
+        public static ExtensionLoader ExtensionLoader = new ExtensionLoader();
+
+        internal static Dictionary<MethodInfo, AddShortCut> HotKeys = new Dictionary<MethodInfo, AddShortCut>();
+        internal static Dictionary<string, Type> ExtensionTypes = new Dictionary<string, Type>();
 
         [Emmiter((int)DataType.ApplicationExit)]
         public static Signal OnExit = new Signal();//para:empty

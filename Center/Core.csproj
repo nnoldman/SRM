@@ -52,7 +52,7 @@
     <Compile Include="InnerExtensions\DebuggerConfiguration.Designer.cs">
       <DependentUpon>DebuggerConfiguration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Docker.cs">
+    <Compile Include="Extension.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DocumentManager.cs" />
@@ -89,11 +89,14 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Docker.resx">
-      <DependentUpon>Docker.cs</DependentUpon>
+    <EmbeddedResource Include="Extension.resx">
+      <DependentUpon>Extension.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\ExtensionsManager.resx">
       <DependentUpon>ExtensionsManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnerExtensions\ShortCutSetting.resx">
+      <DependentUpon>ShortCutSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>

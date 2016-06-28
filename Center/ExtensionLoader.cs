@@ -11,21 +11,6 @@ namespace Core
 {
     public class ExtensionLoader
     {
-        ExtensionLoader() { }
-
-        public static ExtensionLoader Instance
-        {
-            get
-            {
-                if (mInstance == null)
-                {
-                    mInstance = new ExtensionLoader();
-                }
-                return mInstance;
-            }
-        }
-        static ExtensionLoader mInstance;
-
         public Dictionary<string, Type> Types
         {
             get

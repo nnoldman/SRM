@@ -27,18 +27,9 @@ partial class MainForm
     /// </summary>
     private void InitializeComponent()
     {
-            this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.DockerContainer = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.MainMenu = new System.Windows.Forms.MenuStrip();
             this.SuspendLayout();
-            // 
-            // MainMenu
-            // 
-            this.MainMenu.Dock = System.Windows.Forms.DockStyle.None;
-            this.MainMenu.Location = new System.Drawing.Point(0, 0);
-            this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(419, 24);
-            this.MainMenu.TabIndex = 1;
-            this.MainMenu.Text = "menuStrip1";
             // 
             // DockerContainer
             // 
@@ -52,8 +43,16 @@ partial class MainForm
             this.DockerContainer.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DockerContainer.Location = new System.Drawing.Point(0, 0);
             this.DockerContainer.Name = "DockerContainer";
-            this.DockerContainer.Size = new System.Drawing.Size(394, 163);
+            this.DockerContainer.Size = new System.Drawing.Size(419, 262);
             this.DockerContainer.TabIndex = 3;
+            // 
+            // MainMenu
+            // 
+            this.MainMenu.Location = new System.Drawing.Point(0, 0);
+            this.MainMenu.Name = "MainMenu";
+            this.MainMenu.Size = new System.Drawing.Size(419, 24);
+            this.MainMenu.TabIndex = 1;
+            this.MainMenu.Text = "menuStrip1";
             // 
             // MainForm
             // 
@@ -61,20 +60,20 @@ partial class MainForm
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.BackColor = System.Drawing.Color.Silver;
             this.ClientSize = new System.Drawing.Size(419, 262);
+            this.DockerContainer.Controls.Add(this.MainMenu);
+            this.Controls.Add(this.DockerContainer);
             this.IsMdiContainer = true;
-            this.MainMenuStrip = this.MainMenu;
             this.Name = "MainForm";
             this.Text = "r";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.OnFormClosing);
-            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.OnKeyUp);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
     }
 
     #endregion
 
-    public System.Windows.Forms.MenuStrip MainMenu;
     public WeifenLuo.WinFormsUI.Docking.DockPanel DockerContainer;
+    public MenuStrip MainMenu;
 }
 

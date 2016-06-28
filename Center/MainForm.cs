@@ -19,14 +19,12 @@ public partial class MainForm : Form
 {
     public MainForm()
     {
-        Center.HotKey.Bind(Modifiers.None, Keys.Escape).To(() => Application.Exit());
+        Center.Form = this;
 
         ATrigger.DataCenter.AddInstance(this);
-
         InitializeComponent();
-        Center.Form = this;
         LoadOption();
-        ExtensionLoader.Instance.Load();
+        Center.ExtensionLoader.Load();
         InitMenus();
         InitShortKeys();
         LoadLayout();
@@ -50,9 +48,9 @@ public partial class MainForm : Form
             if (attr != null)
             {
                 var menu = (AddShortCut)attr;
-                if (HotKeys.ContainsKey(method))
+                if (Center.HotKeys.ContainsKey(method))
                     return;
-                HotKeys.Add(method, new Hotkey(menu.DefaultModifiers, menu.DefaultKey));
+                Center.HotKeys.Add(method, menu);
             }
         }
     }
@@ -96,7 +94,6 @@ public partial class MainForm : Form
         }
     }
 
-    static Dictionary<MethodInfo, Hotkey> HotKeys = new Dictionary<MethodInfo, Hotkey>();
 
     void AddShortCutFromASM(Assembly asm)
     {
@@ -114,7 +111,7 @@ public partial class MainForm : Form
     {
         //AddShortCutFromASM(Assembly.GetCallingAssembly());
 
-        foreach (var extensionType in ExtensionLoader.Instance.Types)
+        foreach (var extensionType in Center.ExtensionLoader.Types)
             AddShortCutFromASM(extensionType.Value.Assembly);
 
         try
@@ -131,7 +128,7 @@ public partial class MainForm : Form
     {
         MenuNode root = new MenuNode();
 
-        foreach (var extensionType in ExtensionLoader.Instance.Types)
+        foreach (var extensionType in Center.ExtensionLoader.Types)
             AddMenuFromASM(extensionType.Value.Assembly, root);
 
         if (root.children.Count > 0)
@@ -203,7 +200,7 @@ public partial class MainForm : Form
             return null;
         string stype = parser["Type"];
         Type tp = null;
-        ExtensionLoader.Instance.Types.TryGetValue(stype, out tp);
+        Center.ExtensionLoader.Types.TryGetValue(stype, out tp);
         if (tp != null)
         {
             Extension contet = (Extension)tp.GetConstructor(Type.EmptyTypes).Invoke(null);
@@ -253,14 +250,14 @@ public partial class MainForm : Form
 
     static void BindHotKeys()
     {
-        foreach (var hotkey in HotKeys)
-            Center.HotKey.Bind(hotkey.Value).To(() => hotkey.Key.Invoke(null, null));
+        foreach (var hotkey in Center.HotKeys)
+            Center.HotKeyBinder.Bind(hotkey.Value.DefaultModifiers, hotkey.Value.DefaultKey).To(() => hotkey.Key.Invoke(null, null));
     }
 
     static void UnbindHotKeys()
     {
-        foreach (var hotkey in HotKeys)
-            Center.HotKey.Unbind(hotkey.Value);
+        foreach (var hotkey in Center.HotKeys)
+            Center.HotKeyBinder.Unbind(new Hotkey(hotkey.Value.DefaultModifiers, hotkey.Value.DefaultKey));
     }
 
     [Receiver((int)DataType.ApplicationExit)]
@@ -270,29 +267,19 @@ public partial class MainForm : Form
         SaveOption();
     }
 
-    private void OnKeyUp(object sender, KeyEventArgs e)
-    {
-        if (e.KeyCode == Keys.Escape)
-            OnExit();
-    }
-
-    private void OnFormClosing(object sender, FormClosingEventArgs e)
-    {
-        ATrigger.DataCenter.RemoveInstance(this);
-        this.OnExit();
-    }
     protected override void OnFormClosed(FormClosedEventArgs e)
     {
         Center.Form = null;
+        Center.OnExit.Trigger();
+        ATrigger.DataCenter.RemoveInstance(this);
         base.OnFormClosed(e);
     }
 
 
     [AddMenu("File(&F)/Exit(&E)")]
-    [AddShortCut(ShortCutIndex.ExitApplication, Modifiers.Control, Keys.Space, "Exit")]
+    [AddShortCut(ShortCutIndex.ExitApplication, Modifiers.None, Keys.Escape, "Exit")]
     static void ExitApplication()
     {
-        Center.OnExit.Trigger();
         Application.Exit();
     }
 
