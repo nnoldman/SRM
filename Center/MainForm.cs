@@ -243,6 +243,7 @@ public partial class MainForm : Form
 
 
     [AddMenu("File(&F)/Exit(&E)")]
+    [AddShortKey(ShortCutIndex.ExitApplication, Modifiers.None, Keys.Escape, "Exit")]
     static void ExitApplication()
     {
         Center.OnExit.Trigger();

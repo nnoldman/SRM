@@ -16,9 +16,9 @@ namespace SolutionExplorer
     {
         static SolutionExplorer Instance;
 
-        int mIndexDir = 0;
-        int mIndexDirSel = 1;
-        int mIndexFile;
+        //int mIndexDir = 0;
+        //int mIndexDirSel = 1;
+        //int mIndexFile;
 
         public SolutionExplorer()
         {
@@ -29,6 +29,9 @@ namespace SolutionExplorer
             //this.fileTree.ImageList.Images.Add(Image.FromFile("./icons/ab_bottom_solid_light_holo.9.png"));
             this.fileTree.NodeMouseDoubleClick += fileTree_NodeMouseDoubleClick;
             this.fileTree.KeyUp += fileTree_KeyUp;
+            this.fileTree.ShowNodeToolTips = true;
+            this.fileTree.ShowLines = false;
+            this.fileTree.ShowPlusMinus = true;
         }
 
         void fileTree_KeyUp(object sender, KeyEventArgs e)
@@ -68,6 +71,7 @@ namespace SolutionExplorer
                 CreateInstance();
 
             FolderBrowserDialog dlg = new FolderBrowserDialog();
+            dlg.SelectedPath = Center.OpenFloder.value;
             var result = dlg.ShowDialog();
 
             if (result == System.Windows.Forms.DialogResult.OK)
@@ -132,6 +136,7 @@ namespace SolutionExplorer
             {
                 var child = new TreeNode(dir.Name);
                 child.Tag = dir.FullName;
+                child.ToolTipText = dir.FullName;
                 parent.Nodes.Add(child);
                 AddFiles(child, dir.FullName);
             }
@@ -144,6 +149,7 @@ namespace SolutionExplorer
                 var child = new TreeNode(f.Name);
                 parent.Nodes.Add(child);
                 child.Tag = f.FullName;
+                child.ToolTipText = f.FullName;
             }
         }
         protected override void OnShown(EventArgs e)

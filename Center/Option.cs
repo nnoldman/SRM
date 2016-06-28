@@ -10,7 +10,6 @@ namespace Core
     public class FileOption:TriggerObject
     {
         public int MaxHistroyCount = 10;
-
         public List<string> Histroy = new List<string>();
     }
     public class SolutionOption
@@ -23,6 +22,7 @@ namespace Core
         public const string FileName = "Option.json";
         public string ExtensionsPath = "Extensions";
         public string LayoutFile = "Layout.xml";
+
         public FileOption File = new FileOption();
         public SolutionOption Solution = new SolutionOption();
     }

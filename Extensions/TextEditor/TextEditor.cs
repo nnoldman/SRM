@@ -1,5 +1,6 @@
 ﻿using Core;
 using ScintillaNET;
+using Shortcut;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -66,11 +67,6 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
             }
         }
     }
-    [ATrigger.Receiver((int)DataType.ApplicationInialized)]
-    static void BindKey()
-    {
-        Center.HotKey.Bind(Shortcut.Modifiers.Control, Keys.S).To(SaveFile);
-    }
 
     [ATrigger.Receiver((int)DataType.ActiveDocument)]
     static void OnActiveDocument()
@@ -96,6 +92,7 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
     {
         InitializeComponent();
 
+        this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
         ATrigger.DataCenter.AddInstance(this);
 
         //Center.HotKey.Bind(Shortcut.Modifiers.Control, Keys.X).To(Cut);
@@ -313,6 +310,7 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
         }
     }
 
+    [AddShortKey(ShortCutIndex.SaveDocument, Modifiers.Control, Keys.S, "SaveFile")]
     static void SaveFile()
     {
         if (!string.IsNullOrEmpty(Center.ActiveDocument.value))
@@ -446,21 +444,6 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
             return;
         }
         TryAutoComplete();
-    }
-
-    public bool OnInit()
-    {
-        throw new Exception("The method or operation is not implemented.");
-    }
-
-    public bool OnExit()
-    {
-        throw new Exception("The method or operation is not implemented.");
-    }
- 
-    protected override bool IsDocument()
-    {
-        return true;
     }
 
     public override void OnDBClickNC()
