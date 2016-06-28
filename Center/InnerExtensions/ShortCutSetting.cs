@@ -63,7 +63,7 @@ namespace Core
             foreach (var item in Center.HotKeys)
             {
                 int cnt = this.dataGridView1.Rows.Add();
-                this.dataGridView1[0, cnt].Value = item.Key.ToString();
+                this.dataGridView1[0, cnt].Value = item.Value.Text;
                 this.dataGridView1[1, cnt].Value = item.Value.DefaultModifiers.ToString();
                 this.dataGridView1[2, cnt].Value = item.Value.DefaultKey.ToString();
             }

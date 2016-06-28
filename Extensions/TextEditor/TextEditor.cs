@@ -270,8 +270,8 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
     static void OnDocumentClose()
     {
         while (Center.Option.File.Histroy.Count >= Center.Option.File.MaxHistroyCount)
-            Center.Option.File.Histroy.RemoveAt(0);
-        Center.Option.File.Histroy.Add(Center.CurrentCloseDoucment.value);
+            Center.Option.File.Histroy.RemoveAt(Center.Option.File.Histroy.Count - 1);
+        Center.Option.File.Histroy.Insert(0, Center.CurrentCloseDoucment.value);
         LoadHistry(Center.Option.File.Histroy);
     }
     static void OpenHistroyFile(object sender, EventArgs e)

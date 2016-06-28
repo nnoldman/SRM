@@ -38,11 +38,11 @@ namespace Core
         public string Args;
     }
 
-    public class BuildOption
+    public class BuildOption : Component
     {
         public string CurrentBuilderName;
         public BuildMode CurrentMode;
-        public List<Builder> Builders;
+        public List<Builder> Builders = new List<Builder>();
 
         public Builder CurrentBuilder
         {

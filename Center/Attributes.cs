@@ -35,4 +35,13 @@ namespace Core
             this.Text = text;
         }
     }
+
+    public class Component : BoolObject
+    {
+
+    }
+
+    public class AddOption : Attribute
+    {
+    }
 }

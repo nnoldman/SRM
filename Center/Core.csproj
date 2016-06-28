@@ -63,6 +63,12 @@
     <Compile Include="InnerExtensions\ExtensionsManager.Designer.cs">
       <DependentUpon>ExtensionsManager.cs</DependentUpon>
     </Compile>
+    <Compile Include="InnerExtensions\Inspector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InnerExtensions\Inspector.Designer.cs">
+      <DependentUpon>Inspector.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Attributes.cs" />
+    <Compile Include="Object.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="InnerExtensions\Output.cs">
       <SubType>Form</SubType>
@@ -92,8 +99,14 @@
     <EmbeddedResource Include="Extension.resx">
       <DependentUpon>Extension.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InnerExtensions\DebuggerConfiguration.resx">
+      <DependentUpon>DebuggerConfiguration.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\ExtensionsManager.resx">
       <DependentUpon>ExtensionsManager.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnerExtensions\Inspector.resx">
+      <DependentUpon>Inspector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\ShortCutSetting.resx">
       <DependentUpon>ShortCutSetting.cs</DependentUpon>

@@ -7,16 +7,19 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class FileOption:TriggerObject
+    public class FileOption : Component
     {
         public int MaxHistroyCount = 10;
         public List<string> Histroy = new List<string>();
     }
-    public class SolutionOption
+    public class SolutionOption : Component
     {
         public string LastSolutionPath;
         public List<string> IgnoreExtensions = new List<string>();
     }
+
+
+
     public class Option : TriggerObject
     {
         public const string FileName = "Option.json";
@@ -26,5 +29,7 @@ namespace Core
         public FileOption File = new FileOption();
         public SolutionOption Solution = new SolutionOption();
         public BuildOption BuildOption = new BuildOption();
+
+        public List<Component> ExtensionOptions = new List<Component>();
     }
 }
