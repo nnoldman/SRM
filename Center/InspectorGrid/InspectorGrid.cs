@@ -53,6 +53,7 @@ namespace Core
                 section.Target = com;
                 section.Width = this.Width;
                 mChildren.Add(section);
+                section.Show();
             }
         }
     }

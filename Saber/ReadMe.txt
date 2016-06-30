@@ -5,9 +5,10 @@
 	SolutionExplorer:
 	Feature:AddShortCut
 	Feature:AddOption
+	Inspector:Support VScrollBar
 	
 ToDoList:
-	Inspector:Support VScrollBar
+	
 	Feature:AddMenu
 	Add:MakeFile
 	Build:

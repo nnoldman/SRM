@@ -128,26 +128,6 @@ public partial class MainForm : Form
 
         foreach (var type in Center.OptionTypes)
             Center.Option.AddComponent(type);
-
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
-        //Center.Option.AddComponent<BuildOption>();
     }
 
     void InitShortKeys()
