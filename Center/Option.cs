@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    [CategoryAttribute("FileOption")]
+    [AddOption]
     public class FileOption : Component
     {
         public int MaxHistroyCount = 10;
         public List<string> Histroy = new List<string>();
     }
-    [CategoryAttribute("SolutionOption")]
+    [AddOption]
     public class SolutionOption : Component
     {
         public string LastSolutionPath;
@@ -23,14 +23,6 @@ namespace Core
 
     public class Option : Object
     {
-        public Option()
-        {
-            this.AddComponent<BaseOption>();
-            this.AddComponent<FileOption>();
-            this.AddComponent<SolutionOption>();
-            this.AddComponent<BuildOption>();
-        }
-
         public BaseOption Base { get { return this.GetComponent<BaseOption>(); } }
         public FileOption File { get { return this.GetComponent<FileOption>(); } }
         public SolutionOption Solution { get { return this.GetComponent<SolutionOption>(); } }

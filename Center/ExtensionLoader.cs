@@ -29,9 +29,9 @@ namespace Core
         }
         void LoadExternExtensions()
         {
-            if (Directory.Exists(Center.Option.Base.ExtensionsPath))
+            if (Directory.Exists(BaseOption.ExtensionsPath))
             {
-                var dlls = Directory.GetFiles(Center.Option.Base.ExtensionsPath, "*.dll");
+                var dlls = Directory.GetFiles(BaseOption.ExtensionsPath, "*.dll");
 
                 if (dlls != null && dlls.Length > 0)
                 {

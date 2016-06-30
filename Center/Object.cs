@@ -9,6 +9,8 @@ namespace Core
 {
     public class Object : ATrigger.TriggerObject
     {
+        public string Name;
+
         public Object()
         {
             ATrigger.DataCenter.AddInstance(this);
@@ -18,15 +20,22 @@ namespace Core
             ATrigger.DataCenter.RemoveInstance(this);
         }
 
-        public List<Component> Components { get { 
-            return mComponents;
-        } }
+        public List<Object> Children { get { return mChildren; } }
+        public List<Component> Components { get { return mComponents; } }
 
         internal List<Component> mComponents = new List<Component>();
+        internal List<Object> mChildren = new List<Object>();
 
         public T AddComponent<T>() where T : Component, new()
         {
             T com = new T();
+            mComponents.Add(com);
+            return com;
+        }
+
+        public Component AddComponent(Type type)
+        {
+            Component com = (Component)type.GetConstructor(Type.EmptyTypes).Invoke(null);
             mComponents.Add(com);
             return com;
         }
@@ -42,6 +51,16 @@ namespace Core
             {
                 if (com.GetType() == typeof(T))
                     return (T)com;
+            }
+            return null;
+        }
+        public T GetComponentFromChildren<T>() where T : Component, new()
+        {
+            foreach (var child in mChildren)
+            {
+                var com = child.GetComponent<T>();
+                if (com)
+                    return com;
             }
             return null;
         }

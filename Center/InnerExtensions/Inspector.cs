@@ -13,15 +13,19 @@ namespace Core
 {
     public partial class Inspector : Extension, ATrigger.ITriggerStatic
     {
-        static Inspector Instance;
+        public static Inspector Instance;
 
         public Inspector()
         {
             Instance = this;
             InitializeComponent();
             ATrigger.DataCenter.AddInstance(this);
+        }
 
-            this.propertyGrid1.SelectedObject = Center.Option;
+        [ATrigger.Receiver((int)DataType.SelectObject)]
+        public void OnSelect()
+        {
+            this.propertyGrid1.SelectedObject = Center.SelectObject.value;
         }
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)

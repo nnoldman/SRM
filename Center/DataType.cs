@@ -17,5 +17,6 @@ namespace Core
         ActiveDocument,
         ChangeDocumentName,
         OpenFloder,
+        SelectObject,
     }
 }

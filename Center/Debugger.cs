@@ -37,7 +37,7 @@ namespace Core
         public LaunchMode Mode;
         public string Args;
     }
-
+    [AddOption]
     public class BuildOption : Component
     {
         public string CurrentBuilderName;

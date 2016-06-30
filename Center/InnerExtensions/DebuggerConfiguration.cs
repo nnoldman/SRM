@@ -48,19 +48,12 @@ namespace Core
         void InitBaseInfo()
         {
             this.comboBox_Builder.Items.Clear();
+            Center.Option.BuildOption.Builders.ForEach((b) => this.comboBox_Builder.Items.Add(b.Name));
+            this.comboBox_Builder.Text = Center.Option.BuildOption.CurrentBuilderName;
 
-            foreach (var b in Center.Option.BuildOption.Builders)
-                this.comboBox_Builder.Items.Add(b.Name);
-
-            this.comboBox_Builder.SelectedIndex = Center.Option.BuildOption.Builders.FindIndex(
-                (item) => item.Name == Center.Option.BuildOption.CurrentBuilderName);
-
-
-            this.comboBox_BuildMode.Items.Add(BuildMode.Debug.ToString());
-            this.comboBox_BuildMode.Items.Add(BuildMode.Release.ToString());
-
-            this.comboBox_BuildMode.SelectedIndex = Center.Option.BuildOption.CurrentMode == BuildMode.Debug ?
-                0 : 1;
+            this.comboBox_BuildMode.Items.Clear();
+            this.comboBox_BuildMode.Items.AddRange(Enum.GetNames(typeof(BuildMode)));
+            this.comboBox_BuildMode.Text = Center.Option.BuildOption.CurrentMode.ToString();
         }
         public void LoadOption()
         {
@@ -144,6 +137,16 @@ namespace Core
         [AddShortCut(ShortCutIndex.Stop, Shortcut.Modifiers.Shift, Keys.F5, "Stop")]
         static void Stop()
         {
+        }
+
+        private void comboBox_Builder_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            Center.Option.BuildOption.CurrentBuilderName = this.comboBox_Builder.Text;
+        }
+
+        private void comboBox_BuildMode_SelectedIndexChanged_1(object sender, EventArgs e)
+        {
+            Center.Option.BuildOption.CurrentMode = (BuildMode)Enum.Parse(typeof(BuildMode), this.comboBox_BuildMode.Text);
         }
     }
 }

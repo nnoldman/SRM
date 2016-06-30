@@ -65,21 +65,23 @@
             // 
             // comboBox_BuildMode
             // 
+            this.comboBox_BuildMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_BuildMode.FormattingEnabled = true;
             this.comboBox_BuildMode.Location = new System.Drawing.Point(186, 12);
             this.comboBox_BuildMode.Name = "comboBox_BuildMode";
             this.comboBox_BuildMode.Size = new System.Drawing.Size(121, 20);
             this.comboBox_BuildMode.TabIndex = 1;
-            this.comboBox_BuildMode.Text = "Mode";
+            this.comboBox_BuildMode.SelectedIndexChanged += new System.EventHandler(this.comboBox_BuildMode_SelectedIndexChanged_1);
             // 
             // comboBox_Builder
             // 
+            this.comboBox_Builder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Builder.FormattingEnabled = true;
             this.comboBox_Builder.Location = new System.Drawing.Point(12, 12);
             this.comboBox_Builder.Name = "comboBox_Builder";
             this.comboBox_Builder.Size = new System.Drawing.Size(121, 20);
             this.comboBox_Builder.TabIndex = 0;
-            this.comboBox_Builder.Text = "Builder";
+            this.comboBox_Builder.SelectedIndexChanged += new System.EventHandler(this.comboBox_Builder_SelectedIndexChanged_1);
             // 
             // dataGridView1
             // 

@@ -23,8 +23,9 @@ public partial class MainForm : Form
 
         ATrigger.DataCenter.AddInstance(this);
         InitializeComponent();
-        LoadOption();
         Center.ExtensionLoader.Load();
+        InitOptions();
+        LoadOption();
         InitMenus();
         InitShortKeys();
         LoadLayout();
@@ -106,6 +107,48 @@ public partial class MainForm : Form
             AddMenuFromType(extensionType.AsType(), root);
     }
 
+    void AddOptionFromASM(Assembly asm)
+    {
+        foreach (var type in asm.DefinedTypes)
+        {
+            Attribute attr = type.GetCustomAttribute(typeof(AddOption));
+            
+            if (attr != null)
+            {
+                if (!Center.OptionTypes.Contains(type))
+                    Center.OptionTypes.Add(type);
+            }
+        }
+    }
+
+    void InitOptions()
+    {
+        foreach (var extensionType in Center.ExtensionLoader.Types)
+            AddOptionFromASM(extensionType.Value.Assembly);
+
+        foreach (var type in Center.OptionTypes)
+            Center.Option.AddComponent(type);
+
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+        //Center.Option.AddComponent<BuildOption>();
+    }
 
     void InitShortKeys()
     {

@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Core
 {
+    [AddOption]
     public class BaseOption : Component
     {
-        public List<int> sums;
+        public const string ExtensionsPath = "Extensions";
         public string FileName = "Option.json";
-        public string ExtensionsPath = "Extensions";
         public string LayoutFile = "Layout.xml";
     }
 }

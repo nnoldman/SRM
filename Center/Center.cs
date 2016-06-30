@@ -17,9 +17,10 @@ namespace Core
         public static Option Option = new Option();
 
         public static DocumentManager DocumentManager = new DocumentManager();
-        public static Shortcut.HotkeyBinder HotKeyBinder = new Shortcut.HotkeyBinder();
-        public static ExtensionLoader ExtensionLoader = new ExtensionLoader();
+        internal static Shortcut.HotkeyBinder HotKeyBinder = new Shortcut.HotkeyBinder();
+        internal static ExtensionLoader ExtensionLoader = new ExtensionLoader();
 
+        internal static HashSet<Type> OptionTypes = new HashSet<Type>();
         internal static Dictionary<MethodInfo, AddShortCut> HotKeys = new Dictionary<MethodInfo, AddShortCut>();
         internal static Dictionary<string, Type> ExtensionTypes = new Dictionary<string, Type>();
 
@@ -49,5 +50,8 @@ namespace Core
 
         [Emmiter((int)DataType.OpenFloder)]
         public static ATrigger<string> OpenFloder = new ATrigger<string>();
+
+        [Emmiter((int)DataType.SelectObject)]
+        public static ATrigger<Object> SelectObject = new ATrigger<Object>();
     }
 }
