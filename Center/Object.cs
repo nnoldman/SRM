@@ -1,18 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Core
 {
-    public class Object
+    public class Object : ATrigger.TriggerObject
     {
+        public Object()
+        {
+            ATrigger.DataCenter.AddInstance(this);
+        }
+        ~Object()
+        {
+            ATrigger.DataCenter.RemoveInstance(this);
+        }
+
         public List<Component> Components { get { 
             return mComponents;
         } }
 
-        List<Component> mComponents = new List<Component>();
+        internal List<Component> mComponents = new List<Component>();
 
         public T AddComponent<T>() where T : Component, new()
         {

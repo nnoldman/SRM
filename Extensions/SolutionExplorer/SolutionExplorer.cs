@@ -26,8 +26,8 @@ namespace SolutionExplorer
             InitializeComponent();
             ATrigger.DataCenter.AddInstance(this);
             this.fileTree.ImageList = new ImageList();
-            this.fileTree.ImageList.Images.Add(Image.FromFile("./icons/openHS.png"));
-            this.fileTree.ImageList.Images.Add(Image.FromFile("./icons/CopyHS.png"));
+            this.fileTree.ImageList.Images.Add(Properties.Resources.openHS);
+            this.fileTree.ImageList.Images.Add(Properties.Resources.CopyHS);
             this.fileTree.NodeMouseDoubleClick += fileTree_NodeMouseDoubleClick;
             this.fileTree.KeyUp += fileTree_KeyUp;
             this.fileTree.ShowNodeToolTips = true;
@@ -150,6 +150,7 @@ namespace SolutionExplorer
 
                 var child = new TreeNode(f.Name);
                 child.ImageIndex = mIndexDirSel;
+                child.SelectedImageIndex = mIndexDirSel;
                 parent.Nodes.Add(child);
                 child.Tag = f.FullName;
                 child.ToolTipText = f.FullName;

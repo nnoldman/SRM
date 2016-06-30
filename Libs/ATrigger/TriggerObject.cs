@@ -21,6 +21,11 @@ namespace ATrigger
             DataCenter.RemoveEntityWithInstance(this);
             DataCenter.RemoveReceiversWithInstance(this);
         }
+
+        public static implicit operator bool(TriggerObject obj)
+        {
+            return obj != null;
+        }
     }
     /// <summary>
     /// add static receiver and emitter

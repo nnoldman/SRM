@@ -168,7 +168,7 @@ namespace fastJSON
                     d.getter = Reflection.CreateGetMethod(type, p);
                     sd.Add(p.Name.ToLower(), d);
                 }
-                FieldInfo[] fi = type.GetFields(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+                FieldInfo[] fi = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
                 foreach (FieldInfo f in fi)
                 {
                     myPropInfo d = CreateMyProp(f.FieldType, f.Name, customType);
@@ -504,35 +504,35 @@ namespace fastJSON
             if (_getterscache.TryGetValue(type, out val))
                 return val;
 
-            PropertyInfo[] props = type.GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static);
+            //PropertyInfo[] props = type.GetProperties(BindingFlags.Public |BindingFlags.NonPublic| BindingFlags.Instance);
             List<Getters> getters = new List<Getters>();
-            foreach (PropertyInfo p in props)
-            {
-                if (p.GetIndexParameters().Length > 0)
-                {// Property is an indexer
-                    continue;
-                }
-                if (!p.CanWrite && ShowReadOnlyProperties == false) continue;
-                if (IgnoreAttributes != null)
-                {
-                    bool found = false;
-                    foreach (var ignoreAttr in IgnoreAttributes)
-                    {
-                        if (p.IsDefined(ignoreAttr, false))
-                        {
-                            found = true;
-                            break;
-                        }
-                    }
-                    if (found)
-                        continue;
-                }
-                GenericGetter g = CreateGetMethod(type, p);
-                if (g != null)
-                    getters.Add(new Getters { Getter = g, Name = p.Name, lcName = p.Name.ToLower() });
-            }
+            //foreach (PropertyInfo p in props)
+            //{
+            //    if (p.GetIndexParameters().Length > 0)
+            //    {// Property is an indexer
+            //        continue;
+            //    }
+            //    if (!p.CanWrite && ShowReadOnlyProperties == false) continue;
+            //    if (IgnoreAttributes != null)
+            //    {
+            //        bool found = false;
+            //        foreach (var ignoreAttr in IgnoreAttributes)
+            //        {
+            //            if (p.IsDefined(ignoreAttr, false))
+            //            {
+            //                found = true;
+            //                break;
+            //            }
+            //        }
+            //        if (found)
+            //            continue;
+            //    }
+            //    GenericGetter g = CreateGetMethod(type, p);
+            //    if (g != null)
+            //        getters.Add(new Getters { Getter = g, Name = p.Name, lcName = p.Name.ToLower() });
+            //}
 
-            FieldInfo[] fi = type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.Static);
+            FieldInfo[] fi = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance);
             foreach (var f in fi)
             {
                 if (IgnoreAttributes != null)

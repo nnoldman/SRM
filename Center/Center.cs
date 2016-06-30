@@ -14,8 +14,8 @@ namespace Core
     public class Center : ATrigger.ITriggerStatic
     {
         public static MainForm Form { get; internal set; }
-
         public static Option Option = new Option();
+
         public static DocumentManager DocumentManager = new DocumentManager();
         public static Shortcut.HotkeyBinder HotKeyBinder = new Shortcut.HotkeyBinder();
         public static ExtensionLoader ExtensionLoader = new ExtensionLoader();

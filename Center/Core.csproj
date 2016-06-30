@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseOption.cs" />
     <Compile Include="BoolObject.cs" />
     <Compile Include="Center.cs" />
     <Compile Include="DataType.cs" />
@@ -69,6 +70,57 @@
     <Compile Include="InnerExtensions\Inspector.Designer.cs">
       <DependentUpon>Inspector.cs</DependentUpon>
     </Compile>
+    <Compile Include="InspectorGrid\InspectorGrid.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorGrid.Designer.cs">
+      <DependentUpon>InspectorGrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_Bool.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_Bool.Designer.cs">
+      <DependentUpon>InspectorItem_Bool.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_Enum.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_Enum.Designer.cs">
+      <DependentUpon>InspectorItem_Enum.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_Float.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_Float.Designer.cs">
+      <DependentUpon>InspectorItem_Float.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_Int.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_Int.Designer.cs">
+      <DependentUpon>InspectorItem_Int.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_List.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_List.Designer.cs">
+      <DependentUpon>InspectorItem_List.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_String.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem_String.Designer.cs">
+      <DependentUpon>InspectorItem_String.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorSection.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InspectorGrid\InspectorSection.Designer.cs">
+      <DependentUpon>InspectorSection.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,6 +139,11 @@
     <Compile Include="PersistStringParser.cs" />
     <Compile Include="ExtensionInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="ShortCutIndex.cs" />
     <Compile Include="InnerExtensions\ShortCutSetting.cs">
       <SubType>Form</SubType>
@@ -108,12 +165,40 @@
     <EmbeddedResource Include="InnerExtensions\Inspector.resx">
       <DependentUpon>Inspector.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InspectorGrid\InspectorGrid.resx">
+      <DependentUpon>InspectorGrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorGrid\InspectorItem_Bool.resx">
+      <DependentUpon>InspectorItem_Bool.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorGrid\InspectorItem_Enum.resx">
+      <DependentUpon>InspectorItem_Enum.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorGrid\InspectorItem_Float.resx">
+      <DependentUpon>InspectorItem_Float.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorGrid\InspectorItem_Int.resx">
+      <DependentUpon>InspectorItem_Int.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorGrid\InspectorItem_List.resx">
+      <DependentUpon>InspectorItem_List.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorGrid\InspectorItem_String.resx">
+      <DependentUpon>InspectorItem_String.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InspectorGrid\InspectorSection.resx">
+      <DependentUpon>InspectorSection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\ShortCutSetting.resx">
       <DependentUpon>ShortCutSetting.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +218,10 @@
       <Project>{c75532c4-765b-418e-b09b-46d36b2abdb1}</Project>
       <Name>WinFormsUI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\minus.png" />
+    <Content Include="Resources\plus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

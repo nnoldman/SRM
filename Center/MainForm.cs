@@ -109,8 +109,6 @@ public partial class MainForm : Form
 
     void InitShortKeys()
     {
-        //AddShortCutFromASM(Assembly.GetCallingAssembly());
-
         foreach (var extensionType in Center.ExtensionLoader.Types)
             AddShortCutFromASM(extensionType.Value.Assembly);
 
@@ -171,17 +169,17 @@ public partial class MainForm : Form
 
     void LoadOption()
     {
-        if (File.Exists(Option.FileName))
-            Center.Option = (Option)fastJSON.JSON.ToObject(File.ReadAllText(Option.FileName));
+        if (File.Exists(Center.Option.Base.FileName))
+            Center.Option = (Option)fastJSON.JSON.ToObject(File.ReadAllText(Center.Option.Base.FileName));
     }
 
     void SaveOption()
     {
-        this.DockerContainer.SaveAsXml(Center.Option.LayoutFile);
+        this.DockerContainer.SaveAsXml(Center.Option.Base.LayoutFile);
 
         string content = fastJSON.JSON.ToNiceJSON(Center.Option, new fastJSON.JSONParameters());
 
-        File.WriteAllText(Option.FileName, content);
+        File.WriteAllText(Center.Option.Base.FileName, content);
     }
 
 
@@ -236,8 +234,8 @@ public partial class MainForm : Form
     }
     void LoadLayout()
     {
-        if (File.Exists(Center.Option.LayoutFile))
-            this.DockerContainer.LoadFromXml(Center.Option.LayoutFile, GetContentFromPersistString);
+        if (File.Exists(Center.Option.Base.LayoutFile))
+            this.DockerContainer.LoadFromXml(Center.Option.Base.LayoutFile, GetContentFromPersistString);
         Center.OnLayoutEnd.Trigger();
     }
 

@@ -86,10 +86,14 @@ namespace Core
             for (int i = 0; i < this.dataGridView1.RowCount - 1; ++i)
             {
                 Builder b = new Builder();
-                b.Name = this.dataGridView1[ColumnName, i].Value.ToString();
-                b.Complier = this.dataGridView1[ColumnComplier, i].Value.ToString();
-                b.Linker = this.dataGridView1[ColumnLinker, i].Value.ToString();
-                b.Debugger = this.dataGridView1[ColumnDebugger, i].Value.ToString();
+                if (this.dataGridView1[ColumnName, i].Value != null)
+                    b.Name = this.dataGridView1[ColumnName, i].Value.ToString();
+                if (this.dataGridView1[ColumnComplier, i].Value != null)
+                    b.Complier = this.dataGridView1[ColumnComplier, i].Value.ToString();
+                if (this.dataGridView1[ColumnLinker, i].Value != null)
+                    b.Linker = this.dataGridView1[ColumnLinker, i].Value.ToString();
+                if (this.dataGridView1[ColumnDebugger, i].Value != null)
+                    b.Debugger = this.dataGridView1[ColumnDebugger, i].Value.ToString();
                 Center.Option.BuildOption.Builders.Add(b);
             }
         }
@@ -132,7 +136,7 @@ namespace Core
             builder.Build();
         }
 
-        [AddShortCut(ShortCutIndex.Run, Shortcut.Modifiers.None, Keys.F5, "Run")]
+        //[AddShortCut(ShortCutIndex.Run, Shortcut.Modifiers.None, Keys.F5, "Run")]
         static void Run()
         {
         }
