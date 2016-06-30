@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,21 @@ namespace Core
         public AddMenu(string str)
         {
             this.Text = str;
+        }
+    }
+
+    public delegate Image LoadBuildImage();
+
+    [AttributeUsage(AttributeTargets.Method)]
+    public class AddMenuButton : Attribute
+    {
+        public string Text;
+        public Type LoaderType;
+
+        public AddMenuButton(string str, Type loaderType = null)
+        {
+            this.Text = str;
+            this.LoaderType = loaderType;
         }
     }
 

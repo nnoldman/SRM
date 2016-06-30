@@ -9,7 +9,7 @@
 	
 ToDoList:
 	
-	Feature:AddMenu
+	Feature:AddMenuButton
 	Add:MakeFile
 	Build:
 	Run:

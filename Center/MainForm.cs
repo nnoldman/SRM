@@ -27,6 +27,7 @@ public partial class MainForm : Form
         InitOptions();
         LoadOption();
         InitMenus();
+        InitMenuButtons();
         InitShortKeys();
         LoadLayout();
         InitSkin();
@@ -112,13 +113,50 @@ public partial class MainForm : Form
         foreach (var type in asm.DefinedTypes)
         {
             Attribute attr = type.GetCustomAttribute(typeof(AddOption));
-            
+
             if (attr != null)
             {
                 if (!Center.OptionTypes.Contains(type))
                     Center.OptionTypes.Add(type);
             }
         }
+    }
+
+    void AddMunuButtonFromType(Type tp)
+    {
+        MethodInfo[] methods = tp.GetMethods(BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
+
+        foreach (var method in methods)
+        {
+            var attr = method.GetCustomAttribute(typeof(AddMenuButton));
+
+            if (attr != null)
+            {
+                var menu = (AddMenuButton)attr;
+                Image image = null;
+                if (menu.LoaderType != null)
+                {
+                    MethodInfo loader = menu.LoaderType.GetMethod("GetImage", BindingFlags.NonPublic|BindingFlags.Public|BindingFlags.Static);
+                    if (loader != null)
+                        image = (Image)loader.Invoke(null, null);
+                }
+                ToolStripMenuItem item = new ToolStripMenuItem(menu.Text, image);
+                item.Click += (sender, e) => method.Invoke(null, null);
+                this.menuStrip1.Items.Add(item);
+            }
+        }
+    }
+
+    void AddMenuButtonsFromASM(Assembly asm)
+    {
+        foreach (var type in asm.DefinedTypes)
+            AddMunuButtonFromType(type);
+    }
+
+    void InitMenuButtons()
+    {
+        foreach (var extensionType in Center.ExtensionLoader.Types)
+            AddMenuButtonsFromASM(extensionType.Value.Assembly);
     }
 
     void InitOptions()
@@ -184,7 +222,7 @@ public partial class MainForm : Form
 
     void OnMenuClick(object sender, EventArgs e)
     {
-        ToolStripMenuItem menu=(ToolStripMenuItem)sender;
+        ToolStripMenuItem menu = (ToolStripMenuItem)sender;
         MethodInfo method = (MethodInfo)(menu.Tag);
         if (method != null)
             method.Invoke(null, null);

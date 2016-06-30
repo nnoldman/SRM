@@ -120,6 +120,16 @@ namespace Core
             }
         }
 
+        class BuildImageLoader
+        {
+            static Image GetImage()
+            {
+                return Core.Properties.Resources.DataContainer_MoveNextHS;
+            }
+        }
+
+
+        [AddMenuButton("Build", typeof(BuildImageLoader))]
         [AddShortCut(ShortCutIndex.Build, Shortcut.Modifiers.Control | Shortcut.Modifiers.Shift, Keys.B, "Build")]
         static void Build()
         {

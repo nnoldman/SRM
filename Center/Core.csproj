@@ -229,6 +229,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\DataContainer_MoveNextHS.png" />
     <Content Include="Resources\minus.png" />
     <Content Include="Resources\plus.png" />
   </ItemGroup>
