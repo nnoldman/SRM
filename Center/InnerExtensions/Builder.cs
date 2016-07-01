@@ -38,22 +38,27 @@ namespace Core
             startInfo.WorkingDirectory = Path.GetDirectoryName(Complier);
 
             Process process = new Process();
+            process.EnableRaisingEvents = true;
             process.StartInfo = startInfo;
             process.ErrorDataReceived += process_ErrorDataReceived;
             process.OutputDataReceived += process_ErrorDataReceived;
             process.Exited += process_Exited;
-            process.Start();
-            process.BeginOutputReadLine();
-            process.BeginErrorReadLine();
 
-            Center.ConsoleClear.Trigger();
-            Center.Console.Trigger("=>Complier Args:" + startInfo.Arguments);
-            Center.BeginBuild.Trigger();
+            if (process.Start())
+            {
+                process.BeginOutputReadLine();
+                process.BeginErrorReadLine();
+
+                Center.ConsoleClear.Trigger();
+                Center.Console.Trigger("=>Complier Args:" + startInfo.Arguments);
+                Center.BeginBuild.Trigger();
+            }
         }
 
         void process_Exited(object sender, EventArgs e)
         {
-            Center.Console.Trigger("=>Complier End");
+            Process process = (Process)sender;
+            Center.Console.Trigger(process.ExitCode == 0 ? "=>Complier Sucessfully!" : string.Empty);
             Center.EndBuild.Trigger();
         }
 

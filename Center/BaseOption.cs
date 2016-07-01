@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    [AddOption]
+    [AddOption("Base")]
     public class BaseOption : Component
     {
         public const string ExtensionsPath = "Extensions";

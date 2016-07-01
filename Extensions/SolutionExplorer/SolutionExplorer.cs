@@ -72,7 +72,7 @@ namespace SolutionExplorer
                 CreateInstance();
 
             FolderBrowserDialog dlg = new FolderBrowserDialog();
-            dlg.SelectedPath = Center.OpenFloder.value;
+            dlg.SelectedPath = Center.Option.Solution.LastSolutionPath;
             var result = dlg.ShowDialog();
 
             if (result == System.Windows.Forms.DialogResult.OK)
@@ -175,10 +175,7 @@ namespace SolutionExplorer
         private void openInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
         {
             string path = this.fileTree.SelectedNode.Tag.ToString();
-            FileInfo fi = new FileInfo(path);
 
-            if (!fi.Attributes.HasFlag(FileAttributes.Directory))
-                path = Path.GetDirectoryName(path);
             Shell.OpenFloder(path);
         }
 

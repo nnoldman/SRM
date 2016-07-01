@@ -26,7 +26,8 @@ namespace Core
         public LaunchMode Mode;
         public string Args;
     }
-    [AddOption]
+
+    [AddOption("Base")]
     public class BuildOption : Component
     {
         public string CurrentBuilderName;

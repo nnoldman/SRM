@@ -116,8 +116,15 @@ public partial class MainForm : Form
 
             if (attr != null)
             {
-                if (!Center.OptionTypes.Contains(type))
-                    Center.OptionTypes.Add(type);
+                List<Type> typeList;
+                AddOption option = (AddOption)attr;
+                if (!Center.OptionTypes.TryGetValue(option.Cate, out typeList))
+                {
+                    typeList = new List<Type>();
+                    Center.OptionTypes.Add(option.Cate, typeList);
+                }
+                if (!typeList.Contains(type))
+                    typeList.Add(type);
             }
         }
     }
@@ -169,8 +176,20 @@ public partial class MainForm : Form
         foreach (var extensionType in Center.ExtensionLoader.Types)
             AddOptionFromASM(extensionType.Value.Assembly);
 
-        foreach (var type in Center.OptionTypes)
-            Center.Option.AddComponent(type);
+        foreach (var childOption in Center.OptionTypes)
+        {
+            Core.Object child = Center.Option.FindChildByName(childOption.Key);
+           
+            if (!child)
+            {
+                child = new Core.Object();
+                child.Name = childOption.Key;
+                Center.Option.Children.Add(child);
+            }
+
+            foreach (var t in childOption.Value)
+                child.AddComponent(t);
+        }
     }
 
     void InitShortKeys()
@@ -300,7 +319,8 @@ public partial class MainForm : Form
     }
     void LoadLayout()
     {
-        if (File.Exists(Center.Option.Base.LayoutFile))
+        if (Center.Option.Base)
+            if (File.Exists(Center.Option.Base.LayoutFile))
             this.DockerContainer.LoadFromXml(Center.Option.Base.LayoutFile, GetContentFromPersistString);
         Center.OnLayoutEnd.Trigger();
     }

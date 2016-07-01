@@ -11,7 +11,6 @@ D:\src\SRM\Saber\bin\Release\Core.pdb
 D:\src\SRM\Saber\bin\Release\ATrigger.pdb
 D:\src\SRM\Saber\bin\Release\fastJSON.pdb
 D:\src\SRM\Saber\bin\Release\Shortcut.pdb
-D:\src\SRM\Saber\bin\Release\Shortcut.xml
 D:\src\SRM\Saber\bin\Release\WeifenLuo.WinFormsUI.Docking.pdb
 D:\src\SRM\Saber\obj\Release\Saber.csprojResolveAssemblyReference.cache
 D:\src\SRM\Saber\obj\Release\Saber.Properties.Resources.resources

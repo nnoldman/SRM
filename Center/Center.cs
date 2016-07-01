@@ -20,7 +20,7 @@ namespace Core
         internal static Shortcut.HotkeyBinder HotKeyBinder = new Shortcut.HotkeyBinder();
         internal static ExtensionLoader ExtensionLoader = new ExtensionLoader();
 
-        internal static HashSet<Type> OptionTypes = new HashSet<Type>();
+        internal static Dictionary<string, List<Type>> OptionTypes = new Dictionary<string, List<Type>>();
         internal static Dictionary<MethodInfo, AddShortCut> HotKeys = new Dictionary<MethodInfo, AddShortCut>();
         internal static Dictionary<MethodInfo, AddMenuButton> MenuButtons = new Dictionary<MethodInfo, AddMenuButton>();
         internal static Dictionary<string, Type> ExtensionTypes = new Dictionary<string, Type>();

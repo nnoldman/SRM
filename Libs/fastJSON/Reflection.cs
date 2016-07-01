@@ -275,12 +275,23 @@ namespace fastJSON
             else
             {
                 Type t = Type.GetType(typename);
-                //if (t == null) // RaptorDB : loading runtime assemblies
-                //{
-                //    t = Type.GetType(typename, (name) => {
-                //        return AppDomain.CurrentDomain.GetAssemblies().Where(z => z.FullName == name.FullName).FirstOrDefault();
-                //    }, null, true);
-                //}
+                if (t == null) // RaptorDB : loading runtime assemblies
+                {
+                    int pos = typename.IndexOf(',');
+                    string asmName = typename.Substring(pos + 2);
+                    string typeName = typename.Substring(0, pos);
+                    var asms = AppDomain.CurrentDomain.GetAssemblies();
+                    foreach (var asm in asms)
+                    {
+                        if (asm.FullName == asmName)
+                        {
+                            t = asm.GetType(typeName);
+                            if (t != null)
+                                break;
+                        }
+
+                    }
+                }
                 _typecache.Add(typename, t);
                 return t;
             }

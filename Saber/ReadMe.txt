@@ -8,6 +8,7 @@
 	Inspector:Support VScrollBar
 	Feature:AddMenuButton
 	SolutionExplorer:Add Shell
+	Console:Clear All
 ToDoList:
 	
 	Add:MakeFile

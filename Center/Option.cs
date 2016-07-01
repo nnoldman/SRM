@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    [AddOption]
+    [AddOption("Base")]
     public class FileOption : Component
     {
         public int MaxHistroyCount = 10;
         public List<string> Histroy = new List<string>();
     }
-    [AddOption]
+    [AddOption("Base")]
     public class SolutionOption : Component
     {
         public string LastSolutionPath;
@@ -23,9 +23,31 @@ namespace Core
 
     public class Option : Object
     {
-        public BaseOption Base { get { return this.GetComponent<BaseOption>(); } }
-        public FileOption File { get { return this.GetComponent<FileOption>(); } }
-        public SolutionOption Solution { get { return this.GetComponent<SolutionOption>(); } }
-        public BuildOption BuildOption { get { return this.GetComponent<BuildOption>(); } }
+        public BaseOption Base { get { return this.GetComponentFromChildren<BaseOption>(); } }
+        public FileOption File { get { return this.GetComponentFromChildren<FileOption>(); } }
+        public SolutionOption Solution { get { return this.GetComponentFromChildren<SolutionOption>(); } }
+        public BuildOption BuildOption { get { return this.GetComponentFromChildren<BuildOption>(); } }
+
+        public T GetOption<T>() where T : Component, new()
+        {
+            T com = GetComponentFromChildren<T>();
+            
+            if (!com)
+            {
+                var tp = typeof(T).GetType();
+                var attrs = tp.GetCustomAttributes(typeof(AddOption), true);
+                AddOption attr = (AddOption)attrs[0];
+                
+                Core.Object child = FindChildByName(attr.Cate);
+                
+                if (!child)
+                {
+                    child = new Object();
+                    child.Name = attr.Cate;
+                }
+                com = child.AddComponent<T>();
+            }
+            return com;
+        }
     }
 }

@@ -32,7 +32,10 @@ namespace Core
             mComponents.Add(com);
             return com;
         }
-
+        public Object FindChildByName(string name)
+        {
+            return mChildren.Find((item) => item.Name == name);
+        }
         public Component AddComponent(Type type)
         {
             Component com = (Component)type.GetConstructor(Type.EmptyTypes).Invoke(null);
@@ -40,12 +43,12 @@ namespace Core
             return com;
         }
 
-        public void RemoveComponent<T>() where T : Component, new()
+        public void RemoveComponent<T>() where T : Component
         {
             mComponents.RemoveAll((item) => item.GetType() == typeof(T));
         }
 
-        public T GetComponent<T>() where T : Component, new()
+        public T GetComponent<T>() where T : Component
         {
             foreach (var com in mComponents)
             {
@@ -54,7 +57,7 @@ namespace Core
             }
             return null;
         }
-        public T GetComponentFromChildren<T>() where T : Component, new()
+        public T GetComponentFromChildren<T>() where T : Component
         {
             foreach (var child in mChildren)
             {

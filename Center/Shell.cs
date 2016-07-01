@@ -12,12 +12,19 @@ namespace Core
     {
         public static void OpenFloder(string path)
         {
+            if (!Directory.Exists(Path.GetDirectoryName(path)))
+            {
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+            }
+            else
+            {
+                FileInfo fi = new FileInfo(path);
+                    path = Path.GetDirectoryName(path);
+            }
+
             Process p = new Process();
             p.StartInfo = new ProcessStartInfo();
             p.StartInfo.Arguments = path;
-
-            if (!Directory.Exists(p.StartInfo.Arguments))
-                Directory.CreateDirectory(p.StartInfo.Arguments);
 
             p.StartInfo.FileName = "explorer.exe";
             p.Start();

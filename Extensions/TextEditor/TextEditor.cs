@@ -88,14 +88,53 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
     {
         this.scintilla1.Cut();
     }
+    void InitStyles()
+    {
+        {
+            DefaultOption option = Center.Option.GetOption<DefaultOption>();
+            SetStyle(Style.Default, option.Default);
+            this.scintilla1.StyleClearAll();
+        }
+        {
+            CppOption option = Center.Option.GetComponentFromChildren<CppOption>();
+
+            SetStyle(Style.Cpp.Character, option.Character);
+            SetStyle(Style.Cpp.Comment, option.Comment);
+            SetStyle(Style.Cpp.CommentDoc, option.CommentDoc);
+            SetStyle(Style.Cpp.CommentDocKeyword, option.CommentDocKeyword);
+            SetStyle(Style.Cpp.CommentDocKeywordError, option.CommentDocKeywordError);
+            SetStyle(Style.Cpp.CommentLine, option.CommentLine);
+            SetStyle(Style.Cpp.CommentLineDoc, option.CommentLineDoc);
+            SetStyle(Style.Cpp.Default, option.Default);
+            SetStyle(Style.Cpp.EscapeSequence, option.EscapeSequence);
+            SetStyle(Style.Cpp.GlobalClass, option.GlobalClass);
+            SetStyle(Style.Cpp.HashQuotedString, option.HashQuotedString);
+            SetStyle(Style.Cpp.Identifier, option.Identifier);
+            SetStyle(Style.Cpp.Number, option.Number);
+            SetStyle(Style.Cpp.Preprocessor, option.Preprocessor);
+            SetStyle(Style.Cpp.PreprocessorComment, option.PreprocessorComment);
+            SetStyle(Style.Cpp.PreprocessorCommentDoc, option.PreprocessorCommentDoc);
+            SetStyle(Style.Cpp.Regex, option.Regex);
+            SetStyle(Style.Cpp.String, option.String);
+            SetStyle(Style.Cpp.StringEol, option.StringEol);
+            SetStyle(Style.Cpp.StringRaw, option.StringRaw);
+            SetStyle(Style.Cpp.TaskMarker, option.TaskMarker);
+            SetStyle(Style.Cpp.TripleVerbatim, option.TripleVerbatim);
+            SetStyle(Style.Cpp.UserLiteral, option.UserLiteral);
+            SetStyle(Style.Cpp.Uuid, option.Uuid);
+            SetStyle(Style.Cpp.Verbatim, option.Verbatim);
+            SetStyle(Style.Cpp.Word, option.Word);
+            SetStyle(Style.Cpp.Word2, option.Word2);
+        }
+
+
+    }
     public TextEditor()
     {
         InitializeComponent();
 
         this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
         ATrigger.DataCenter.AddInstance(this);
-
-        //Center.HotKey.Bind(Shortcut.Modifiers.Control, Keys.X).To(Cut);
 
         this.scintilla1.StyleResetDefault();
         this.scintilla1.SetWhitespaceBackColor(true, GlobalBackColor);
@@ -110,39 +149,16 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
         this.scintilla1.Margins[1].Type = ScintillaNET.MarginType.Number;
         this.scintilla1.Margins[1].Width = 60;
 
-        this.scintilla1.Styles[Style.Default].Font = "courier new";
-        this.scintilla1.Styles[Style.Default].Size = 14;
-        this.scintilla1.Styles[Style.Default].BackColor = GlobalBackColor;
-        this.scintilla1.StyleClearAll();
-
-        //this.BackgroundImage = Image.FromFile("ExampleWatermark.jpg");
-        //this.BackgroundImageLayout = ImageLayout.Stretch;
-
-        this.scintilla1.Styles[Style.Cpp.Default].ForeColor = Color.Blue;
-        this.scintilla1.Styles[Style.Cpp.Comment].ForeColor = Color.FromArgb(0, 128, 0);
-        this.scintilla1.Styles[Style.Cpp.CommentLine].ForeColor = Color.FromArgb(0, 128, 0);
-        this.scintilla1.Styles[Style.Cpp.Number].ForeColor = Color.Black;
-        this.scintilla1.Styles[Style.Cpp.Word].ForeColor = Color.Blue;
-        this.scintilla1.Styles[Style.Cpp.Word2].ForeColor = Color.Blue;
-        this.scintilla1.Styles[Style.Cpp.String].ForeColor = Color.FromArgb(163, 21, 21);
-        this.scintilla1.Styles[Style.Cpp.Character].ForeColor = Color.FromArgb(163, 21, 21);
-        this.scintilla1.Styles[Style.Cpp.StringEol].BackColor = Color.Pink;
-        this.scintilla1.Styles[Style.Cpp.Operator].ForeColor = Color.Purple;
-        this.scintilla1.Styles[Style.Cpp.Preprocessor].ForeColor = Color.Maroon;
-        this.scintilla1.Styles[Style.Cpp.UserLiteral].ForeColor = Color.Maroon;
-        this.scintilla1.Styles[Style.Cpp.Identifier].ForeColor = Color.FromArgb(255, 0, 0, 130);
-        this.scintilla1.Styles[Style.Cpp.Identifier].Bold = false;
+        InitStyles();
         
-        this.scintilla1.SetKeywords(0, "abstract as base break case catch checked continue default delegate do else event explicit extern false finally fixed for foreach goto if implicit in interface internal is lock namespace new null object operator out override params private protected public readonly ref return sealed sizeof stackalloc switch this throw true try typeof unchecked unsafe using virtual while");
-        this.scintilla1.SetKeywords(1, "bool byte char class const decimal double enum float int long sbyte short static string struct uint ulong ushort void");
         this.scintilla1.Lexer = Lexer.Cpp;
         this.scintilla1.CharAdded += CharAdded;
-        this.scintilla1.Delete += CharDelete;
-
+        this.scintilla1.AutoCCharDeleted += OnAutoCCharDeleted;      
+        
         this.scintilla1.AutoCIgnoreCase = true;
 
-        this.scintilla1.SetProperty("fold", "1");
-        this.scintilla1.SetProperty("fold.compact", "1");
+        //this.scintilla1.SetProperty("fold", "1");
+        //this.scintilla1.SetProperty("fold.compact", "1");
 
         // Configure a margin to display folding symbols
         this.scintilla1.Margins[2].Type = MarginType.Symbol;
@@ -169,13 +185,23 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
         // Enable automatic folding
         this.scintilla1.AutomaticFold = (AutomaticFold.Show | AutomaticFold.Click | AutomaticFold.Change);
 
-        this.scintilla1.AssignCmdKey(Keys.Control | Keys.S, Command.Home);
-
-        //Bitmap bmp = (Bitmap)Bitmap.FromFile("vol4.bmp");
-        //this.scintilla1.RegisterRgbaImage(-1, bmp);
-
         mInstances.Add(this);
     }
+
+    void SetStyle(int index, GrammarStyle grammar)
+    {
+        this.scintilla1.Styles[index].ForeColor = grammar.ForeColor;
+        this.scintilla1.Styles[index].BackColor = grammar.BackColor;
+        this.scintilla1.Styles[index].Font = grammar.Font;
+        this.scintilla1.Styles[index].Weight = grammar.Weight;
+        this.scintilla1.Styles[index].Size = grammar.Size;
+    }
+
+    //[AddMenu("View(&V)/GrammarHighLight")]
+    //static void OnOpenView()
+    //{
+    //    Center.SelectObject.value=
+    //}
 
     [AddMenu("View(&V)/TextEditor")]
     static void OnOpenView()
@@ -423,7 +449,7 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
             this.scintilla1.AutoCShow(lenEntered, GetAutoList(content, wordStartPos, lenEntered));
         }
     }
-    private void CharDelete(object sender, ModificationEventArgs arg)
+    private void OnAutoCCharDeleted(object sender, EventArgs e)
     {
         TryAutoComplete();
     }
@@ -504,6 +530,12 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
         TextEditor editor = (TextEditor)sender;
         if (editor.Visible)
             Center.ActiveDocument.value = string.IsNullOrEmpty(editor.FileName) ? editor.TabText : editor.FileName;
+    }
+
+    private void openInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+    {
+        if (!string.IsNullOrEmpty(Center.ActiveDocument.value))
+            Shell.OpenFloder(Center.ActiveDocument.value);
     }
 }
 }

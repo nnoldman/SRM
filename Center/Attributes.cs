@@ -56,8 +56,14 @@ namespace Core
     {
 
     }
-
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
     public class AddOption : Attribute
     {
+        public string Cate;
+
+        public AddOption(string cate)
+        {
+            this.Cate = cate;
+        }
     }
 }

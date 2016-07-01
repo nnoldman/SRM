@@ -72,5 +72,18 @@ namespace Core
                 Instance = null;
             }
         }
+
+        private void clearAllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.textBox1.Clear();
+        }
+
+        private void textBox1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == System.Windows.Forms.MouseButtons.Right)
+            {
+                this.contextMenuStrip1.Show(this.textBox1, e.X + 15, e.Y - 10);
+            }
+        }
     }
 }

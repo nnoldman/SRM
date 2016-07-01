@@ -10,10 +10,10 @@ D:\src\SRM\Extensions\SolutionExplorer\bin\Release\Core.pdb
 D:\src\SRM\Extensions\SolutionExplorer\bin\Release\ATrigger.pdb
 D:\src\SRM\Extensions\SolutionExplorer\bin\Release\WeifenLuo.WinFormsUI.Docking.pdb
 D:\src\SRM\Extensions\SolutionExplorer\bin\Release\Shortcut.pdb
-D:\src\SRM\Extensions\SolutionExplorer\bin\Release\Shortcut.xml
 D:\src\SRM\Extensions\SolutionExplorer\bin\Release\fastJSON.pdb
 D:\src\SRM\Extensions\SolutionExplorer\obj\Release\SolutionExplorer.csprojResolveAssemblyReference.cache
-D:\src\SRM\Extensions\SolutionExplorer\obj\Release\SolutionExplorer.resources
 D:\src\SRM\Extensions\SolutionExplorer\obj\Release\SolutionExplorer.csproj.GenerateResource.Cache
 D:\src\SRM\Extensions\SolutionExplorer\obj\Release\SolutionExplorer.dll
 D:\src\SRM\Extensions\SolutionExplorer\obj\Release\SolutionExplorer.pdb
+D:\src\SRM\Extensions\SolutionExplorer\obj\Release\SolutionExplorer.Properties.Resources.resources
+D:\src\SRM\Extensions\SolutionExplorer\obj\Release\SolutionExplorer.SolutionExplorer.resources

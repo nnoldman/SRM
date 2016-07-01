@@ -47,25 +47,25 @@ namespace Core
         [AddMenu("View(&V)/Option")]
         static void OnOpenView()
         {
-            Center.SelectObject.value = Center.Option;
-            //if (Instance == null)
-            //{
-            //    Instance = new OptionView();
-            //    Instance.TabText = "OptionView";
-            //    Instance.Show(Center.Form.DockerContainer, DockState.Float);
-            //}
-            //else
-            //{
-            //    Instance.Hide();
-            //    Instance.Dispose();
-            //    Instance = null;
-            //}
+            if (Instance == null)
+            {
+                Instance = new OptionView();
+                Instance.TabText = "OptionView";
+                Instance.Show(Center.Form.DockerContainer, DockState.Float);
+            }
+            else
+            {
+                Instance.Hide();
+                Instance.Dispose();
+                Instance = null;
+            }
         }
 
-        private void treeView1_MouseClick(object sender, MouseEventArgs e)
+
+        private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (this.treeView1.SelectedNode != null)
-                Center.SelectObject.value = (Object)this.treeView1.SelectedNode.Tag;
+            if (e.Button == System.Windows.Forms.MouseButtons.Left)
+                Center.SelectObject.value = (Core.Object)e.Node.Tag;
         }
     }
 }
