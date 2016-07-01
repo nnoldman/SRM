@@ -19,6 +19,7 @@ namespace Core
         OpenFloder,
         SelectObject,
         Console,
+        ConsoleClear,
         BeginBuild,
         EndBuild,
     }

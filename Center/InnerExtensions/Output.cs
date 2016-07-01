@@ -28,7 +28,13 @@ namespace Core
             ATrigger.DataCenter.RemoveInstance(this);
             Instance = null;
         }
-        
+
+        [ATrigger.Receiver((int)DataType.ConsoleClear)]
+        void ClearConsole()
+        {
+            this.textBox1.Clear();
+        }
+
         delegate void SetTextCallback(string text);
 
         [ATrigger.Receiver((int)DataType.Console)]

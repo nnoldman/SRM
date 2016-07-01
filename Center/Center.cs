@@ -58,6 +58,9 @@ namespace Core
         [Emmiter((int)DataType.Console)]
         public static Signal Console = new Signal();
 
+        [Emmiter((int)DataType.ConsoleClear)]
+        public static Signal ConsoleClear = new Signal();
+        
         [Emmiter((int)DataType.BeginBuild)]
         public static Signal BeginBuild = new Signal();
 

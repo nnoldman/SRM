@@ -151,6 +151,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Shell.cs" />
     <Compile Include="ShortCutIndex.cs" />
     <Compile Include="InnerExtensions\ShortCutSetting.cs">
       <SubType>Form</SubType>

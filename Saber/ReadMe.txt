@@ -7,8 +7,9 @@
 	Feature:AddOption
 	Inspector:Support VScrollBar
 	Feature:AddMenuButton
-	
+	SolutionExplorer:Add Shell
 ToDoList:
+	
 	Add:MakeFile
 	Build:
 	Run:

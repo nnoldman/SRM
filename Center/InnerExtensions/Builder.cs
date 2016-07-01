@@ -26,7 +26,7 @@ namespace Core
 
             string ccp_entry = Path.Combine(floder, "main.cpp");
             string out_file = Path.Combine(floder, "bin") + "/bin.exe";
-            string args = string.Format("{0} -o {1}", ccp_entry, out_file);
+            string args = string.Format("{0} -o {1} -g", ccp_entry, out_file);
 
             ProcessStartInfo startInfo = new ProcessStartInfo();
             startInfo.FileName = Complier;
@@ -45,11 +45,15 @@ namespace Core
             process.Start();
             process.BeginOutputReadLine();
             process.BeginErrorReadLine();
+
+            Center.ConsoleClear.Trigger();
+            Center.Console.Trigger("=>Complier Args:" + startInfo.Arguments);
             Center.BeginBuild.Trigger();
         }
 
         void process_Exited(object sender, EventArgs e)
         {
+            Center.Console.Trigger("=>Complier End");
             Center.EndBuild.Trigger();
         }
 

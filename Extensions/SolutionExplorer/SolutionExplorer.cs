@@ -162,5 +162,25 @@ namespace SolutionExplorer
             DoOpen();
         }
 
+        private void fileTree_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                this.fileTree.SelectedNode = e.Node;
+                Point pos = new Point(e.Node.Bounds.X + e.Node.Bounds.Width, e.Node.Bounds.Y + e.Node.Bounds.Height / 2);
+                this.contextMenuStrip1.Show(e.Node.TreeView, pos);
+            }
+        }
+
+        private void openInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string path = this.fileTree.SelectedNode.Tag.ToString();
+            FileInfo fi = new FileInfo(path);
+
+            if (!fi.Attributes.HasFlag(FileAttributes.Directory))
+                path = Path.GetDirectoryName(path);
+            Shell.OpenFloder(path);
+        }
+
     }
 }
