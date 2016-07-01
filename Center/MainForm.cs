@@ -132,7 +132,12 @@ public partial class MainForm : Form
 
             if (attr != null)
             {
+                if (Center.MenuButtons.Keys.Contains(method))
+                    continue;
+
                 var menu = (AddMenuButton)attr;
+                Center.MenuButtons.Add(method, menu);
+
                 Image image = null;
                 if (menu.LoaderType != null)
                 {

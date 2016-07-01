@@ -1,0 +1,62 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Core
+{
+    public class Builder : BoolObject
+    {
+        public string Name;
+        public string Complier;
+        public string Linker;
+        public string Debugger;
+
+        public void Build()
+        {
+            if (string.IsNullOrEmpty(Complier))
+                return;
+
+            string floder = Center.Option.Solution.LastSolutionPath;
+            if (string.IsNullOrEmpty(floder))
+                return;
+
+            string ccp_entry = Path.Combine(floder, "main.cpp");
+            string out_file = Path.Combine(floder, "bin") + "/bin.exe";
+            string args = string.Format("{0} -o {1}", ccp_entry, out_file);
+
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = Complier;
+            startInfo.Arguments = args;
+            startInfo.CreateNoWindow = true;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.RedirectStandardError = true;
+            startInfo.UseShellExecute = false;
+            startInfo.WorkingDirectory = Path.GetDirectoryName(Complier);
+
+            Process process = new Process();
+            process.StartInfo = startInfo;
+            process.ErrorDataReceived += process_ErrorDataReceived;
+            process.OutputDataReceived += process_ErrorDataReceived;
+            process.Exited += process_Exited;
+            process.Start();
+            process.BeginOutputReadLine();
+            process.BeginErrorReadLine();
+            Center.BeginBuild.Trigger();
+        }
+
+        void process_Exited(object sender, EventArgs e)
+        {
+            Center.EndBuild.Trigger();
+        }
+
+        void process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(e.Data))
+                Center.Console.Trigger(e.Data);
+        }
+    }
+}

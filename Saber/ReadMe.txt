@@ -6,10 +6,9 @@
 	Feature:AddShortCut
 	Feature:AddOption
 	Inspector:Support VScrollBar
+	Feature:AddMenuButton
 	
 ToDoList:
-	
-	Feature:AddMenuButton
 	Add:MakeFile
 	Build:
 	Run:

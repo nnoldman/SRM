@@ -22,6 +22,7 @@ namespace Core
 
         internal static HashSet<Type> OptionTypes = new HashSet<Type>();
         internal static Dictionary<MethodInfo, AddShortCut> HotKeys = new Dictionary<MethodInfo, AddShortCut>();
+        internal static Dictionary<MethodInfo, AddMenuButton> MenuButtons = new Dictionary<MethodInfo, AddMenuButton>();
         internal static Dictionary<string, Type> ExtensionTypes = new Dictionary<string, Type>();
 
         [Emmiter((int)DataType.ApplicationExit)]
@@ -53,5 +54,15 @@ namespace Core
 
         [Emmiter((int)DataType.SelectObject)]
         public static ATrigger<Object> SelectObject = new ATrigger<Object>();
+
+        [Emmiter((int)DataType.Console)]
+        public static Signal Console = new Signal();
+
+        [Emmiter((int)DataType.BeginBuild)]
+        public static Signal BeginBuild = new Signal();
+
+        [Emmiter((int)DataType.EndBuild)]
+        public static Signal EndBuild = new Signal();
+
     }
 }

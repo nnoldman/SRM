@@ -43,16 +43,19 @@ namespace Core
         void Initialize()
         {
             LoadOption();
-            InitBaseInfo();
+            UpdateList();
+            UpdateSelected();
         }
-        void InitBaseInfo()
+        void UpdateList()
         {
             this.comboBox_Builder.Items.Clear();
             Center.Option.BuildOption.Builders.ForEach((b) => this.comboBox_Builder.Items.Add(b.Name));
-            this.comboBox_Builder.Text = Center.Option.BuildOption.CurrentBuilderName;
-
             this.comboBox_BuildMode.Items.Clear();
             this.comboBox_BuildMode.Items.AddRange(Enum.GetNames(typeof(BuildMode)));
+        }
+        void UpdateSelected()
+        {
+            this.comboBox_Builder.Text = Center.Option.BuildOption.CurrentBuilderName;
             this.comboBox_BuildMode.Text = Center.Option.BuildOption.CurrentMode.ToString();
         }
         public void LoadOption()
@@ -89,6 +92,9 @@ namespace Core
                     b.Debugger = this.dataGridView1[ColumnDebugger, i].Value.ToString();
                 Center.Option.BuildOption.Builders.Add(b);
             }
+
+            UpdateList();
+            UpdateSelected();
         }
 
         void dataGridView1_CellValueChanged(object sender, DataGridViewCellEventArgs e)

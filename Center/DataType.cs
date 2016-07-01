@@ -18,5 +18,8 @@ namespace Core
         ChangeDocumentName,
         OpenFloder,
         SelectObject,
+        Console,
+        BeginBuild,
+        EndBuild,
     }
 }

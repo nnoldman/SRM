@@ -47,6 +47,7 @@
     <Compile Include="Center.cs" />
     <Compile Include="DataType.cs" />
     <Compile Include="Debugger.cs" />
+    <Compile Include="InnerExtensions\Builder.cs" />
     <Compile Include="InnerExtensions\DebuggerConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +174,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\OptionView.resx">
       <DependentUpon>OptionView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnerExtensions\Output.resx">
+      <DependentUpon>Output.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InspectorGrid\InspectorGrid.resx">
       <DependentUpon>InspectorGrid.cs</DependentUpon>

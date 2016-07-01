@@ -28,6 +28,27 @@ namespace Core
             ATrigger.DataCenter.RemoveInstance(this);
             Instance = null;
         }
+        
+        delegate void SetTextCallback(string text);
+
+        [ATrigger.Receiver((int)DataType.Console)]
+        void WriteConsole()
+        {
+            SetText(Center.Console.Arg<string>(0));
+        }
+
+        private void SetText(string text)
+        {
+            if (this.textBox1.InvokeRequired)
+            {
+                SetTextCallback d = new SetTextCallback(SetText);
+                this.Invoke(d, new object[] { text });
+            }
+            else
+            {
+                this.textBox1.Text += text + "\r\n";
+            }
+        }
 
         [AddMenu("View(&V)/Output")]
         static void OnOpenView()

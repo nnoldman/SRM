@@ -18,18 +18,7 @@ namespace Core
         Release,
     }
 
-    public class Builder : BoolObject
-    {
-        public string Name;
-        public string Complier;
-        public string Linker;
-        public string Debugger;
-
-        public void Build()
-        {
-
-        }
-    }
+ 
 
     public class LaunchParams
     {
