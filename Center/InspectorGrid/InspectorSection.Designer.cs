@@ -33,6 +33,7 @@
             // 
             // TitleButton
             // 
+            this.TitleButton.BackColor = System.Drawing.SystemColors.GradientInactiveCaption;
             this.TitleButton.Dock = System.Windows.Forms.DockStyle.Top;
             this.TitleButton.Location = new System.Drawing.Point(0, 0);
             this.TitleButton.Margin = new System.Windows.Forms.Padding(0);
@@ -41,7 +42,7 @@
             this.TitleButton.TabIndex = 0;
             this.TitleButton.Text = "button1";
             this.TitleButton.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.TitleButton.UseVisualStyleBackColor = true;
+            this.TitleButton.UseVisualStyleBackColor = false;
             this.TitleButton.Click += new System.EventHandler(this.TitleButton_Click_1);
             // 
             // InspectorSection

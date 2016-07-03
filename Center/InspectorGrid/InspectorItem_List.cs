@@ -19,7 +19,7 @@ namespace Core
         }
         public override void OnInit()
         {
-            this.Title.Text = Field.Name;
+            this.button1.Text = Field.Name;
             object f = Field.GetValue(this.Target);
         }
         private void Content_TextChanged(object sender, EventArgs e)

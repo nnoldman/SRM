@@ -28,47 +28,67 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.Title = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Value";
+            this.Column2.Name = "Column2";
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Index";
+            this.Column1.Name = "Column1";
+            // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToResizeRows = false;
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(108, 0);
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.Column2});
+            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Right;
+            this.dataGridView1.Location = new System.Drawing.Point(161, 0);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(173, 57);
+            this.dataGridView1.RowHeadersVisible = false;
+            this.dataGridView1.RowTemplate.Height = 23;
+            this.dataGridView1.Size = new System.Drawing.Size(559, 43);
             this.dataGridView1.TabIndex = 1;
             // 
-            // Title
+            // button1
             // 
-            this.Title.AutoEllipsis = true;
-            this.Title.Dock = System.Windows.Forms.DockStyle.Left;
-            this.Title.Location = new System.Drawing.Point(0, 0);
-            this.Title.Name = "Title";
-            this.Title.Size = new System.Drawing.Size(108, 57);
-            this.Title.TabIndex = 0;
-            this.Title.Text = "label1";
-            this.Title.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.button1.Location = new System.Drawing.Point(0, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(148, 43);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "button1";
+            this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.button1.UseVisualStyleBackColor = true;
             // 
             // InspectorItem_List
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridView1);
-            this.Controls.Add(this.Title);
             this.Name = "InspectorItem_List";
-            this.Size = new System.Drawing.Size(281, 57);
+            this.Size = new System.Drawing.Size(720, 43);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        public System.Windows.Forms.Label Title;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.Button button1;
     }
 }
