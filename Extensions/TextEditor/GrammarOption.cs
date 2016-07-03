@@ -121,4 +121,15 @@ namespace TextEditor
         public GrammarStyle UserLiteral = new GrammarStyle();
         public GrammarStyle Identifier = new GrammarStyle();
     }
+
+    [AddOption("LanguageExtension")]
+    public class LanguageExtensionOption : Component
+    {
+        public string Cpp = ".h;.cpp;.cc";
+        public string C = ".c";
+        public string Lua = ".lua;.bytes";
+        public string Xml = ".xml";
+        public string Csharp = ".cs";
+        public string Python = ".py";
+    }
 }

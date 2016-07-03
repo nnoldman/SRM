@@ -83,9 +83,7 @@
     <Compile Include="InspectorGrid\InspectorGrid.Designer.cs">
       <DependentUpon>InspectorGrid.cs</DependentUpon>
     </Compile>
-    <Compile Include="InspectorGrid\InspectorItem.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
+    <Compile Include="InspectorGrid\InspectorItem.cs" />
     <Compile Include="InspectorGrid\InspectorItem_Bool.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -220,9 +218,9 @@
       <Project>{349dfe1d-d3cd-4bf7-ad85-8052e81dc525}</Project>
       <Name>ATrigger</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Libs\fastJSON\fastJSON.csproj">
-      <Project>{207e91b1-c9f8-4913-88e1-3549ef5f3273}</Project>
-      <Name>fastJSON</Name>
+    <ProjectReference Include="..\Libs\Newtonsoft.Json\Newtonsoft.Json.csproj">
+      <Project>{eeea67f9-9089-481d-a4dc-0966dec9fd7d}</Project>
+      <Name>Newtonsoft.Json</Name>
     </ProjectReference>
     <ProjectReference Include="..\Libs\Shortcut\Shortcut.csproj">
       <Project>{5deadf0b-dc7b-430f-982e-647f7b05455d}</Project>

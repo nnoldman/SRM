@@ -1,5 +1,6 @@
 ﻿using ATrigger;
 using Core;
+using Newtonsoft.Json;
 using Shortcut;
 using System;
 using System.Collections.Generic;
@@ -255,14 +256,18 @@ public partial class MainForm : Form
     void LoadOption()
     {
         if (File.Exists(Center.Option.Base.FileName))
-            Center.Option = (Option)fastJSON.JSON.ToObject(File.ReadAllText(Center.Option.Base.FileName));
+        {
+            var setting = new JsonSerializerSettings();
+            setting.Formatting = Formatting.Indented;
+            JsonConvert.DeserializeObject(File.ReadAllText(Center.Option.Base.FileName));
+        }
     }
 
     void SaveOption()
     {
         this.DockerContainer.SaveAsXml(Center.Option.Base.LayoutFile);
 
-        string content = fastJSON.JSON.ToNiceJSON(Center.Option, new fastJSON.JSONParameters());
+        string content = JsonConvert.SerializeObject(Center.Option);
 
         File.WriteAllText(Center.Option.Base.FileName, content);
     }

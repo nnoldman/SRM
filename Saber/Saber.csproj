@@ -79,10 +79,6 @@
       <Project>{349dfe1d-d3cd-4bf7-ad85-8052e81dc525}</Project>
       <Name>ATrigger</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Libs\fastJSON\fastJSON.csproj">
-      <Project>{207e91b1-c9f8-4913-88e1-3549ef5f3273}</Project>
-      <Name>fastJSON</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Libs\Shortcut\Shortcut.csproj">
       <Project>{5deadf0b-dc7b-430f-982e-647f7b05455d}</Project>
       <Name>Shortcut</Name>
