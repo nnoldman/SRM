@@ -100,7 +100,7 @@
 
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private System.Windows.Forms.ToolStripMenuItem closeAllToolStripMenuItem;
-        private ScintillaNET.Scintilla scintilla1;
         private System.Windows.Forms.ToolStripMenuItem openInExplorerToolStripMenuItem;
+        internal ScintillaNET.Scintilla scintilla1;
     }
 }

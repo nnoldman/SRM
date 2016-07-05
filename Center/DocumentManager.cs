@@ -34,10 +34,10 @@ public class DocumentManager : ATrigger.TriggerObject
     }
 
     [ATrigger.Receiver((int)DataType.OpenDocument)]
-    public void CreateDocument(string document)
+    public void CreateDocument()
     {
-        if (!mDocuments.Contains(document))
-            mDocuments.Add(document);
+        if (!mDocuments.Contains(Center.CurrentOpenDoucment.value))
+            mDocuments.Add(Center.CurrentOpenDoucment.value);
     }
 
     [ATrigger.Receiver((int)DataType.ChangeDocumentName)]

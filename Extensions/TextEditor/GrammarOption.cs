@@ -125,11 +125,18 @@ namespace TextEditor
     [AddOption("LanguageExtension")]
     public class LanguageExtensionOption : Component
     {
-        public string Cpp = ".h;.cpp;.cc";
-        public string C = ".c";
-        public string Lua = ".lua;.bytes";
-        public string Xml = ".xml";
-        public string Csharp = ".cs";
-        public string Python = ".py";
+        public Dictionary<string, string> LanguageNameExtensions;
+        public LanguageExtensionOption()
+        {
+            LanguageNameExtensions = new Dictionary<string, string>()
+            {
+                ["Cpp"] = ".h;.cpp;.cc",
+                ["C"] = ".c",
+                ["Lua"] = ".lua;.bytes",
+                ["Xml"] = ".xml",
+                ["Csharp"] = ".cs",
+                ["Python"] = ".py",
+            };
+        }
     }
 }
