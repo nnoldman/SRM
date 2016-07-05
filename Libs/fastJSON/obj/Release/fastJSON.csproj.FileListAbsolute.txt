@@ -1,4 +1,0 @@
-D:\src\SRM\Libs\fastJSON\bin\Release\fastJSON.dll
-D:\src\SRM\Libs\fastJSON\bin\Release\fastJSON.pdb
-D:\src\SRM\Libs\fastJSON\obj\Release\fastJSON.dll
-D:\src\SRM\Libs\fastJSON\obj\Release\fastJSON.pdb
