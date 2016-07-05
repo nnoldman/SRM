@@ -17,6 +17,7 @@ namespace Core
         ActiveDocument,
         ChangeDocumentName,
         OpenFloder,
+        ViewObject,
         SelectObject,
         Console,
         ConsoleClear,

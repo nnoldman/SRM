@@ -216,12 +216,12 @@ public partial class MainForm : Form
             {
                 ToolStripMenuItem menu = new ToolStripMenuItem();
                 this.MainMenu.Items.Add(menu);
-                AddMenu(menu, child);
+                AddMenus(menu, child);
             }
         }
     }
 
-    void AddMenu(ToolStripMenuItem parent, MenuNode node)
+    void AddMenus(ToolStripMenuItem parent, MenuNode node)
     {
         if (!string.IsNullOrEmpty(node.content))
         {
@@ -236,7 +236,7 @@ public partial class MainForm : Form
         {
             ToolStripMenuItem menu = new ToolStripMenuItem();
             parent.DropDownItems.Add(menu);
-            AddMenu(menu, child);
+            AddMenus(menu, child);
         }
     }
 
@@ -344,6 +344,12 @@ public partial class MainForm : Form
             if (Center.HotKeyBinder.IsHotkeyAlreadyBound(hk))
                 Center.HotKeyBinder.Unbind(hk);
         }
+    }
+
+    [AddMenu("View(&V)/Option")]
+    static void OnOpenView()
+    {
+        Center.ViewObject.value = Center.Option;
     }
 
     [Receiver((int)DataType.ApplicationExit)]

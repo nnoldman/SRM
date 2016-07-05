@@ -11,30 +11,15 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public partial class OptionView : Extension, ATrigger.ITriggerStatic
+    public partial class ObjectView : Extension, ATrigger.ITriggerStatic
     {
-        static OptionView Instance;
+        static ObjectView Instance;
 
-        public OptionView()
+        public ObjectView()
         {
             Instance = this;
             InitializeComponent();
             ATrigger.DataCenter.AddInstance(this);
-
-            ShowContent();
-        }
-
-
-        void ShowContent()
-        {
-            this.treeView1.Nodes.Clear();
-
-            foreach (var child in Center.Option.Children)
-            {
-                TreeNode node = new TreeNode(child.Name);
-                node.Tag = child;
-                this.treeView1.Nodes.Add(node);
-            }
         }
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
@@ -44,13 +29,13 @@ namespace Core
             Instance = null;
         }
 
-        [AddMenu("View(&V)/Option")]
+        [AddMenu("View(&V)/ObjectView")]
         static void OnOpenView()
         {
             if (Instance == null)
             {
-                Instance = new OptionView();
-                Instance.TabText = "OptionView";
+                Instance = new ObjectView();
+                Instance.TabText = "ObjectView";
                 Instance.Show(Center.Form.DockerContainer, DockState.Float);
             }
             else
@@ -61,6 +46,27 @@ namespace Core
             }
         }
 
+        [ATrigger.Receiver((int)DataType.ViewObject)]
+        static void OnViewObjectChange()
+        {
+            Instance.treeView1.Nodes.Clear();
+            CreateNode(Center.ViewObject.value, null, Instance.treeView1);
+        }
+
+
+        static void CreateNode(Core.Object obj, TreeNode parent,TreeView root)
+        {
+            TreeNode node = new TreeNode();
+            node.Text = obj.Name ?? obj.GetType().Name;
+            node.Tag = obj;
+            if (parent != null)
+                parent.Nodes.Add(node);
+            else
+                root.Nodes.Add(node);
+
+            foreach (var child in obj.Children)
+                CreateNode(child, node, root);
+        }
 
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {

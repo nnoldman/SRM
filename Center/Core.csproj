@@ -71,11 +71,11 @@
     <Compile Include="InnerExtensions\Inspector.Designer.cs">
       <DependentUpon>Inspector.cs</DependentUpon>
     </Compile>
-    <Compile Include="InnerExtensions\OptionView.cs">
+    <Compile Include="InnerExtensions\ObjectView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="InnerExtensions\OptionView.Designer.cs">
-      <DependentUpon>OptionView.cs</DependentUpon>
+    <Compile Include="InnerExtensions\ObjectView.Designer.cs">
+      <DependentUpon>ObjectView.cs</DependentUpon>
     </Compile>
     <Compile Include="InspectorGrid\InspectorGrid.cs">
       <SubType>UserControl</SubType>
@@ -171,8 +171,8 @@
     <EmbeddedResource Include="InnerExtensions\Inspector.resx">
       <DependentUpon>Inspector.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InnerExtensions\OptionView.resx">
-      <DependentUpon>OptionView.cs</DependentUpon>
+    <EmbeddedResource Include="InnerExtensions\ObjectView.resx">
+      <DependentUpon>ObjectView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\Output.resx">
       <DependentUpon>Output.cs</DependentUpon>

@@ -55,6 +55,9 @@ namespace Core
         [Emmiter((int)DataType.SelectObject)]
         public static ATrigger<Object> SelectObject = new ATrigger<Object>();
 
+        [Emmiter((int)DataType.ViewObject)]
+        public static ATrigger<Object> ViewObject = new ATrigger<Object>();
+
         [Emmiter((int)DataType.Console)]
         public static Signal Console = new Signal();
 
