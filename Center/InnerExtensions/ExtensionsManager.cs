@@ -13,7 +13,7 @@ using WeifenLuo.WinFormsUI.Docking;
 namespace Core
 {
     [Core.ExtensionVersion(Name = "Extensions")]
-    public partial class ExtensionsManager : Extension, ATrigger.ITriggerStatic
+    public partial class ExtensionsManager : Extension, ATrigger.IStaticEmitterContainer
     {
         static ExtensionsManager Instance;
 

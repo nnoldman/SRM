@@ -49,7 +49,7 @@ namespace Core
             LoadInnerExtensions();
             LoadExternExtensions();
 
-            Center.ExtensionsLoaded.Trigger();
+            Center.OnExtensionsLoaded.Trigger();
         }
 
         void InstallExtensions(Assembly asm)

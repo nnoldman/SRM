@@ -18,7 +18,7 @@ namespace TextEditor
 
 [Core.ExtensionVersion(Name = "TextEditor")]
 
-public partial class TextEditor : Extension, ATrigger.ITriggerStatic
+public partial class TextEditor : Extension, ATrigger.IStaticEmitterContainer
 {
     public static Color GlobalBackColor = Color.FromArgb(0, 220, 230, 255);
     static List<TextEditor> mInstances = new List<TextEditor>();
@@ -237,11 +237,8 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
     }
 
     [ATrigger.Receiver((int)DataType.ChangeDocumentName)]
-     public void OnNameChaned()
+     public void OnNameChaned(string oldname, string newname)
     {
-        string oldname = Center.OnChangeDocumentName.Arg<string>(0);
-        string newname = Center.OnChangeDocumentName.Arg<string>(1);
-
         if (oldname == this.TabText || oldname == this.FileName)
             this.FileName = newname;
     }
@@ -356,7 +353,7 @@ public partial class TextEditor : Extension, ATrigger.ITriggerStatic
                 {
                     File.WriteAllText(dlg.FileName, text);
 
-                    Center.OnChangeDocumentName.Trigger(Center.ActiveDocument, dlg.FileName);
+                    Center.OnChangeDocumentName.Trigger(Center.ActiveDocument.value, dlg.FileName);
                 }
             }
         }

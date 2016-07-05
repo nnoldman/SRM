@@ -11,7 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public class Center : ATrigger.ITriggerStatic
+    public class Center : ATrigger.IStaticEmitterContainer
     {
         public static MainForm Form { get; internal set; }
         public static Option Option = new Option();
@@ -25,50 +25,51 @@ namespace Core
         internal static Dictionary<MethodInfo, AddMenuButton> MenuButtons = new Dictionary<MethodInfo, AddMenuButton>();
         internal static Dictionary<string, Type> ExtensionTypes = new Dictionary<string, Type>();
 
-        [Emmiter((int)DataType.ApplicationExit)]
-        public static Signal OnExit = new Signal();//para:empty
+        [TriggerEmmiter((int)DataType.ApplicationExit)]
+        public static Emmiter OnExit = new Emmiter();//para:empty
 
-        [Emmiter((int)DataType.LayoutEnd)]
-        public static Signal OnLayoutEnd = new Signal();//para:empty
+        [TriggerEmmiter((int)DataType.ExtensionsLoaded)]
+        public static Emmiter OnExtensionsLoaded = new Emmiter();
+
+        [TriggerEmmiter((int)DataType.LayoutEnd)]
+        public static Emmiter OnLayoutEnd = new Emmiter();//para:empty
         
-        [Emmiter((int)DataType.ApplicationInialized)]
-        public static Signal OnInitialized = new Signal();//para:empty
+        [TriggerEmmiter((int)DataType.ApplicationInialized)]
+        public static Emmiter OnInitialized = new Emmiter();//para:empty
 
-        [Emmiter((int)DataType.OpenDocument)]
-        public static ATrigger<string> CurrentOpenDoucment = new ATrigger<string>();
+        [TriggerEmmiter((int)DataType.OpenDocument)]
+        public static DataContainer<string> CurrentOpenDoucment = new DataContainer<string>();
 
-        [Emmiter((int)DataType.CloseDocument)]
-        public static ATrigger<string> CurrentCloseDoucment = new ATrigger<string>();
+        [TriggerEmmiter((int)DataType.CloseDocument)]
+        public static DataContainer<string> CurrentCloseDoucment = new DataContainer<string>();
 
-        [Emmiter((int)DataType.ActiveDocument)]
-        public static ATrigger<string> ActiveDocument = new ATrigger<string>();
+        [TriggerEmmiter((int)DataType.ActiveDocument)]
+        public static DataContainer<string> ActiveDocument = new DataContainer<string>();
 
-        [Emmiter((int)DataType.ChangeDocumentName)]
-        public static Signal OnChangeDocumentName = new Signal();//para:old name,new name
+        [TriggerEmmiter((int)DataType.ChangeDocumentName)]
+        public static Emmiter<string, string> OnChangeDocumentName = new Emmiter<string, string>();
 
-        [Emmiter((int)DataType.ExtensionsLoaded)]
-        public static Signal ExtensionsLoaded = new Signal();
+        [TriggerEmmiter((int)DataType.OpenFloder)]
+        public static DataContainer<string> OnOpenFloder = new DataContainer<string>();
 
-        [Emmiter((int)DataType.OpenFloder)]
-        public static ATrigger<string> OpenFloder = new ATrigger<string>();
+        [TriggerEmmiter((int)DataType.SelectObject)]
+        public static DataContainer<Object> OnSelectObject = new DataContainer<Object>();
 
-        [Emmiter((int)DataType.SelectObject)]
-        public static ATrigger<Object> SelectObject = new ATrigger<Object>();
+        [TriggerEmmiter((int)DataType.ViewObject)]
+        public static DataContainer<Object> OnViewObject = new DataContainer<Object>();
 
-        [Emmiter((int)DataType.ViewObject)]
-        public static ATrigger<Object> ViewObject = new ATrigger<Object>();
+        [TriggerEmmiter((int)DataType.Console)]
+        public static Emmiter<string> Console = new Emmiter<string>();
 
-        [Emmiter((int)DataType.Console)]
-        public static Signal Console = new Signal();
-
-        [Emmiter((int)DataType.ConsoleClear)]
-        public static Signal ConsoleClear = new Signal();
+        [TriggerEmmiter((int)DataType.ConsoleClear)]
+        public static Emmiter OnConsoleClear = new Emmiter();
         
-        [Emmiter((int)DataType.BeginBuild)]
-        public static Signal BeginBuild = new Signal();
+        [TriggerEmmiter((int)DataType.BeginBuild)]
+        public static Emmiter BeginBuild = new Emmiter();
 
-        [Emmiter((int)DataType.EndBuild)]
-        public static Signal EndBuild = new Signal();
+        [TriggerEmmiter((int)DataType.EndBuild)]
+        public static Emmiter EndBuild = new Emmiter();
 
+        public static Emmiter<string> TheOpenDocument = new Emmiter<string>();
     }
 }

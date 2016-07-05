@@ -49,7 +49,7 @@ namespace Core
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
 
-                Center.ConsoleClear.Trigger();
+                Center.OnConsoleClear.Trigger();
                 Center.Console.Trigger("=>Complier Args:" + startInfo.Arguments);
                 Center.BeginBuild.Trigger();
             }

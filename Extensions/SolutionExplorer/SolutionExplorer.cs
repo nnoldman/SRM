@@ -12,7 +12,7 @@ using WeifenLuo.WinFormsUI.Docking;
 namespace SolutionExplorer
 {
     [Core.ExtensionVersion(Name = "SolutionExplorer")]
-    public partial class SolutionExplorer : Extension, ATrigger.ITriggerStatic
+    public partial class SolutionExplorer : Extension, ATrigger.IStaticEmitterContainer
     {
         static SolutionExplorer Instance;
 
@@ -53,8 +53,7 @@ namespace SolutionExplorer
             }
             else if (File.Exists(e.Node.Tag.ToString()))
             {
-                Center.CurrentOpenDoucment.Set(e.Node.Tag.ToString(), false);
-                Center.CurrentOpenDoucment.Trigger();
+                Center.CurrentOpenDoucment.Set(e.Node.Tag.ToString(),true,true);
             }
         }
 
@@ -76,7 +75,7 @@ namespace SolutionExplorer
             var result = dlg.ShowDialog();
 
             if (result == System.Windows.Forms.DialogResult.OK)
-                Center.OpenFloder.value = dlg.SelectedPath;
+                Center.OnOpenFloder.value = dlg.SelectedPath;
         }
 
         static void CreateInstance()
@@ -104,7 +103,7 @@ namespace SolutionExplorer
         [ATrigger.Receiver((int)DataType.OpenFloder)]
         void OnOpenFloder()
         {
-            string floderName = Center.OpenFloder.value;
+            string floderName = Center.OnOpenFloder.value;
 
             if (!Directory.Exists(floderName))
                 return;

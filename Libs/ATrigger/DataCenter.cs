@@ -17,10 +17,10 @@ namespace ATrigger
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
-    public class Emmiter : Attribute
+    public class TriggerEmmiter : Attribute
     {
         public DataType dataType;
-        public Emmiter(int dataType)
+        public TriggerEmmiter(int dataType)
         {
             this.dataType = dataType;
         }
@@ -37,7 +37,7 @@ namespace ATrigger
             {
                 foreach (var tp in asm.DefinedTypes)
                 {
-                    if (typeof(ATrigger.ITriggerStatic).IsAssignableFrom(tp))
+                    if (typeof(ATrigger.IStaticEmitterContainer).IsAssignableFrom(tp))
                     {
                         ATrigger.DataCenter.ProcessStaticTrigger(tp);
                     }
@@ -70,10 +70,10 @@ namespace ATrigger
                 {
                     if (field.IsStatic)
                     {
-                        object[] objs = field.GetCustomAttributes(typeof(Emmiter), true);
+                        object[] objs = field.GetCustomAttributes(typeof(TriggerEmmiter), true);
                         if (objs != null && objs.Length > 0)
                         {
-                            Signal data = (Signal)field.GetValue(null);
+                            Emmiter data = (Emmiter)field.GetValue(null);
                             if (data == null)
                             {
                                 string warnstr = string.Format("Warning : DataEntity({0}.{1}) is null when scan type!", tp.Name, field.Name);
@@ -81,12 +81,12 @@ namespace ATrigger
                             }
                             else
                             {
-                                data.dataType = ((Emmiter)objs[0]).dataType;
+                                data.Type = ((TriggerEmmiter)objs[0]).dataType;
 
                                 Entity entity = new Entity();
                                 entity.instance = null;
                                 entity.data = data;
-                                mDataEntities.Add(data.dataType, entity);
+                                mDataEntities.Add(data.Type, entity);
                             }
                         }
                     }
@@ -114,12 +114,12 @@ namespace ATrigger
                 acts.RemoveAll((item) => item.call.instance == instance);
             }
         }
-        internal static object[] GetParams()
-        {
-            if (mParamStack.Count > 0)
-                return (object[])mParamStack.Peek();
-            return null;
-        }
+        //internal static object[] GetParams()
+        //{
+        //    if (mParamStack.Count > 0)
+        //        return (object[])mParamStack.Peek();
+        //    return null;
+        //}
         internal static T GetParamByIndex<T>(int idx)
         {
             object[] paras = (object[])mParamStack.Peek();
@@ -152,7 +152,7 @@ namespace ATrigger
                     if (act != null)
                     {
                         //act.call.method.Invoke(act.call.instance, args);
-                        act.call.method.Invoke(act.call.instance, null);
+                        act.call.method.Invoke(act.call.instance, args);
                     }
                 }
             }
@@ -161,7 +161,7 @@ namespace ATrigger
 
         internal class ReceiverData
         {
-            public DataType type = Signal.InvalidDataType;
+            public DataType type = Emmiter.InvalidDataType;
             public CallCack call = new CallCack();
         }
         internal class CallCack
@@ -172,7 +172,7 @@ namespace ATrigger
         internal class Entity
         {
             public object instance;
-            public Signal data;
+            public Emmiter data;
         }
         static Dictionary<DataType, Entity> mDataEntities = new Dictionary<DataType, Entity>();
 
@@ -195,7 +195,7 @@ namespace ATrigger
         internal static void AddEntityWithInstance(object instance)
         {
             Type tp = instance.GetType();
-            Type baseType = typeof(Signal);
+            Type baseType = typeof(Emmiter);
 
             FieldInfo[] fields = tp.GetFields(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
             if (fields != null && fields.Length > 0)
@@ -204,14 +204,14 @@ namespace ATrigger
                 {
                     if (!field.IsStatic)
                     {
-                        object[] objs = field.GetCustomAttributes(typeof(Emmiter), true);
+                        object[] objs = field.GetCustomAttributes(typeof(TriggerEmmiter), true);
                         if (objs != null && objs.Length > 0)
                         {
                             try
                             {
                                 if (field.FieldType.IsSubclassOf(baseType) || field.FieldType == baseType)
                                 {
-                                    Signal data = (Signal)field.GetValue(instance);
+                                    Emmiter data = (Emmiter)field.GetValue(instance);
                                     if (data == null)
                                     {
                                         string warnstr = string.Format("Warning : DataEntity({0}.{1}) is null when class construct!", tp.Name, field.Name);
@@ -219,13 +219,13 @@ namespace ATrigger
                                     }
                                     else
                                     {
-                                        data.dataType = ((Emmiter)objs[0]).dataType;
-                                        if (!mDataEntities.ContainsKey(data.dataType))
+                                        data.Type = ((TriggerEmmiter)objs[0]).dataType;
+                                        if (!mDataEntities.ContainsKey(data.Type))
                                         {
                                             Entity entity = new Entity();
                                             entity.instance = instance;
                                             entity.data = data;
-                                            mDataEntities.Add(data.dataType, entity);
+                                            mDataEntities.Add(data.Type, entity);
                                         }
                                     }
                                 }

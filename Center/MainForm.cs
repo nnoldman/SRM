@@ -349,7 +349,7 @@ public partial class MainForm : Form
     [AddMenu("View(&V)/Option")]
     static void OnOpenView()
     {
-        Center.ViewObject.value = Center.Option;
+        Center.OnViewObject.value = Center.Option;
     }
 
     [Receiver((int)DataType.ApplicationExit)]

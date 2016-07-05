@@ -36,7 +36,7 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Signal.cs" />
+    <Compile Include="Emmiter.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="TriggerObject.cs" />
     <Compile Include="DataCenter.cs" />

@@ -34,18 +34,15 @@ public class DocumentManager : ATrigger.TriggerObject
     }
 
     [ATrigger.Receiver((int)DataType.OpenDocument)]
-    public void CreateDocument()
+    public void CreateDocument(string document)
     {
-        if (!mDocuments.Contains(Center.CurrentOpenDoucment.value))
-            mDocuments.Add(Center.CurrentOpenDoucment.value);
+        if (!mDocuments.Contains(document))
+            mDocuments.Add(document);
     }
 
     [ATrigger.Receiver((int)DataType.ChangeDocumentName)]
-    public void OnNameChanged()
+    public void OnNameChanged(string oldname, string newname)
     {
-        string oldname = Center.OnChangeDocumentName.Arg<string>(0);
-        string newname = Center.OnChangeDocumentName.Arg<string>(1);
-
         mDocuments.Remove(oldname);
 
         if (!mDocuments.Contains(newname))

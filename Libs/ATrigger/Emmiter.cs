@@ -9,49 +9,69 @@ using System.Text;
 /// </summary>
 namespace ATrigger
 {
-    public class Signal
+    /// <summary>
+    /// trigger can any where
+    /// </summary>
+    public class Emmiter
     {
         public const int InvalidDataType = -1;
         public const int DefaultInvalidIndex = -1;
 
-        public int dataType = InvalidDataType;
+        public int Type { get; internal set; }
 
-        public Signal()
+        public Emmiter()
         {
         }
-
-        public static implicit operator bool(Signal dd)
+        public void Trigger()
+        {
+            Dipatch(null);
+        }
+        public static implicit operator bool(Emmiter dd)
         {
             return dd != null;
         }
 
-        public void Trigger(params object[] args)
+        internal void Dipatch(params object[] args)
         {
-            if (dataType == InvalidDataType)
+            if (Type == InvalidDataType)
             {
                 Debug.WriteLine("Please use attribute DataCenter.DataEntry,or Use DataCenter.AObject(or AScriptObject) as its parent class!");
                 return;
             }
 
-            DataCenter.Emitter(dataType, args);
+            DataCenter.Emitter(Type, args);
         }
-        public virtual void Set(object obj)
+        internal virtual void Set(object obj)
         {
 
         }
-        public T Arg<T>(int argIndex)
+    }
+    public class Emmiter<T> : Emmiter
+    {
+        public void Trigger(T arg)
         {
-            return DataCenter.GetParamByIndex<T>(argIndex);
-        }
-        public object[] Args
-        {
-            get
-            {
-                return DataCenter.GetParams();
-            }
+            Dipatch(arg);
         }
     }
-    public class ATrigger<T> : Signal
+    public class Emmiter<T1, T2> : Emmiter
+    {
+        public void Trigger(T1 arg1, T2 arg2)
+        {
+            Dipatch(arg1, arg2);
+        }
+    }
+    public class Emmiter<T1, T2, T3> : Emmiter
+    {
+        public void Trigger(T1 arg1, T2 arg2, T3 arg3)
+        {
+            Dipatch(arg1, arg2, arg3);
+        }
+    }
+    /// <summary>
+    /// trigger on value changed or need
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public class DataContainer<T> : Emmiter
     {
         public T value
         {
@@ -71,18 +91,25 @@ namespace ATrigger
                 return (T)mLastData;
             }
         }
-        public void Set(T data, bool trigger = true)
+        /// <summary>
+        /// use when 2 data equal but you need trigger
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="trigger"></param>
+        /// <param name="force"></param>
+        public void Set(T data, bool trigger = true, bool force = false)
         {
             mLastData = mData;
             mData = data;
-            if (mData != null && !mData.Equals(mLastData) && trigger)
+            bool autoTrigger = mData != null && !mData.Equals(mLastData);
+            if (trigger && (force || autoTrigger))
                 Trigger();
         }
-        protected object mData = default(T);
-        protected object mLastData = default(T);
+        internal object mData = default(T);
+        internal object mLastData = default(T);
     }
 
-    public class AInt : ATrigger<int>
+    public class AInt : DataContainer<int>
     {
         int mInvalidValue = DefaultInvalidIndex;
 
@@ -131,7 +158,7 @@ namespace ATrigger
     /// <summary>
     /// data drive list
     /// </summary>
-    public class AList<T> : ATrigger<List<T>>
+    public class AList<T> : DataContainer<List<T>>
     {
         public AList()
         {
@@ -174,7 +201,7 @@ namespace ATrigger
             T curItem = item;
             value.Add(item);
             if (trigger)
-                Trigger(curItem);
+                Trigger();
             Clear();
         }
         public void Remove(T item, bool trigger = false)
@@ -182,7 +209,7 @@ namespace ATrigger
             T curItem = item;
             value.Remove(item);
             if (trigger)
-                Trigger(curItem);
+                Trigger();
             Clear();
         }
 
@@ -216,7 +243,7 @@ namespace ATrigger
         }
     }
 
-    public class AMap<TKey, TValue> : Signal
+    public class AMap<TKey, TValue> : Emmiter
     {
         Dictionary<TKey, TValue> mValue;
         public Dictionary<TKey, TValue> value

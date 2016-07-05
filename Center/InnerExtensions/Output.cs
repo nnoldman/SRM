@@ -11,7 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public partial class Output : Extension, ATrigger.ITriggerStatic
+    public partial class Output : Extension, ATrigger.IStaticEmitterContainer
     {
         static Output Instance;
 
@@ -38,9 +38,9 @@ namespace Core
         delegate void SetTextCallback(string text);
 
         [ATrigger.Receiver((int)DataType.Console)]
-        void WriteConsole()
+        void WriteConsole(string text)
         {
-            SetText(Center.Console.Arg<string>(0));
+            SetText(text);
         }
 
         private void SetText(string text)

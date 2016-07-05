@@ -30,7 +30,7 @@ namespace ATrigger
     /// <summary>
     /// add static receiver and emitter
     /// </summary>
-    public interface ITriggerStatic
+    public interface IStaticEmitterContainer
     {
     }
 }

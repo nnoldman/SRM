@@ -11,7 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public partial class ObjectView : Extension, ATrigger.ITriggerStatic
+    public partial class ObjectView : Extension, ATrigger.IStaticEmitterContainer
     {
         static ObjectView Instance;
 
@@ -50,7 +50,7 @@ namespace Core
         static void OnViewObjectChange()
         {
             Instance.treeView1.Nodes.Clear();
-            CreateNode(Center.ViewObject.value, null, Instance.treeView1);
+            CreateNode(Center.OnViewObject.value, null, Instance.treeView1);
         }
 
 
@@ -71,7 +71,7 @@ namespace Core
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
-                Center.SelectObject.value = (Core.Object)e.Node.Tag;
+                Center.OnSelectObject.value = (Core.Object)e.Node.Tag;
         }
     }
 }

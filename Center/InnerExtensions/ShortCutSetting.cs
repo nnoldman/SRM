@@ -14,7 +14,7 @@ namespace Core
 {
     [Core.ExtensionVersion(Name = "ShortCutSetting")]
 
-    public partial class ShortCutSetting : Extension, ATrigger.ITriggerStatic
+    public partial class ShortCutSetting : Extension, ATrigger.IStaticEmitterContainer
     {
         static ShortCutSetting Instance;
 

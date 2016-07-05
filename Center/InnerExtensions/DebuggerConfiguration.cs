@@ -11,7 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public partial class DebuggerConfiguration : Extension, ATrigger.ITriggerStatic
+    public partial class DebuggerConfiguration : Extension, ATrigger.IStaticEmitterContainer
     {
         static DebuggerConfiguration Instance;
 
