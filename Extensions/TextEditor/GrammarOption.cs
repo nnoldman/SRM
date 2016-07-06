@@ -8,24 +8,10 @@ using System.Threading.Tasks;
 
 namespace TextEditor
 {
-    public class AColor
-    {
-        public byte A;
-        public byte R;
-        public byte G;
-        public byte B;
-
-        public static AColor Black = new AColor() { A = 255, R = 0, G = 0, B = 0 };
-
-        public static implicit operator Color(AColor c)
-        {
-            return Color.FromArgb(c.A, c.R, c.G, c.B);
-        }
-    }
     public class GrammarStyle
     {
-        public AColor ForeColor = AColor.Black;
-        public AColor BackColor = new AColor() { A = 255, R = 220, G = 230, B = 255 };
+        public Color ForeColor = Color.Black;
+        public Color BackColor = Color.FromArgb(255, 220, 230, 255);
         public string Font = "courier new";
         public int Weight = 14;
         public int Size = 14;

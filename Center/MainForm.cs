@@ -253,21 +253,34 @@ public partial class MainForm : Form
             method.Invoke(null, null);
     }
 
+    JsonSerializerSettings mJsonSetting;
+    JsonSerializerSettings JsonSetting
+    {
+        get
+        {
+            if(mJsonSetting==null)
+            {
+                mJsonSetting = new JsonSerializerSettings();
+                mJsonSetting.TypeNameAssemblyFormat = System.Runtime.Serialization.Formatters.FormatterAssemblyStyle.Full;
+                mJsonSetting.Formatting = Formatting.Indented;
+                mJsonSetting.TypeNameHandling = TypeNameHandling.Auto;
+            }
+            return mJsonSetting;
+        }
+    }
+
     void LoadOption()
     {
         if (File.Exists(Center.Option.Base.FileName))
         {
-            var setting = new JsonSerializerSettings();
-            setting.Formatting = Formatting.Indented;
-            JsonConvert.DeserializeObject(File.ReadAllText(Center.Option.Base.FileName));
+            Center.Option = JsonConvert.DeserializeObject<Option>(File.ReadAllText(Center.Option.Base.FileName), JsonSetting);
         }
     }
 
     void SaveOption()
     {
         this.DockerContainer.SaveAsXml(Center.Option.Base.LayoutFile);
-
-        string content = JsonConvert.SerializeObject(Center.Option);
+        string content = JsonConvert.SerializeObject(Center.Option, JsonSetting);
 
         File.WriteAllText(Center.Option.Base.FileName, content);
     }
