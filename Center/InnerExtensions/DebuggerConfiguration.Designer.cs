@@ -60,14 +60,15 @@
             // 
             this.splitContainer1.Panel2.Controls.Add(this.dataGridView1);
             this.splitContainer1.Size = new System.Drawing.Size(788, 284);
-            this.splitContainer1.SplitterDistance = 43;
+            this.splitContainer1.SplitterDistance = 26;
             this.splitContainer1.TabIndex = 0;
             // 
             // comboBox_BuildMode
             // 
+            this.comboBox_BuildMode.Dock = System.Windows.Forms.DockStyle.Left;
             this.comboBox_BuildMode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_BuildMode.FormattingEnabled = true;
-            this.comboBox_BuildMode.Location = new System.Drawing.Point(186, 12);
+            this.comboBox_BuildMode.Location = new System.Drawing.Point(0, 0);
             this.comboBox_BuildMode.Name = "comboBox_BuildMode";
             this.comboBox_BuildMode.Size = new System.Drawing.Size(121, 20);
             this.comboBox_BuildMode.TabIndex = 1;
@@ -75,11 +76,12 @@
             // 
             // comboBox_Builder
             // 
+            this.comboBox_Builder.Dock = System.Windows.Forms.DockStyle.Fill;
             this.comboBox_Builder.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBox_Builder.FormattingEnabled = true;
-            this.comboBox_Builder.Location = new System.Drawing.Point(12, 12);
+            this.comboBox_Builder.Location = new System.Drawing.Point(0, 0);
             this.comboBox_Builder.Name = "comboBox_Builder";
-            this.comboBox_Builder.Size = new System.Drawing.Size(121, 20);
+            this.comboBox_Builder.Size = new System.Drawing.Size(786, 20);
             this.comboBox_Builder.TabIndex = 0;
             this.comboBox_Builder.SelectedIndexChanged += new System.EventHandler(this.comboBox_Builder_SelectedIndexChanged_1);
             // 
@@ -97,7 +99,7 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowHeadersVisible = false;
             this.dataGridView1.RowTemplate.Height = 23;
-            this.dataGridView1.Size = new System.Drawing.Size(786, 235);
+            this.dataGridView1.Size = new System.Drawing.Size(786, 252);
             this.dataGridView1.TabIndex = 0;
             // 
             // Column1

@@ -149,9 +149,9 @@ namespace TextEditor
         public TextEditor()
         {
             InitializeComponent();
+            ATrigger.DataCenter.AddInstance(this);
 
             this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
-            ATrigger.DataCenter.AddInstance(this);
 
             this.scintilla1.StyleResetDefault();
             this.scintilla1.SetWhitespaceBackColor(true, GlobalBackColor);
@@ -168,6 +168,7 @@ namespace TextEditor
 
             InitStyles();
 
+            this.scintilla1.BufferedDraw = true;
             this.scintilla1.Lexer = Lexer.Cpp;
             this.scintilla1.CharAdded += CharAdded;
             this.scintilla1.AutoCCharDeleted += OnAutoCCharDeleted;
