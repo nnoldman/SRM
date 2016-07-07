@@ -44,7 +44,9 @@
   <ItemGroup>
     <Compile Include="BaseOption.cs" />
     <Compile Include="BoolObject.cs" />
+    <Compile Include="Bus.cs" />
     <Compile Include="Center.cs" />
+    <Compile Include="IOT\Constructure.cs" />
     <Compile Include="DataType.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="InnerExtensions\Builder.cs" />
@@ -133,6 +135,7 @@
       <DependentUpon>MainForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Attributes.cs" />
+    <Compile Include="IOT\Port.cs" />
     <Compile Include="Object.cs" />
     <Compile Include="Option.cs" />
     <Compile Include="InnerExtensions\Output.cs">

@@ -242,9 +242,19 @@ namespace TextEditor
 
             LoadHistry(Center.Option.File.Histroy);
         }
-
         [ATrigger.Receiver((int)DataType.OpenDocument)]
         static public void CreateDocument()
+        {
+            TextEditor instance = new TextEditor();
+            if (!File.Exists(Center.CurrentOpenDoucment.value))
+                instance.TabText = Center.CurrentOpenDoucment.value;
+            else
+                instance.FileName = Center.CurrentOpenDoucment.value;
+            instance.Show(Center.Form.DockerContainer, DockState.Document);
+        }
+
+        [InputPort(InnerIndex = (int)ID.NameChanged)]
+        static public void OnNameChangedd()
         {
             TextEditor instance = new TextEditor();
             if (!File.Exists(Center.CurrentOpenDoucment.value))

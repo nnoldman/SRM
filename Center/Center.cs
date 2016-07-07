@@ -25,6 +25,7 @@ namespace Core
         internal static Dictionary<MethodInfo, AddMenuButton> MenuButtons = new Dictionary<MethodInfo, AddMenuButton>();
         internal static Dictionary<string, Type> ExtensionTypes = new Dictionary<string, Type>();
 
+
         [TriggerEmmiter((int)DataType.ApplicationExit)]
         public static Emmiter OnExit = new Emmiter();//para:empty
 
