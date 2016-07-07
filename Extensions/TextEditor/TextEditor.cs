@@ -242,26 +242,34 @@ namespace TextEditor
 
             LoadHistry(Center.Option.File.Histroy);
         }
-        [ATrigger.Receiver((int)DataType.OpenDocument)]
+
+        [InputListener(InnerIndex = (int)ID.OpenDocument)]
         static public void CreateDocument()
         {
             TextEditor instance = new TextEditor();
-            if (!File.Exists(Center.CurrentOpenDoucment.value))
-                instance.TabText = Center.CurrentOpenDoucment.value;
+            if (!File.Exists(PortHub.OpenDocument.Value))
+                instance.TabText = PortHub.OpenDocument.Value;
             else
-                instance.FileName = Center.CurrentOpenDoucment.value;
+                instance.FileName = PortHub.OpenDocument.Value;
             instance.Show(Center.Form.DockerContainer, DockState.Document);
+
+            //TextEditor instance = new TextEditor();
+            //if (!File.Exists(Center.CurrentOpenDoucment.value))
+            //    instance.TabText = Center.CurrentOpenDoucment.value;
+            //else
+            //    instance.FileName = Center.CurrentOpenDoucment.value;
+            //instance.Show(Center.Form.DockerContainer, DockState.Document);
         }
 
-        [InputListener(InnerIndex = (int)ID.NameChanged)]
-        void OnNameChangedd()
-        {
-            string oldname= ProtHub.OnNameChanged.Value["OldName"];
-            string newname = ProtHub.OnNameChanged.Value["NewName"];
+        //[InputListener(InnerIndex = (int)ID.NameChanged)]
+        //void OnNameChangedd()
+        //{
+        //    string oldname= ProtHub.OnNameChanged.Value["OldName"];
+        //    string newname = ProtHub.OnNameChanged.Value["NewName"];
 
-            if (oldname == this.TabText || oldname == this.FileName)
-                this.FileName = newname;
-        }
+        //    if (oldname == this.TabText || oldname == this.FileName)
+        //        this.FileName = newname;
+        //}
 
         [ATrigger.Receiver((int)DataType.ChangeDocumentName)]
         public void OnNameChaned(string oldname, string newname)

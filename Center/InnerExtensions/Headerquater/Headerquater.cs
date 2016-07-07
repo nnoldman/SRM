@@ -32,9 +32,9 @@ namespace Core
 
             foreach(var com in components)
             {
-                if (!string.IsNullOrEmpty(except) && except == com.Key.FullName)
+                if (!string.IsNullOrEmpty(except) && except == com.Key.ManifestModule.Name)
                     continue;
-                view.Items.Add(com.Key.FullName);
+                view.Items.Add(com.Key.ManifestModule.Name);
             }
         }
 
@@ -74,7 +74,7 @@ namespace Core
 
         void InitOutPorts()
         {
-            var com = Bus.Components.Keys.First((item) => item.FullName == this.listBox1.SelectedItem.ToString());
+            var com = Bus.Components.Keys.First((item) => item.ManifestModule.Name == this.listBox1.SelectedItem.ToString());
 
             Constructure constructure;
 
@@ -96,7 +96,7 @@ namespace Core
         }
         void InitInputPorts()
         {
-            var com = Bus.Components.Keys.First((item) => item.FullName == this.listBox2.SelectedItem.ToString());
+            var com = Bus.Components.Keys.First((item) => item.ManifestModule.Name == this.listBox2.SelectedItem.ToString());
 
             Constructure constructure;
 

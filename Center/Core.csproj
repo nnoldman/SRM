@@ -59,6 +59,7 @@
     <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinker.Designer.cs">
       <DependentUpon>HeaderquaterLinker.cs</DependentUpon>
     </Compile>
+    <Compile Include="InnerExtensions\Headerquater\PortOption.cs" />
     <Compile Include="IOT\Constructure.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="InnerExtensions\Builder.cs" />
