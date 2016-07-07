@@ -46,6 +46,7 @@
     <Compile Include="BoolObject.cs" />
     <Compile Include="Bus.cs" />
     <Compile Include="Center.cs" />
+    <Compile Include="DataType.cs" />
     <Compile Include="Headerquater.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -53,7 +54,6 @@
       <DependentUpon>Headerquater.cs</DependentUpon>
     </Compile>
     <Compile Include="IOT\Constructure.cs" />
-    <Compile Include="DataType.cs" />
     <Compile Include="Debugger.cs" />
     <Compile Include="InnerExtensions\Builder.cs" />
     <Compile Include="InnerExtensions\DebuggerConfiguration.cs">
@@ -170,6 +170,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Extension.resx">
       <DependentUpon>Extension.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Headerquater.resx">
+      <DependentUpon>Headerquater.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\DebuggerConfiguration.resx">
       <DependentUpon>DebuggerConfiguration.cs</DependentUpon>
