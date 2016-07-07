@@ -35,12 +35,15 @@ namespace Core
                     {
                         Port p = (Port)field.GetValue(null);
                         p.PortNumber = desc.InnerIndex;
+                        p.WorkType = PortWorkType.Input;
+                        p.Desc = desc;
 
                         inputPorts.Add(p.PortNumber, p);
 
                         InPortValue iv = new InPortValue();
                         iv.desc = desc;
                         iv.field = field;
+                        iv.port = p;
                         structure.Inputs.Add(iv);
                     }
                 }
@@ -57,9 +60,13 @@ namespace Core
                     if (desc != null)
                     {
                         Port p = (Port)field.GetValue(null);
+                        p.WorkType = PortWorkType.Output;
+                        p.PortNumber = desc.InnerIndex;
+                        p.Desc = desc;
                         OutPortValue ov = new OutPortValue();
                         ov.desc = desc;
                         ov.field = field;
+                        ov.port = p;
                         structure.Outputs.Add(ov);
                     }
                 }
@@ -75,7 +82,6 @@ namespace Core
 
                     if (desc != null)
                     {
-
                         Port p;
                         if(inputPorts.TryGetValue(desc.InnerIndex,out p))
                         {
@@ -91,6 +97,48 @@ namespace Core
                     }
                 }
             }
+        }
+
+        static OutPortValue GetOutputPort(string asmout, string outputport)
+        {
+            foreach(var com in Components)
+            {
+                var ov = com.Value.Outputs.Find(i => i.field.Name == outputport && i.field.DeclaringType.Assembly.FullName
+                  == asmout);
+                if (ov != null)
+                    return ov;
+            }
+            return null;
+        }
+
+        static InPortValue GetInputPort(string asmin, string inport)
+        {
+            foreach (var com in Components)
+            {
+                var ov = com.Value.Inputs.Find(i => i.field.Name == inport && i.field.DeclaringType.Assembly.FullName
+                  == asmin);
+                if (ov != null)
+                    return ov;
+            }
+            return null;
+        }
+
+        public static void ChangePortTarget(string asmout,string outputport,string asmin,string inputport)
+        {
+            OutPortValue op = GetOutputPort(asmout, outputport);
+            InPortValue ip = GetInputPort(asmin, inputport);
+
+            foreach (var outin in mOutIns)
+                outin.Value.RemoveAll(i => i == ip.port);
+
+            PortConnection coellection;
+
+            if (!mOutIns.TryGetValue(op.port, out coellection))
+            {
+                coellection = new PortConnection();
+                mOutIns.Add(op.port, coellection);
+            }
+            coellection.Add(ip.port);
         }
 
         public static void Input(Port p)

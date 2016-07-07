@@ -13,7 +13,7 @@ namespace Core
 {
     public partial class Headerquater : Extension
     {
-        static Headerquater Instance;
+        internal static Headerquater Instance;
 
         List<HeaderquaterLinker> mLinkers = new List<HeaderquaterLinker>();
 
@@ -50,6 +50,24 @@ namespace Core
                 Instance.Hide();
                 Instance.Dispose();
                 Instance = null;
+            }
+        }
+
+        public string InputAsm
+        {
+            get
+            {
+                var com = Bus.Components.Keys.First((item) => item.ManifestModule.Name == this.listBox2.SelectedItem.ToString());
+                return com.FullName;
+            }
+        }
+
+        public string OututASM
+        {
+            get
+            {
+                var com = Bus.Components.Keys.First((item) => item.ManifestModule.Name == this.listBox1.SelectedItem.ToString());
+                return com.FullName;
             }
         }
 

@@ -27,7 +27,25 @@ namespace Core
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
+            string asmInput = Headerquater.Instance.InputAsm;
+            string asmOutput = Headerquater.Instance.OututASM;
+            string inputPortName = this.comboBox1.SelectedItem.ToString();
+            PortOption option = Center.Option.GetOption<PortOption>();
+            var item = option.PortPairs.Find(i => i.Target.AsmName == asmOutput && i.Target.PortName == inputPortName);
 
+            if (item == null)
+            {
+                item = new PortPair();
+                option.PortPairs.Add(item);
+            }
+
+            item.Target.AsmName = asmOutput;
+            item.Target.PortName = this.Title;
+            item.Input.AsmName = asmInput;
+            item.Input.PortName = inputPortName;
+
+            Bus.ChangePortTarget(item.Target.AsmName, item.Target.PortName
+                , item.Input.AsmName, item.Input.PortName);
         }
     }
 }

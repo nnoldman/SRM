@@ -32,6 +32,7 @@ namespace Core
         public Arg Arg1;
         public Arg Arg2;
         public string Desc;
+        public int InnerIndex;
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
@@ -42,7 +43,6 @@ namespace Core
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public class InputPortDesc : PortDesc
     {
-        public int InnerIndex;
     }
 
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
@@ -55,6 +55,7 @@ namespace Core
     {
         internal int PortNumber=0;
         internal PortWorkType WorkType = PortWorkType.None;
+        internal PortDesc Desc;
 
         protected object mValue;
 

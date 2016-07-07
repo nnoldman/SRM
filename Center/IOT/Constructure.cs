@@ -18,12 +18,14 @@ namespace Core
     {
         internal FieldInfo field;
         internal InputPortDesc desc;
+        internal Port port;
     }
 
     internal class OutPortValue
     {
         internal FieldInfo field;
         internal OutputPortDesc desc;
+        internal Port port;
     }
 
     internal class Constructure

@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    internal class PortItem
+    public class PortItem
     {
-        internal string AsmName;
-        internal string PortName;
+        public string AsmName;
+        public string PortName;
     }
-    internal class PortPair
+    public class PortPair
     {
-        internal PortItem Input;
-        internal PortItem Target;
+        public PortItem Target = new PortItem();
+        public PortItem Input = new PortItem();
     }
 
     [AddOption("PortHub")]
-    internal class PortOption : Component
+    public class PortOption : Component
     {
-        internal List<PortPair> PortPairs = new List<PortPair>(); 
+        public List<PortPair> PortPairs = new List<PortPair>();
     }
 }
