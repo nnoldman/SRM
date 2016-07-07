@@ -13,12 +13,12 @@ namespace TextEditor
         NameChanged,
     }
 
-    internal class Interface
+    internal class ProtHub
     {
-        [OutputPort(Arg1 = Arg.Str)]
+        [OutputPortDesc(Arg1 = Arg.Str)]
         internal static Port_String OpenDocument =new Port_String();
 
-        [InputPort(InnerIndex = (int)ID.NameChanged)]
-        internal static Port_String OnNameChanged = new Port_String();
+        [InputPortDesc(InnerIndex = (int)ID.NameChanged, Container = PortDataContainerType.Dict, Arg1 = Arg.Str)]
+        internal static Port_StringDic OnNameChanged = new Port_StringDic();
     }
 }

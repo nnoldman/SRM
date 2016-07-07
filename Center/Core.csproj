@@ -46,6 +46,12 @@
     <Compile Include="BoolObject.cs" />
     <Compile Include="Bus.cs" />
     <Compile Include="Center.cs" />
+    <Compile Include="Headerquater.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Headerquater.Designer.cs">
+      <DependentUpon>Headerquater.cs</DependentUpon>
+    </Compile>
     <Compile Include="IOT\Constructure.cs" />
     <Compile Include="DataType.cs" />
     <Compile Include="Debugger.cs" />

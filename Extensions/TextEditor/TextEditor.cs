@@ -253,15 +253,14 @@ namespace TextEditor
             instance.Show(Center.Form.DockerContainer, DockState.Document);
         }
 
-        [InputPort(InnerIndex = (int)ID.NameChanged)]
-        static public void OnNameChangedd()
+        [InputListener(InnerIndex = (int)ID.NameChanged)]
+        void OnNameChangedd()
         {
-            TextEditor instance = new TextEditor();
-            if (!File.Exists(Center.CurrentOpenDoucment.value))
-                instance.TabText = Center.CurrentOpenDoucment.value;
-            else
-                instance.FileName = Center.CurrentOpenDoucment.value;
-            instance.Show(Center.Form.DockerContainer, DockState.Document);
+            string oldname= ProtHub.OnNameChanged.Value["OldName"];
+            string newname = ProtHub.OnNameChanged.Value["NewName"];
+
+            if (oldname == this.TabText || oldname == this.FileName)
+                this.FileName = newname;
         }
 
         [ATrigger.Receiver((int)DataType.ChangeDocumentName)]

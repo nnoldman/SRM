@@ -8,9 +8,10 @@ namespace Core
 {
     public enum PortWorkType
     {
-        Output,
-        Input,
-        Double,
+        None,
+        Output = 1,
+        Input = 2,
+        Double = 4 | Output | Input,
     }
     public enum Arg
     {
@@ -32,15 +33,29 @@ namespace Core
         public Arg Arg2;
         public string Desc;
     }
-    public class OutputPort : PortDesc
+
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class OutputPortDesc : PortDesc
     {
     }
-    public class InputPort: PortDesc
+
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
+    public class InputPortDesc : PortDesc
     {
         public int InnerIndex;
     }
+
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
+    public class InputListener : Attribute
+    {
+        public int InnerIndex;
+    }
+
     public class Port
     {
+        internal int PortNumber=0;
+        internal PortWorkType WorkType = PortWorkType.None;
+
         protected object mValue;
 
         public object RawValue
@@ -54,9 +69,9 @@ namespace Core
         }
     }
 
-    public class Listeners : List<Port> { };
+    public class PortConnection : List<Port> { };
 
-    public class Port_String:Port
+    public class Port_String : Port
     {
         public Port_String()
         {
@@ -67,6 +82,26 @@ namespace Core
             get
             {
                 return (string)mValue;
+            }
+            set
+            {
+                mValue = value;
+                Bus.Input(this);
+            }
+        }
+    }
+
+    public class Port_StringDic : Port
+    {
+        public Port_StringDic()
+        {
+            mValue = new Dictionary<string, string>();
+        }
+        public Dictionary<string, string> Value
+        {
+            get
+            {
+                return (Dictionary<string, string>)mValue;
             }
             set
             {
