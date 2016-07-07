@@ -9,17 +9,17 @@ namespace Core
 {
     public static class Bus
     {
-        static Dictionary<Assembly, Constructure> mComponents = new Dictionary<Assembly, Constructure>();
+        internal static Dictionary<Assembly, Constructure> Components = new Dictionary<Assembly, Constructure>();
         static Dictionary<Port, PortConnection> mOutIns = new Dictionary<Port, PortConnection>();
         static Dictionary<Port, IntputListenerValue> mListeners = new Dictionary<Port, IntputListenerValue>();
 
         internal static void OnLoadAssambly(Assembly asm)
         {
-            if (mComponents.Keys.Contains(asm))
+            if (Components.Keys.Contains(asm))
                 return;
 
             Constructure structure = new Constructure();
-            mComponents.Add(asm, structure);
+            Components.Add(asm, structure);
 
             Dictionary<int, Port> inputPorts = new Dictionary<int, Port>();
 

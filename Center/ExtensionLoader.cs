@@ -63,6 +63,8 @@ namespace Core
             }
 
             ATrigger.DataCenter.InstallStaticTriggers(asm);
+
+            Bus.OnLoadAssambly(asm);
         }
 
         bool LoadAnExternExtension(string name)

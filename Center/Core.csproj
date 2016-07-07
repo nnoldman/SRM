@@ -47,11 +47,17 @@
     <Compile Include="Bus.cs" />
     <Compile Include="Center.cs" />
     <Compile Include="DataType.cs" />
-    <Compile Include="Headerquater.cs">
+    <Compile Include="InnerExtensions\Headerquater\Headerquater.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Headerquater.Designer.cs">
+    <Compile Include="InnerExtensions\Headerquater\Headerquater.Designer.cs">
       <DependentUpon>Headerquater.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinker.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinker.Designer.cs">
+      <DependentUpon>HeaderquaterLinker.cs</DependentUpon>
     </Compile>
     <Compile Include="IOT\Constructure.cs" />
     <Compile Include="Debugger.cs" />
@@ -171,8 +177,11 @@
     <EmbeddedResource Include="Extension.resx">
       <DependentUpon>Extension.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Headerquater.resx">
+    <EmbeddedResource Include="InnerExtensions\Headerquater\Headerquater.resx">
       <DependentUpon>Headerquater.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnerExtensions\Headerquater\HeaderquaterLinker.resx">
+      <DependentUpon>HeaderquaterLinker.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\DebuggerConfiguration.resx">
       <DependentUpon>DebuggerConfiguration.cs</DependentUpon>
