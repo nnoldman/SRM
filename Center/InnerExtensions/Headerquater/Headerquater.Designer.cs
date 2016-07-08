@@ -32,12 +32,14 @@
             this.listBox1 = new System.Windows.Forms.ListBox();
             this.panel2 = new System.Windows.Forms.Panel();
             this.listBox2 = new System.Windows.Forms.ListBox();
-            this.portPanel = new System.Windows.Forms.Panel();
             this.inpanel = new System.Windows.Forms.Panel();
             this.outpanel = new System.Windows.Forms.Panel();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
-            this.portPanel.SuspendLayout();
+            this.outpanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -64,7 +66,7 @@
             // 
             this.panel2.Controls.Add(this.listBox2);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Right;
-            this.panel2.Location = new System.Drawing.Point(504, 0);
+            this.panel2.Location = new System.Drawing.Point(534, 0);
             this.panel2.Name = "panel2";
             this.panel2.Size = new System.Drawing.Size(200, 320);
             this.panel2.TabIndex = 1;
@@ -80,48 +82,52 @@
             this.listBox2.TabIndex = 0;
             this.listBox2.SelectedIndexChanged += new System.EventHandler(this.listBox2_SelectedIndexChanged);
             // 
-            // portPanel
-            // 
-            this.portPanel.AutoSize = true;
-            this.portPanel.Controls.Add(this.inpanel);
-            this.portPanel.Controls.Add(this.outpanel);
-            this.portPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.portPanel.Location = new System.Drawing.Point(200, 0);
-            this.portPanel.Name = "portPanel";
-            this.portPanel.Size = new System.Drawing.Size(304, 320);
-            this.portPanel.TabIndex = 2;
-            // 
             // inpanel
             // 
             this.inpanel.Dock = System.Windows.Forms.DockStyle.Right;
-            this.inpanel.Location = new System.Drawing.Point(174, 0);
+            this.inpanel.Location = new System.Drawing.Point(179, 0);
             this.inpanel.Name = "inpanel";
-            this.inpanel.Size = new System.Drawing.Size(130, 320);
+            this.inpanel.Size = new System.Drawing.Size(155, 320);
             this.inpanel.TabIndex = 1;
             // 
             // outpanel
             // 
+            this.outpanel.Controls.Add(this.splitContainer1);
             this.outpanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.outpanel.Location = new System.Drawing.Point(0, 0);
             this.outpanel.Name = "outpanel";
-            this.outpanel.Size = new System.Drawing.Size(130, 320);
+            this.outpanel.Size = new System.Drawing.Size(155, 320);
             this.outpanel.TabIndex = 0;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer1.Name = "splitContainer1";
+            this.splitContainer1.Size = new System.Drawing.Size(155, 320);
+            this.splitContainer1.SplitterDistance = 51;
+            this.splitContainer1.TabIndex = 0;
             // 
             // Headerquater
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(704, 320);
-            this.Controls.Add(this.portPanel);
-            this.Controls.Add(this.panel1);
-            this.Controls.Add(this.panel2);
+            this.ClientSize = new System.Drawing.Size(734, 320);
+            this.Controls.Add(this.splitContainer1);
+            this.splitContainer1.Panel1.Controls.Add(this.panel1);
+            this.splitContainer1.Panel1.Controls.Add(this.outpanel);
+            this.splitContainer1.Panel2.Controls.Add(this.inpanel);
+            this.splitContainer1.Panel2.Controls.Add(this.panel2);
             this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.MinimumSize = new System.Drawing.Size(720, 358);
             this.Name = "Headerquater";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Headerquater";
             this.panel1.ResumeLayout(false);
             this.panel2.ResumeLayout(false);
-            this.portPanel.ResumeLayout(false);
+            this.outpanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -131,10 +137,10 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Panel portPanel;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListBox listBox2;
         private System.Windows.Forms.Panel inpanel;
         private System.Windows.Forms.Panel outpanel;
+        private System.Windows.Forms.SplitContainer splitContainer1;
     }
 }

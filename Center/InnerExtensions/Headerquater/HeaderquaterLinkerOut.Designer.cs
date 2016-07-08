@@ -37,16 +37,16 @@
             this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label1.Location = new System.Drawing.Point(0, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(93, 29);
+            this.label1.Size = new System.Drawing.Size(123, 29);
             this.label1.TabIndex = 1;
             this.label1.Text = "label1";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // button1
             // 
             this.button1.Dock = System.Windows.Forms.DockStyle.Right;
             this.button1.Image = global::Core.Properties.Resources._out;
-            this.button1.Location = new System.Drawing.Point(93, 0);
+            this.button1.Location = new System.Drawing.Point(123, 0);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(27, 29);
             this.button1.TabIndex = 0;
@@ -59,7 +59,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button1);
             this.Name = "HeaderquaterLinkerOut";
-            this.Size = new System.Drawing.Size(120, 29);
+            this.Size = new System.Drawing.Size(150, 29);
             this.ResumeLayout(false);
 
         }
