@@ -17,6 +17,7 @@
       "$type": "Core.FileOption, Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "MaxHistroyCount": 20,
       "Histroy": [
+        "D:\\src\\SRM\\Center\\BaseOption.cs",
         "D:\\src\\SRM\\Libs\\ATrigger\\DataCenter.cs",
         "Z:\\client\\TKE_Client\\Client\\360wxWindow.cpp",
         "D:\\src\\SRM\\README.md"
