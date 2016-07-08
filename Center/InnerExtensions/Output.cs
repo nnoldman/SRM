@@ -11,7 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public partial class Output : Extension, ATrigger.IStaticEmitterContainer
+    public partial class Output : Extension
     {
         static Output Instance;
 
@@ -19,17 +19,15 @@ namespace Core
         {
             Instance = this;
             InitializeComponent();
-            ATrigger.DataCenter.AddInstance(this);
         }
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
-            ATrigger.DataCenter.RemoveInstance(this);
             Instance = null;
         }
 
-        [ATrigger.Receiver((int)DataType.ConsoleClear)]
+        [Watcher((int)ID.ConsoleClear)]
         void ClearConsole()
         {
             this.textBox1.Clear();
@@ -37,7 +35,7 @@ namespace Core
 
         delegate void SetTextCallback(string text);
 
-        [ATrigger.Receiver((int)DataType.Console)]
+        [Watcher((int)ID.Console)]
         void WriteConsole(string text)
         {
             SetText(text);

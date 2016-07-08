@@ -18,7 +18,7 @@ namespace TextEditor
 
     [Core.ExtensionVersion(Name = "TextEditor")]
 
-    public partial class TextEditor : Extension, ATrigger.IStaticEmitterContainer
+    public partial class TextEditor : Extension
     {
         public static Color GlobalBackColor = Color.FromArgb(0, 220, 230, 255);
         static List<TextEditor> mInstances = new List<TextEditor>();
@@ -82,25 +82,20 @@ namespace TextEditor
             return ScintillaNET.Lexer.Null;
         }
 
-        [ATrigger.Receiver((int)DataType.ActiveDocument)]
+        [Watcher((int)ID.ShowDocument)]
         static void OnActiveDocument()
         {
             foreach (var instance in mInstances)
             {
                 string name = string.IsNullOrEmpty(instance.FileName) ? instance.TabText : instance.FileName;
-                if (name == Center.ActiveDocument.value)
+                if (name == PortHub.OnShowDocument.Value)
                 {
-                    instance.scintilla1.Lexer = GetLexer(Path.GetExtension(Center.ActiveDocument.value));
+                    instance.scintilla1.Lexer = GetLexer(Path.GetExtension(PortHub.OnShowDocument.Value));
                     instance.Show(Center.Form.DockerContainer, DockState.Document);
                 }
             }
         }
 
-        [ATrigger.Receiver((int)DataType.ExtensionsLoaded)]
-        public void OnExtensionLoaded()
-        {
-            throw new Exception();
-        }
         void Cut()
         {
             this.scintilla1.Cut();
@@ -149,7 +144,7 @@ namespace TextEditor
         public TextEditor()
         {
             InitializeComponent();
-            ATrigger.DataCenter.AddInstance(this);
+            
 
             this.DockAreas = WeifenLuo.WinFormsUI.Docking.DockAreas.Document;
 
@@ -235,7 +230,7 @@ namespace TextEditor
             foreach (var instance in mInstances)
             {
                 string name = string.IsNullOrEmpty(instance.FileName) ? instance.TabText : instance.FileName;
-                Center.DocumentManager.AddHistroy(name);
+                DocumentManager.Instance.AddHistroy(name);
             }
 
             mFileMenuInitItemCount = FileToolStripMenuItem.DropDownItems.Count;
@@ -246,34 +241,23 @@ namespace TextEditor
         [Watcher((int)ID.OpenDocument)]
         static public void CreateDocument()
         {
-            TextEditor instance = new TextEditor();
             if (!File.Exists(PortHub.OpenDocument.Value))
-                instance.TabText = PortHub.OpenDocument.Value;
-            else
-                instance.FileName = PortHub.OpenDocument.Value;
-            instance.Show(Center.Form.DockerContainer, DockState.Document);
-
-            //TextEditor instance = new TextEditor();
-            //if (!File.Exists(Center.CurrentOpenDoucment.value))
-            //    instance.TabText = Center.CurrentOpenDoucment.value;
-            //else
-            //    instance.FileName = Center.CurrentOpenDoucment.value;
-            //instance.Show(Center.Form.DockerContainer, DockState.Document);
+                return;
+            TextEditor editor = GetEditorFromName(PortHub.OpenDocument.Value);
+            if (editor == null)
+            {
+                editor = new TextEditor();
+                editor.FileName = PortHub.OpenDocument.Value;
+            }
+            editor.Show(Center.Form.DockerContainer, DockState.Document);
         }
 
-        //[InputListener(InnerIndex = (int)ID.NameChanged)]
-        //void OnNameChangedd()
-        //{
-        //    string oldname= ProtHub.OnNameChanged.Value["OldName"];
-        //    string newname = ProtHub.OnNameChanged.Value["NewName"];
-
-        //    if (oldname == this.TabText || oldname == this.FileName)
-        //        this.FileName = newname;
-        //}
-
-        [ATrigger.Receiver((int)DataType.ChangeDocumentName)]
-        public void OnNameChaned(string oldname, string newname)
+        [Watcher((int)ID.SaveDocument)]
+        void OnNameChangedd()
         {
+            string oldname = PortHub.SaveDocumentParam.Value["OldName"];
+            string newname = PortHub.SaveDocumentParam.Value["NewName"];
+
             if (oldname == this.TabText || oldname == this.FileName)
                 this.FileName = newname;
         }
@@ -317,19 +301,19 @@ namespace TextEditor
             }
         }
 
-        //[ATrigger.Receiver((int)DataType.OpenDocument)]
+        //[Watcher((int)ID.OpenDocument)]
         //static void OnDocumentOpen()
         //{
         //    if (Center.Option.File.Histroy.Remove(Center.CurrentOpenDoucment.value))
         //        LoadHistry(Center.Option.File.Histroy);
         //}
 
-        [ATrigger.Receiver((int)DataType.CloseDocument)]
+        [Watcher((int)ID.CloseDocument)]
         static void OnDocumentClose()
         {
             while (Center.Option.File.Histroy.Count >= Center.Option.File.MaxHistroyCount)
                 Center.Option.File.Histroy.RemoveAt(Center.Option.File.Histroy.Count - 1);
-            Center.Option.File.Histroy.Insert(0, Center.CurrentCloseDoucment.value);
+            Center.Option.File.Histroy.Insert(0, PortHub.OnCloseDocument.Value);
             LoadHistry(Center.Option.File.Histroy);
         }
         static void OpenHistroyFile(object sender, EventArgs e)
@@ -339,6 +323,17 @@ namespace TextEditor
             //    Center.CurrentOpenDoucment.value = sender.ToString().Substring(pos + 1);
             //else
             //    throw new Exception();
+        }
+        static TextEditor GetEditorFromName(string name)
+        {
+            foreach (var inst in mInstances)
+            {
+                if (inst.TabText == name || inst.FileName == name)
+                {
+                    return inst;
+                }
+            }
+            return null;
         }
         static string GetTextFromInstances(string name)
         {
@@ -371,13 +366,13 @@ namespace TextEditor
         [AddShortCut(ShortCutIndex.SaveDocument, Modifiers.Control, Keys.S, "SaveFile")]
         static void SaveFile()
         {
-            if (!string.IsNullOrEmpty(Center.ActiveDocument.value))
+            if (!string.IsNullOrEmpty(PortHub.OnClickTitle.Value))
             {
-                string text = GetTextFromInstances(Center.ActiveDocument.value);
+                string text = GetTextFromInstances(PortHub.OnClickTitle.Value);
 
-                if (File.Exists(Center.ActiveDocument.value))
+                if (File.Exists(PortHub.OnClickTitle.Value))
                 {
-                    File.WriteAllText(Center.ActiveDocument.value, text);
+                    File.WriteAllText(PortHub.OnClickTitle.Value, text);
                 }
                 else
                 {
@@ -388,7 +383,10 @@ namespace TextEditor
                     {
                         File.WriteAllText(dlg.FileName, text);
 
-                        Center.OnChangeDocumentName.Trigger(Center.ActiveDocument.value, dlg.FileName);
+                        PortHub.SaveDocumentParam.Value.Clear();
+                        PortHub.SaveDocumentParam.Value.Add("OldName", text);
+                        PortHub.SaveDocumentParam.Value.Add("NewName", dlg.FileName);
+                        PortHub.SaveDocumentParam.Trigger();
                     }
                 }
             }
@@ -506,14 +504,14 @@ namespace TextEditor
 
         public override void OnDBClickNC()
         {
-            //Center.CurrentOpenDoucment.value = NewDocuemntName;
+            PortHub.OpenDocument.Value = NewDocuemntName;
         }
 
         static void CloseAll()
         {
             foreach (var instance in mInstances)
             {
-                Center.CurrentCloseDoucment.value = instance.FileName;
+                PortHub.OnCloseDocument.Value = instance.FileName;
                 instance.Hide();
                 instance.Dispose();
             }
@@ -522,12 +520,10 @@ namespace TextEditor
 
         private void TextEditor_FormClosed(object sender, System.Windows.Forms.FormClosedEventArgs e)
         {
-            ATrigger.DataCenter.RemoveInstance(this);
-
             this.scintilla1.ClearRegisteredImages();
             mInstances.Remove(this);
             if (!string.IsNullOrEmpty(this.FileName))
-                Center.CurrentCloseDoucment.value = this.FileName;
+                PortHub.OnCloseDocument.Value = this.FileName;
         }
 
         private void closeAllToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -561,13 +557,13 @@ namespace TextEditor
         {
             TextEditor editor = (TextEditor)sender;
             if (editor.Visible)
-                Center.ActiveDocument.value = string.IsNullOrEmpty(editor.FileName) ? editor.TabText : editor.FileName;
+                PortHub.OnClickTitle.Value = string.IsNullOrEmpty(editor.FileName) ? editor.TabText : editor.FileName;
         }
 
         private void openInExplorerToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!string.IsNullOrEmpty(Center.ActiveDocument.value))
-                Shell.OpenFloder(Center.ActiveDocument.value);
+            if (!string.IsNullOrEmpty(PortHub.OnClickTitle.Value))
+                Shell.OpenFloder(PortHub.OnClickTitle.Value);
         }
     }
 }

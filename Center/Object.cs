@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    public class Object : ATrigger.TriggerObject
+    public class Object : BoolObject
     {
         public string Name;
 
         public Object()
         {
-            ATrigger.DataCenter.AddInstance(this);
+            
         }
         ~Object()
         {
-            ATrigger.DataCenter.RemoveInstance(this);
+            
         }
 
         public List<Object> Children { get { return mChildren; } }

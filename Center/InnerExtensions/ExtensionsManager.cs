@@ -13,16 +13,13 @@ using WeifenLuo.WinFormsUI.Docking;
 namespace Core
 {
     [Core.ExtensionVersion(Name = "Extensions")]
-    public partial class ExtensionsManager : Extension, ATrigger.IStaticEmitterContainer
+    public partial class ExtensionsManager : Extension
     {
         static ExtensionsManager Instance;
 
         public ExtensionsManager()
         {
             Instance = this;
-
-            ATrigger.DataCenter.AddInstance(this);
-
             InitializeComponent();
 
             this.dataGridView1.ReadOnly = true;
@@ -36,11 +33,10 @@ namespace Core
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
-            ATrigger.DataCenter.RemoveInstance(this);
             Instance = null;
         }
 
-        [ATrigger.Receiver((int)DataType.ExtensionsLoaded)]
+        [Watcher((int)ID.ExtensionsLoad)]
         public void ShowContent()
         {
             this.dataGridView1.Rows.Clear();

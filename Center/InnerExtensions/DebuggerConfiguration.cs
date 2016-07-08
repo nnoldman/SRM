@@ -11,7 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public partial class DebuggerConfiguration : Extension, ATrigger.IStaticEmitterContainer
+    public partial class DebuggerConfiguration : Extension
     {
         static DebuggerConfiguration Instance;
 
@@ -24,7 +24,7 @@ namespace Core
         {
             Instance = this;
             InitializeComponent();
-            ATrigger.DataCenter.AddInstance(this);
+            
             
             Initialize();
         }
@@ -105,7 +105,7 @@ namespace Core
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
-            ATrigger.DataCenter.RemoveInstance(this);
+            
             Instance = null;
         }
 

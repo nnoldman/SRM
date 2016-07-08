@@ -72,7 +72,6 @@
     <Compile Include="Extension.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DocumentManager.cs" />
     <Compile Include="ExtensionLoader.cs" />
     <Compile Include="InnerExtensions\ExtensionsManager.cs">
       <SubType>Form</SubType>
@@ -237,10 +236,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Libs\ATrigger\ATrigger.csproj">
-      <Project>{349dfe1d-d3cd-4bf7-ad85-8052e81dc525}</Project>
-      <Name>ATrigger</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Libs\Newtonsoft.Json\Newtonsoft.Json.csproj">
       <Project>{eeea67f9-9089-481d-a4dc-0966dec9fd7d}</Project>
       <Name>Newtonsoft.Json</Name>

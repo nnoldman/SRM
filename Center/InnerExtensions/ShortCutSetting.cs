@@ -14,14 +14,14 @@ namespace Core
 {
     [Core.ExtensionVersion(Name = "ShortCutSetting")]
 
-    public partial class ShortCutSetting : Extension, ATrigger.IStaticEmitterContainer
+    public partial class ShortCutSetting : Extension
     {
         static ShortCutSetting Instance;
 
         public ShortCutSetting()
         {
             Instance = this;
-            ATrigger.DataCenter.AddInstance(this);
+            
             InitializeComponent();
             ShowContent();
         }
@@ -35,7 +35,7 @@ namespace Core
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
         {
-            ATrigger.DataCenter.RemoveInstance(this);
+            
             base.OnFormClosed(e);
             Instance = null;
         }
@@ -55,7 +55,7 @@ namespace Core
             }
         }
 
-        [ATrigger.Receiver((int)DataType.ExtensionsLoaded)]
+        [Watcher((int)ID.ExtensionsLoad)]
         public void ShowContent()
         {
             this.dataGridView1.Rows.Clear();

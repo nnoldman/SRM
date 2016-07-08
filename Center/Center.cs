@@ -1,4 +1,4 @@
-﻿using ATrigger;
+﻿
 using Shortcut;
 using System;
 using System.Collections.Generic;
@@ -11,12 +11,11 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public class Center : ATrigger.IStaticEmitterContainer
+    public class Center
     {
         public static MainForm Form { get; internal set; }
         public static Option Option = new Option();
 
-        public static DocumentManager DocumentManager = new DocumentManager();
         internal static Shortcut.HotkeyBinder HotKeyBinder = new Shortcut.HotkeyBinder();
         internal static ExtensionLoader ExtensionLoader = new ExtensionLoader();
 
@@ -27,35 +26,30 @@ namespace Core
 
         //public static DataContainer<string> CurrentOpenDoucment = new DataContainer<string>();
 
-        [TriggerEmmiter((int)DataType.CloseDocument)]
-        public static DataContainer<string> CurrentCloseDoucment = new DataContainer<string>();
+        //[TriggerEmmiter((int)ID.CloseDocument)]
+        //public static DataContainer<string> CurrentCloseDoucment = new DataContainer<string>();
 
-        [TriggerEmmiter((int)DataType.ActiveDocument)]
-        public static DataContainer<string> ActiveDocument = new DataContainer<string>();
+        //[TriggerEmmiter((int)ID.ActiveDocument)]
+        //public static DataContainer<string> ActiveDocument = new DataContainer<string>();
 
-        [TriggerEmmiter((int)DataType.ChangeDocumentName)]
-        public static Emmiter<string, string> OnChangeDocumentName = new Emmiter<string, string>();
+        //[TriggerEmmiter((int)ID.SelectObject)]
+        //public static DataContainer<Object> OnSelectObject = new DataContainer<Object>();
 
+        //[TriggerEmmiter((int)ID.ViewObject)]
+        //public static DataContainer<Object> OnViewObject = new DataContainer<Object>();
 
+        //[TriggerEmmiter((int)ID.Console)]
+        //public static Emmiter<string> Console = new Emmiter<string>();
 
-        [TriggerEmmiter((int)DataType.SelectObject)]
-        public static DataContainer<Object> OnSelectObject = new DataContainer<Object>();
-
-        [TriggerEmmiter((int)DataType.ViewObject)]
-        public static DataContainer<Object> OnViewObject = new DataContainer<Object>();
-
-        [TriggerEmmiter((int)DataType.Console)]
-        public static Emmiter<string> Console = new Emmiter<string>();
-
-        [TriggerEmmiter((int)DataType.ConsoleClear)]
-        public static Emmiter OnConsoleClear = new Emmiter();
+        //[TriggerEmmiter((int)ID.ConsoleClear)]
+        //public static Emmiter OnConsoleClear = new Emmiter();
         
-        [TriggerEmmiter((int)DataType.BeginBuild)]
-        public static Emmiter BeginBuild = new Emmiter();
+        //[TriggerEmmiter((int)ID.BeginBuild)]
+        //public static Emmiter BeginBuild = new Emmiter();
 
-        [TriggerEmmiter((int)DataType.EndBuild)]
-        public static Emmiter EndBuild = new Emmiter();
+        //[TriggerEmmiter((int)ID.EndBuild)]
+        //public static Emmiter EndBuild = new Emmiter();
 
-        public static Emmiter<string> TheOpenDocument = new Emmiter<string>();
+        //public static Emmiter<string> TheOpenDocument = new Emmiter<string>();
     }
 }

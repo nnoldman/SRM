@@ -15,7 +15,7 @@ namespace Core
         OpenDocument,
         CloseDocument,
         ActiveDocument,
-        ChangeDocumentName,
+        //ChangeDocumentName,
         ViewObject,
         SelectObject,
         Console,

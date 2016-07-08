@@ -49,23 +49,24 @@ namespace Core
                 process.BeginOutputReadLine();
                 process.BeginErrorReadLine();
 
-                Center.OnConsoleClear.Trigger();
-                Center.Console.Trigger("=>Complier Args:" + startInfo.Arguments);
-                Center.BeginBuild.Trigger();
+                PortHub.OnConsoleClear.Trigger();
+                PortHub.OnConsole.Value = "=>Complier Args:" + startInfo.Arguments;
+                PortHub.OnConsole.Trigger();
+                PortHub.OnBeginBuild.Trigger();
             }
         }
 
         void process_Exited(object sender, EventArgs e)
         {
             Process process = (Process)sender;
-            Center.Console.Trigger(process.ExitCode == 0 ? "=>Complier Sucessfully!" : string.Empty);
-            Center.EndBuild.Trigger();
+            PortHub.OnConsole.Value= process.ExitCode == 0 ? "=>Complier Sucessfully!" : string.Empty;
+            PortHub.OnEndBuild.Trigger();
         }
 
         void process_ErrorDataReceived(object sender, DataReceivedEventArgs e)
         {
             if (!string.IsNullOrEmpty(e.Data))
-                Center.Console.Trigger(e.Data);
+                PortHub.OnConsole.Value = e.Data;
         }
     }
 }

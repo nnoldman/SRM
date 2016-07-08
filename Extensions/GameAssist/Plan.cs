@@ -12,7 +12,7 @@ using WeifenLuo.WinFormsUI.Docking;
 namespace GameAssist
 {
     [Core.ExtensionVersion(Name = "Plan")]
-    public partial class Plan : Extension, ATrigger.IStaticEmitterContainer
+    public partial class Plan : Extension
     {
         static Plan Instance;
 
@@ -24,7 +24,7 @@ namespace GameAssist
         {
             Instance = this;
             InitializeComponent();
-            ATrigger.DataCenter.AddInstance(this);
+            
             this.fileTree.ImageList = new ImageList();
             this.fileTree.NodeMouseDoubleClick += fileTree_NodeMouseDoubleClick;
             this.fileTree.KeyUp += fileTree_KeyUp;
@@ -45,19 +45,11 @@ namespace GameAssist
 
         void fileTree_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (Center.DocumentManager.Documents.Contains(e.Node.Tag.ToString()))
-            {
-                Center.ActiveDocument.value = e.Node.Tag.ToString();
-            }
-            else if (File.Exists(e.Node.Tag.ToString()))
-            {
-                //Center.CurrentOpenDoucment.Set(e.Node.Tag.ToString(),true,true);
-            }
+
         }
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
         {
-            ATrigger.DataCenter.RemoveInstance(this);
             base.OnFormClosed(e);
             Instance = null;
         }

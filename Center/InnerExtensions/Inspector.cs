@@ -11,7 +11,7 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace Core
 {
-    public partial class Inspector : Extension, ATrigger.IStaticEmitterContainer
+    public partial class Inspector : Extension
     {
         public static Inspector Instance;
 
@@ -19,19 +19,19 @@ namespace Core
         {
             Instance = this;
             InitializeComponent();
-            ATrigger.DataCenter.AddInstance(this);
+            
         }
 
-        [ATrigger.Receiver((int)DataType.SelectObject)]
+        [Watcher((int)ID.ViewObject)]
         public void OnSelect()
         {
-            this.propertyGrid1.SelectedObject = Center.OnSelectObject.value;
+            this.propertyGrid1.SelectedObject = PortHub.OnViewObject.Value;
         }
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
         {
             base.OnFormClosed(e);
-            ATrigger.DataCenter.RemoveInstance(this);
+            
             Instance = null;
         }
 

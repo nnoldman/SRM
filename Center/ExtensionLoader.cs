@@ -60,24 +60,25 @@ namespace Core
                 }
             }
 
-            ATrigger.DataCenter.InstallStaticTriggers(asm);
-
             Bus.OnLoadAssambly(asm);
         }
 
         bool LoadAnExternExtension(string name)
         {
             FileInfo file = new FileInfo(name);
-            try
-            {
-                Assembly asm = Assembly.LoadFile(file.FullName);
-                if (asm != null)
-                    InstallExtensions(asm);
-            }
-            catch (Exception exc)
-            {
-                Logger.error(exc.Message);
-            }
+            Assembly asm = Assembly.LoadFile(file.FullName);
+            if (asm != null)
+                InstallExtensions(asm);
+
+            //try
+            //{
+            //    Assembly asm = Assembly.LoadFile(file.FullName);
+            //    if (asm != null)
+            //        InstallExtensions(asm);
+            //}
+            //catch (Exception exc)
+            //{
+            //}
             return false;
         }
     }

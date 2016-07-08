@@ -21,6 +21,7 @@ namespace Core
         Str,
         Number,
         Bytes,
+        Object,
     }
     public enum PortDataContainerType
     {
@@ -81,17 +82,13 @@ namespace Core
             mValue = v;
             Bus.Input(this);
         }
-    }
-
-    public class PortCollection : List<Port> { };
-
-    public class Pin_Signal:Port
-    {
         public void Trigger()
         {
             Bus.Input(this);
         }
     }
+
+    public class PortCollection : List<Port> { };
 
     public class Port_String : Port
     {
@@ -152,7 +149,21 @@ namespace Core
             }
         }
     }
-
+    public class Port_Object:Port
+    {
+        public Core.Object Value
+        {
+            get
+            {
+                return (Core.Object)mValue;
+            }
+            set
+            {
+                mValue = value;
+                Bus.Input(this);
+            }
+        }
+    }
     public class Port_Int : Port
     {
         public Port_Int()

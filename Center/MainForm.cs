@@ -1,4 +1,4 @@
-﻿using ATrigger;
+﻿
 using Core;
 using Newtonsoft.Json;
 using Shortcut;
@@ -21,7 +21,7 @@ public partial class MainForm : Form
     public MainForm()
     {
         Center.Form = this;
-        ATrigger.DataCenter.AddInstance(this);
+        
         InitializeComponent();
         Center.ExtensionLoader.Load();
         PortHub.OnExtensionLoaded.Trigger();
@@ -376,7 +376,7 @@ public partial class MainForm : Form
     [AddMenu("View(&V)/Option")]
     static void OnOpenView()
     {
-        Center.OnViewObject.value = Center.Option;
+        PortHub.OnViewObject.Value = Center.Option;
     }
 
     [Watcher((int)ID.ApplicationExit)]
