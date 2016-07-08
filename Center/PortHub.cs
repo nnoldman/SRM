@@ -18,6 +18,7 @@ namespace Core
         Console,
         ConsoleClear,
         SelectObject,
+        ClickObjectViewNode,
         ViewObject,
         BeginBuild,
         EndBuild,
@@ -46,17 +47,19 @@ namespace Core
         [InputPortDesc((int)ID.Console, Arg1 = Arg.Str)]
         internal static Port_String OnConsole = new Port_String();
 
+        [InputPortDesc((int)ID.SelectObject, Arg1 = Arg.Object)]
+        internal static Port_Object OnSelectObject = new Port_Object();
+
+        [OutputPortDesc((int)ID.ClickObjectViewNode, Arg1 = Arg.Object)]
+        internal static Port_Object OnClickObjectViewNode = new Port_Object();
+
+        [InputPortDesc((int)ID.ViewObject, Arg1 = Arg.Object)]
+        internal static Port_Object OnViewObject = new Port_Object();
+
         [OutputPortDesc((int)ID.BeginBuild, Arg1 = Arg.Signal)]
         internal static Port OnBeginBuild = new Port();
 
         [OutputPortDesc((int)ID.EndBuild, Arg1 = Arg.Signal)]
         internal static Port OnEndBuild = new Port();
-
-        [InputPortDesc((int)ID.SelectObject, Arg1 = Arg.Object)]
-        internal static Port_Object OnSelectObject = new Port_Object();
-
-        [InputPortDesc((int)ID.ViewObject, Arg1 = Arg.Object)]
-        internal static Port_Object OnViewObject = new Port_Object();
     }
-
 }

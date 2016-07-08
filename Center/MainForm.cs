@@ -376,7 +376,7 @@ public partial class MainForm : Form
     [AddMenu("View(&V)/Option")]
     static void OnOpenView()
     {
-        PortHub.OnViewObject.Value = Center.Option;
+        PortHub.OnSelectObject.Value = Center.Option;
     }
 
     [Watcher((int)ID.ApplicationExit)]

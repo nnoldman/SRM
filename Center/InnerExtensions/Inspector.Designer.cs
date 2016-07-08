@@ -56,6 +56,6 @@
 
         #endregion
 
-        private InspectorGrid propertyGrid1;
+        internal InspectorGrid propertyGrid1;
     }
 }

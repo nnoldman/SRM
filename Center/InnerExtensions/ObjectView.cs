@@ -19,7 +19,6 @@ namespace Core
         {
             Instance = this;
             InitializeComponent();
-            
         }
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)
@@ -71,7 +70,10 @@ namespace Core
         private void treeView1_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
-                PortHub.OnSelectObject.Value = (Core.Object)e.Node.Tag;
+            {
+                PortHub.OnClickObjectViewNode.Value = (Core.Object)e.Node.Tag;
+                PortHub.OnViewObject.Value = (Core.Object)e.Node.Tag;
+            }
         }
     }
 }

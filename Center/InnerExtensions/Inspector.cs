@@ -23,9 +23,9 @@ namespace Core
         }
 
         [Watcher((int)ID.ViewObject)]
-        public void OnSelect()
+        public static void OnSelect()
         {
-            this.propertyGrid1.SelectedObject = PortHub.OnViewObject.Value;
+            Instance.propertyGrid1.SelectedObject = PortHub.OnViewObject.Value;
         }
 
         protected override void OnFormClosed(System.Windows.Forms.FormClosedEventArgs e)

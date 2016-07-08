@@ -9,7 +9,7 @@
     {
       "$type": "Core.BuildOption, Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
       "CurrentBuilderName": null,
-      "CurrentMode": 0,
+      "CurrentMode": 1,
       "Builders": [],
       "CurrentBuilder": null
     },
