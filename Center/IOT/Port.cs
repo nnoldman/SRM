@@ -16,6 +16,7 @@ namespace Core
     public enum Arg
     {
         None,
+        Signal,
         Bool,
         Str,
         Number,
@@ -38,17 +39,29 @@ namespace Core
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public class OutputPortDesc : PortDesc
     {
+        public OutputPortDesc(int portNumber)
+        {
+            this.InnerIndex = portNumber;
+        }
     }
 
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = false)]
     public class InputPortDesc : PortDesc
     {
+        public InputPortDesc(int portNumber)
+        {
+            this.InnerIndex = portNumber;
+        }
     }
 
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = false)]
-    public class InputListener : Attribute
+    public class Watcher : Attribute
     {
-        public int InnerIndex;
+        public Watcher(int portNumber)
+        {
+            InnerIndex = portNumber;
+        }
+        internal int InnerIndex;
     }
 
     public class Port
@@ -70,7 +83,15 @@ namespace Core
         }
     }
 
-    public class PortConnection : List<Port> { };
+    public class PortCollection : List<Port> { };
+
+    public class Pin_Signal:Port
+    {
+        public void Trigger()
+        {
+            Bus.Input(this);
+        }
+    }
 
     public class Port_String : Port
     {

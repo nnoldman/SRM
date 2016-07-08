@@ -51,7 +51,7 @@ namespace GameAssist
             }
             else if (File.Exists(e.Node.Tag.ToString()))
             {
-                Center.CurrentOpenDoucment.Set(e.Node.Tag.ToString(),true,true);
+                //Center.CurrentOpenDoucment.Set(e.Node.Tag.ToString(),true,true);
             }
         }
 

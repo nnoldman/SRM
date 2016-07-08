@@ -21,18 +21,20 @@ public partial class MainForm : Form
     public MainForm()
     {
         Center.Form = this;
-
         ATrigger.DataCenter.AddInstance(this);
         InitializeComponent();
         Center.ExtensionLoader.Load();
+        PortHub.OnExtensionLoaded.Trigger();
         InitOptions();
         LoadOption();
+        PortHub.OnOptionLoaded.Trigger();
         InitMenus();
         InitMenuButtons();
         InitShortKeys();
         LoadLayout();
+        PortHub.OnLayoutEnd.Trigger();
         InitSkin();
-        Center.OnInitialized.Trigger();
+        PortHub.OnInitialized.Trigger();
     }
     class MenuNode
     {
@@ -253,8 +255,8 @@ public partial class MainForm : Form
             method.Invoke(null, null);
     }
 
-    JsonSerializerSettings mJsonSetting;
-    JsonSerializerSettings JsonSetting
+    static JsonSerializerSettings mJsonSetting;
+    static JsonSerializerSettings JsonSetting
     {
         get
         {
@@ -271,20 +273,33 @@ public partial class MainForm : Form
 
     void LoadOption()
     {
-        if (File.Exists(Center.Option.Base.FileName))
+        if (Center.Option.Base && Directory.Exists(BaseOption.OptionsFloder))
         {
-            Center.Option = JsonConvert.DeserializeObject<Option>(File.ReadAllText(Center.Option.Base.FileName), JsonSetting);
+            Center.Option.Children.Clear();
+
+            var files = Directory.GetFiles(BaseOption.OptionsFloder);
+
+            foreach (var file in files)
+            {
+                var obj = JsonConvert.DeserializeObject<Core.Object>(File.ReadAllText(file), JsonSetting);
+                Center.Option.Children.Add(obj);
+            }
         }
     }
 
-    void SaveOption()
+    static void SaveOption()
     {
-        this.DockerContainer.SaveAsXml(Center.Option.Base.LayoutFile);
-        string content = JsonConvert.SerializeObject(Center.Option, JsonSetting);
+        Center.Form.DockerContainer.SaveAsXml(Center.Option.Base.LayoutFile);
 
-        File.WriteAllText(Center.Option.Base.FileName, content);
+        if (!Directory.Exists(BaseOption.OptionsFloder))
+            Directory.CreateDirectory(BaseOption.OptionsFloder);
+
+        foreach(var child in Center.Option.Children)
+        {
+            string content = JsonConvert.SerializeObject(child, JsonSetting);
+            File.WriteAllText(Path.Combine(BaseOption.OptionsFloder, child.Name + ".json"), content);
+        }
     }
-
 
     private IDockContent GetContentFromPersistString(string persistString)
     {
@@ -340,7 +355,6 @@ public partial class MainForm : Form
         if (Center.Option.Base)
             if (File.Exists(Center.Option.Base.LayoutFile))
             this.DockerContainer.LoadFromXml(Center.Option.Base.LayoutFile, GetContentFromPersistString);
-        Center.OnLayoutEnd.Trigger();
     }
 
     static void BindHotKeys()
@@ -365,8 +379,8 @@ public partial class MainForm : Form
         Center.OnViewObject.value = Center.Option;
     }
 
-    [Receiver((int)DataType.ApplicationExit)]
-    void OnExit()
+    [Watcher((int)ID.ApplicationExit)]
+    static void OnExit()
     {
         UnbindHotKeys();
         SaveOption();
@@ -374,9 +388,8 @@ public partial class MainForm : Form
 
     protected override void OnFormClosed(FormClosedEventArgs e)
     {
+        PortHub.OnApplicationExit.Trigger();
         Center.Form = null;
-        Center.OnExit.Trigger();
-        ATrigger.DataCenter.RemoveInstance(this);
         base.OnFormClosed(e);
     }
 

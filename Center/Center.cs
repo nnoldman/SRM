@@ -25,21 +25,8 @@ namespace Core
         internal static Dictionary<MethodInfo, AddMenuButton> MenuButtons = new Dictionary<MethodInfo, AddMenuButton>();
         internal static Dictionary<string, Type> ExtensionTypes = new Dictionary<string, Type>();
 
-
-        [TriggerEmmiter((int)DataType.ApplicationExit)]
-        public static Emmiter OnExit = new Emmiter();//para:empty
-
-        [TriggerEmmiter((int)DataType.ExtensionsLoaded)]
-        public static Emmiter OnExtensionsLoaded = new Emmiter();
-
-        [TriggerEmmiter((int)DataType.LayoutEnd)]
-        public static Emmiter OnLayoutEnd = new Emmiter();//para:empty
-        
-        [TriggerEmmiter((int)DataType.ApplicationInialized)]
-        public static Emmiter OnInitialized = new Emmiter();//para:empty
-
-        [TriggerEmmiter((int)DataType.OpenDocument)]
-        public static DataContainer<string> CurrentOpenDoucment = new DataContainer<string>();
+        //[TriggerEmmiter((int)DataType.OpenDocument)]
+        //public static DataContainer<string> CurrentOpenDoucment = new DataContainer<string>();
 
         [TriggerEmmiter((int)DataType.CloseDocument)]
         public static DataContainer<string> CurrentCloseDoucment = new DataContainer<string>();

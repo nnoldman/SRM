@@ -48,8 +48,6 @@ namespace Core
         {
             LoadInnerExtensions();
             LoadExternExtensions();
-
-            Center.OnExtensionsLoaded.Trigger();
         }
 
         void InstallExtensions(Assembly asm)

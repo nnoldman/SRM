@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core
 {
-    internal class IntputListenerValue
+    internal class WatcherValue
     {
         internal object instance;
         internal MethodInfo method;
@@ -32,6 +32,6 @@ namespace Core
     {
         internal List<InPortValue> Inputs = new List<InPortValue>();
         internal List<OutPortValue> Outputs = new List<OutPortValue>();
-        internal List<IntputListenerValue> InputListeners = new List<IntputListenerValue>();
+        internal List<WatcherValue> InnerWatchers = new List<WatcherValue>();
     }
 }

@@ -224,11 +224,11 @@ namespace TextEditor
         [AddMenu("View(&V)/TextEditor")]
         static void OnOpenView()
         {
-            if (mInstances.Count == 0)
-                Center.CurrentOpenDoucment.value = NewDocuemntName;
+            //if (mInstances.Count == 0)
+            //    Center.CurrentOpenDoucment.value = NewDocuemntName;
         }
 
-        [ATrigger.Receiver((int)DataType.LayoutEnd)]
+        [Watcher((int)ID.LayoutEnd)]
         static void OnLayoutEnd()
         {
             var histroy = new List<string>();
@@ -243,7 +243,7 @@ namespace TextEditor
             LoadHistry(Center.Option.File.Histroy);
         }
 
-        [InputListener(InnerIndex = (int)ID.OpenDocument)]
+        [Watcher((int)ID.OpenDocument)]
         static public void CreateDocument()
         {
             TextEditor instance = new TextEditor();
@@ -317,12 +317,12 @@ namespace TextEditor
             }
         }
 
-        [ATrigger.Receiver((int)DataType.OpenDocument)]
-        static void OnDocumentOpen()
-        {
-            if (Center.Option.File.Histroy.Remove(Center.CurrentOpenDoucment.value))
-                LoadHistry(Center.Option.File.Histroy);
-        }
+        //[ATrigger.Receiver((int)DataType.OpenDocument)]
+        //static void OnDocumentOpen()
+        //{
+        //    if (Center.Option.File.Histroy.Remove(Center.CurrentOpenDoucment.value))
+        //        LoadHistry(Center.Option.File.Histroy);
+        //}
 
         [ATrigger.Receiver((int)DataType.CloseDocument)]
         static void OnDocumentClose()
@@ -334,11 +334,11 @@ namespace TextEditor
         }
         static void OpenHistroyFile(object sender, EventArgs e)
         {
-            int pos = sender.ToString().IndexOf(' ');
-            if (pos != -1)
-                Center.CurrentOpenDoucment.value = sender.ToString().Substring(pos + 1);
-            else
-                throw new Exception();
+            //int pos = sender.ToString().IndexOf(' ');
+            //if (pos != -1)
+            //    Center.CurrentOpenDoucment.value = sender.ToString().Substring(pos + 1);
+            //else
+            //    throw new Exception();
         }
         static string GetTextFromInstances(string name)
         {
@@ -355,9 +355,9 @@ namespace TextEditor
 
         private void MainForm_DragDrop(object sender, DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files)
-                Center.CurrentOpenDoucment.value = file;
+            //string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            //foreach (string file in files)
+            //    Center.CurrentOpenDoucment.value = file;
         }
 
         private void MainForm_DragEnter(object sender, DragEventArgs e)
@@ -506,7 +506,7 @@ namespace TextEditor
 
         public override void OnDBClickNC()
         {
-            Center.CurrentOpenDoucment.value = NewDocuemntName;
+            //Center.CurrentOpenDoucment.value = NewDocuemntName;
         }
 
         static void CloseAll()
@@ -552,9 +552,9 @@ namespace TextEditor
 
         private void scintilla1_DragDrop(object sender, System.Windows.Forms.DragEventArgs e)
         {
-            string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
-            foreach (string file in files)
-                Center.CurrentOpenDoucment.value = file;
+            //string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+            //foreach (string file in files)
+            //    Center.CurrentOpenDoucment.value = file;
         }
 
         private void TextEditor_VisibleChanged(object sender, EventArgs e)

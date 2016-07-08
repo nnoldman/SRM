@@ -10,8 +10,8 @@ namespace Core
     public static class Bus
     {
         internal static Dictionary<Assembly, Constructure> Components = new Dictionary<Assembly, Constructure>();
-        static Dictionary<Port, PortConnection> mOutIns = new Dictionary<Port, PortConnection>();
-        static Dictionary<Port, IntputListenerValue> mListeners = new Dictionary<Port, IntputListenerValue>();
+        static Dictionary<Port, PortCollection> mOutIns = new Dictionary<Port, PortCollection>();
+        static Dictionary<Port, WatcherValue> mListeners = new Dictionary<Port, WatcherValue>();
 
         internal static void OnLoadAssambly(Assembly asm)
         {
@@ -22,8 +22,9 @@ namespace Core
             Components.Add(asm, structure);
 
             Dictionary<int, Port> inputPorts = new Dictionary<int, Port>();
+            Dictionary<int, Port> outputPorts = new Dictionary<int, Port>();
 
-            foreach(var def in asm.DefinedTypes)
+            foreach (var def in asm.DefinedTypes)
             {
                 var fields = def.GetFields(BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic);
 
@@ -63,6 +64,9 @@ namespace Core
                         p.WorkType = PortWorkType.Output;
                         p.PortNumber = desc.InnerIndex;
                         p.Desc = desc;
+
+                        outputPorts.Add(p.PortNumber, p);
+
                         OutPortValue ov = new OutPortValue();
                         ov.desc = desc;
                         ov.field = field;
@@ -78,25 +82,35 @@ namespace Core
 
                 foreach (var method in methods)
                 {
-                    InputListener desc = (InputListener)method.GetCustomAttribute(typeof(InputListener));
+                    Watcher desc = (Watcher)method.GetCustomAttribute(typeof(Watcher));
 
                     if (desc != null)
                     {
                         Port p;
-                        if(inputPorts.TryGetValue(desc.InnerIndex,out p))
+
+                        if (!inputPorts.TryGetValue(desc.InnerIndex, out p))
+                            outputPorts.TryGetValue(desc.InnerIndex, out p);
+
+                        if (p != null)
                         {
-                            IntputListenerValue act = new IntputListenerValue();
+                            WatcherValue act = new WatcherValue();
                             act.instance = null;
                             act.method = method;
                             act.innerPort = desc.InnerIndex;
                             mListeners.Add(p, act);
 
-                            IntputListenerValue lv = new IntputListenerValue();
-                            structure.InputListeners.Add(act);
+                            WatcherValue lv = new WatcherValue();
+                            structure.InnerWatchers.Add(act);
                         }
                     }
                 }
             }
+        }
+
+        [Watcher((int)ID.OptionLoaded)]
+        static void OnExtensionsLoaded()
+        {
+
         }
 
         static OutPortValue GetOutputPort(string asmout, string outputport)
@@ -131,11 +145,11 @@ namespace Core
             foreach (var outin in mOutIns)
                 outin.Value.RemoveAll(i => i == ip.port);
 
-            PortConnection coellection;
+            PortCollection coellection;
 
             if (!mOutIns.TryGetValue(op.port, out coellection))
             {
-                coellection = new PortConnection();
+                coellection = new PortCollection();
                 mOutIns.Add(op.port, coellection);
             }
             coellection.Add(ip.port);
@@ -145,19 +159,17 @@ namespace Core
         {
             if(p.WorkType.HasFlag(PortWorkType.Output))
             {
-                PortConnection inputs;
+                PortCollection inputs;
                 if (mOutIns.TryGetValue(p, out inputs))
                 {
                     foreach (var listener in inputs)
                         listener.SetValue(p.RawValue);
                 }
             }
-            else if (p.WorkType.HasFlag(PortWorkType.Input))
-            {
-                IntputListenerValue act;
-                if (mListeners.TryGetValue(p, out act))
-                    act.method.Invoke(act.instance, null);
-            }
+
+            WatcherValue act;
+            if (mListeners.TryGetValue(p, out act))
+                act.method.Invoke(act.instance, null);
         }
     }
 }

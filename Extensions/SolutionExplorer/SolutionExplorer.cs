@@ -53,7 +53,8 @@ namespace SolutionExplorer
             }
             else if (File.Exists(e.Node.Tag.ToString()))
             {
-                Center.CurrentOpenDoucment.Set(e.Node.Tag.ToString(),true,true);
+                PortHub.ClickNode.Value = e.Node.Tag.ToString();
+                //Center.CurrentOpenDoucment.Set(e.Node.Tag.ToString(),true,true);
             }
         }
 

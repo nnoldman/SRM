@@ -7,7 +7,7 @@ using Core;
 
 namespace SolutionExplorer
 {
-    public enum ID
+    internal enum ID
     {
         None,
         NameChanged,
@@ -15,7 +15,7 @@ namespace SolutionExplorer
 
     internal class PortHub
     {
-        [OutputPortDesc(Arg1 = Arg.Str)]
+        [OutputPortDesc((int)ID.NameChanged,Arg1 = Arg.Str)]
         internal static Port_String ClickNode = new Port_String();
     }
 }
