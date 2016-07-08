@@ -1,0 +1,17 @@
+{
+  "Name": "LanguageExtension",
+  "Children": [],
+  "Components": [
+    {
+      "$type": "TextEditor.LanguageExtensionOption, TextEditor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "LanguageNameExtensions": {
+        "Cpp": ".h;.cpp;.cc",
+        "C": ".c",
+        "Lua": ".lua;.bytes",
+        "Xml": ".xml",
+        "Csharp": ".cs",
+        "Python": ".py"
+      }
+    }
+  ]
+}

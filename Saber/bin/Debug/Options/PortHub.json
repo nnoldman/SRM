@@ -1,0 +1,21 @@
+{
+  "Name": "PortHub",
+  "Children": [],
+  "Components": [
+    {
+      "$type": "Core.PortOption, Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "PortPairs": [
+        {
+          "Target": {
+            "AsmName": "SolutionExplorer, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "PortName": "ClickNode"
+          },
+          "Input": {
+            "AsmName": "TextEditor, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+            "PortName": "OpenDocument"
+          }
+        }
+      ]
+    }
+  ]
+}

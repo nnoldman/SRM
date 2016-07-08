@@ -108,9 +108,21 @@ namespace Core
         }
 
         [Watcher((int)ID.OptionLoaded)]
-        static void OnExtensionsLoaded()
+        static void OnOptionLoaded()
         {
-            
+            PortOption option = Center.Option.Get<PortOption>();
+            foreach(var item in option.PortPairs)
+            {
+                OutPortValue op = GetOutputPort(item.Target.AsmName, item.Target.PortName);
+                InPortValue ip = GetInputPort(item.Input.AsmName, item.Input.PortName);
+                PortCollection collection;
+                if(!mOutIns.TryGetValue(op.port, out collection))
+                {
+                    collection = new PortCollection();
+                    mOutIns.Add(op.port, collection);
+                }
+                collection.Add(ip.port);
+            }
         }
 
         static OutPortValue GetOutputPort(string asmout, string outputport)

@@ -28,7 +28,7 @@ namespace Core
         public SolutionOption Solution { get { return this.GetComponentFromChildren<SolutionOption>(); } }
         public BuildOption BuildOption { get { return this.GetComponentFromChildren<BuildOption>(); } }
 
-        public T GetOption<T>() where T : Component, new()
+        public T Get<T>() where T : Component, new()
         {
             T com = GetComponentFromChildren<T>();
             

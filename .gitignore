@@ -1,9 +1,8 @@
 *.sdf
 *.suo
-/Debug
+
 /Visual Studio 2012
-bin
-Debug
+
 *.user
 *.Cache
 output

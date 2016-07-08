@@ -23,14 +23,18 @@ namespace Core
         }
         public string[] SelectList
         {
-            set { this.comboBox1.Items.AddRange(value); }
+            set
+            {
+                this.comboBox1.Items.Clear();
+                this.comboBox1.Items.AddRange(value);
+            }
         }
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
             string asmInput = Headerquater.Instance.InputAsm;
             string asmOutput = Headerquater.Instance.OututASM;
             string inputPortName = this.comboBox1.SelectedItem.ToString();
-            PortOption option = Center.Option.GetOption<PortOption>();
+            PortOption option = Center.Option.Get<PortOption>();
 
             var item = option.PortPairs.Find(i => i.Target.AsmName == asmOutput && i.Target.PortName == this.Title);
 

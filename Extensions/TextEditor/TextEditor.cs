@@ -70,7 +70,7 @@ namespace TextEditor
 
         static ScintillaNET.Lexer GetLexer(string extension)
         {
-            var option = Center.Option.GetOption<LanguageExtensionOption>();
+            var option = Center.Option.Get<LanguageExtensionOption>();
             foreach (var item in option.LanguageNameExtensions)
             {
                 var extensions = item.Value.Split(';');
@@ -108,7 +108,7 @@ namespace TextEditor
         void InitStyles()
         {
             {
-                DefaultOption option = Center.Option.GetOption<DefaultOption>();
+                DefaultOption option = Center.Option.Get<DefaultOption>();
                 SetStyle(Style.Default, option.Default);
                 this.scintilla1.StyleClearAll();
             }

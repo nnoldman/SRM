@@ -1,0 +1,31 @@
+{
+  "Name": "Base",
+  "Children": [],
+  "Components": [
+    {
+      "$type": "Core.BaseOption, Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "LayoutFile": "Layout.xml"
+    },
+    {
+      "$type": "Core.BuildOption, Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "CurrentBuilderName": null,
+      "CurrentMode": 0,
+      "Builders": [],
+      "CurrentBuilder": null
+    },
+    {
+      "$type": "Core.FileOption, Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "MaxHistroyCount": 20,
+      "Histroy": [
+        "D:\\src\\SRM\\Libs\\ATrigger\\DataCenter.cs",
+        "Z:\\client\\TKE_Client\\Client\\360wxWindow.cpp",
+        "D:\\src\\SRM\\README.md"
+      ]
+    },
+    {
+      "$type": "Core.SolutionOption, Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null",
+      "LastSolutionPath": "D:\\src\\SRM",
+      "IgnoreExtensions": []
+    }
+  ]
+}
