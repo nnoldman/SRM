@@ -53,11 +53,17 @@
     <Compile Include="InnerExtensions\Headerquater\Headerquater.Designer.cs">
       <DependentUpon>Headerquater.cs</DependentUpon>
     </Compile>
-    <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinker.cs">
+    <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinkerIn.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinker.Designer.cs">
-      <DependentUpon>HeaderquaterLinker.cs</DependentUpon>
+    <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinkerIn.Designer.cs">
+      <DependentUpon>HeaderquaterLinkerIn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinkerOut.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="InnerExtensions\Headerquater\HeaderquaterLinkerOut.Designer.cs">
+      <DependentUpon>HeaderquaterLinkerOut.cs</DependentUpon>
     </Compile>
     <Compile Include="InnerExtensions\Headerquater\PortOption.cs" />
     <Compile Include="IOT\Constructure.cs" />
@@ -181,8 +187,11 @@
     <EmbeddedResource Include="InnerExtensions\Headerquater\Headerquater.resx">
       <DependentUpon>Headerquater.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="InnerExtensions\Headerquater\HeaderquaterLinker.resx">
-      <DependentUpon>HeaderquaterLinker.cs</DependentUpon>
+    <EmbeddedResource Include="InnerExtensions\Headerquater\HeaderquaterLinkerIn.resx">
+      <DependentUpon>HeaderquaterLinkerIn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="InnerExtensions\Headerquater\HeaderquaterLinkerOut.resx">
+      <DependentUpon>HeaderquaterLinkerOut.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="InnerExtensions\DebuggerConfiguration.resx">
       <DependentUpon>DebuggerConfiguration.cs</DependentUpon>
@@ -251,7 +260,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\DataContainer_MoveNextHS.png" />
+    <None Include="Resources\in.png" />
     <Content Include="Resources\minus.png" />
+    <None Include="Resources\out.png" />
     <Content Include="Resources\plus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

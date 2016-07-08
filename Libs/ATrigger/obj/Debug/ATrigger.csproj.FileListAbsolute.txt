@@ -1,0 +1,4 @@
+D:\src\SRM\Libs\ATrigger\bin\Debug\ATrigger.dll
+D:\src\SRM\Libs\ATrigger\bin\Debug\ATrigger.pdb
+D:\src\SRM\Libs\ATrigger\obj\Debug\ATrigger.dll
+D:\src\SRM\Libs\ATrigger\obj\Debug\ATrigger.pdb

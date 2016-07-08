@@ -15,7 +15,8 @@ namespace Core
     {
         internal static Headerquater Instance;
 
-        List<HeaderquaterLinker> mLinkers = new List<HeaderquaterLinker>();
+        List<HeaderquaterLinkerIn> mLinkerIns = new List<HeaderquaterLinkerIn>();
+        List<HeaderquaterLinkerOut> mLinkerOuts = new List<HeaderquaterLinkerOut>();
 
         public Headerquater()
         {
@@ -98,17 +99,17 @@ namespace Core
 
             if(Bus.Components.TryGetValue(com, out constructure))
             {
-                this.portPanel.Controls.Clear();
-                mLinkers.Clear();
+                mLinkerOuts.ForEach(i => this.outpanel.Controls.Remove(i));
+                mLinkerOuts.Clear();
 
                 foreach(var outputPort in constructure.Outputs)
                 {
-                    HeaderquaterLinker linker = new HeaderquaterLinker();
+                    HeaderquaterLinkerOut linker = new HeaderquaterLinkerOut();
                     linker.Title = outputPort.field.Name;
-                    this.portPanel.Controls.Add(linker);
+                    this.outpanel.Controls.Add(linker);
                     linker.Dock = DockStyle.Top;
 
-                    mLinkers.Add(linker);
+                    mLinkerOuts.Add(linker);
                 }
             }
         }
@@ -120,12 +121,17 @@ namespace Core
 
             if (Bus.Components.TryGetValue(com, out constructure))
             {
-                List<string> stringlist = new List<string>();
-                foreach (var inputPort in constructure.Inputs)
-                    stringlist.Add(inputPort.field.Name);
+                mLinkerIns.ForEach(i => this.inpanel.Controls.Remove(i));
+                mLinkerIns.Clear();
 
-                foreach (var linker in mLinkers)
-                    linker.SelectList = stringlist.ToArray();
+                foreach (var inputPort in constructure.Inputs)
+                {
+                    HeaderquaterLinkerIn linker = new HeaderquaterLinkerIn();
+                    linker.Title = inputPort.field.Name;
+                    this.inpanel.Controls.Add(linker);
+                    linker.Dock = DockStyle.Top;
+                    mLinkerIns.Add(linker);
+                }
             }
         }
 
