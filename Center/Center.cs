@@ -25,7 +25,6 @@ namespace Core
         internal static Dictionary<MethodInfo, AddMenuButton> MenuButtons = new Dictionary<MethodInfo, AddMenuButton>();
         internal static Dictionary<string, Type> ExtensionTypes = new Dictionary<string, Type>();
 
-        //[TriggerEmmiter((int)DataType.OpenDocument)]
         //public static DataContainer<string> CurrentOpenDoucment = new DataContainer<string>();
 
         [TriggerEmmiter((int)DataType.CloseDocument)]
@@ -37,8 +36,7 @@ namespace Core
         [TriggerEmmiter((int)DataType.ChangeDocumentName)]
         public static Emmiter<string, string> OnChangeDocumentName = new Emmiter<string, string>();
 
-        [TriggerEmmiter((int)DataType.OpenFloder)]
-        public static DataContainer<string> OnOpenFloder = new DataContainer<string>();
+
 
         [TriggerEmmiter((int)DataType.SelectObject)]
         public static DataContainer<Object> OnSelectObject = new DataContainer<Object>();

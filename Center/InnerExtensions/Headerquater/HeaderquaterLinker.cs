@@ -31,7 +31,8 @@ namespace Core
             string asmOutput = Headerquater.Instance.OututASM;
             string inputPortName = this.comboBox1.SelectedItem.ToString();
             PortOption option = Center.Option.GetOption<PortOption>();
-            var item = option.PortPairs.Find(i => i.Target.AsmName == asmOutput && i.Target.PortName == inputPortName);
+
+            var item = option.PortPairs.Find(i => i.Target.AsmName == asmOutput && i.Target.PortName == this.Title);
 
             if (item == null)
             {

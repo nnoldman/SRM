@@ -11,11 +11,15 @@ namespace SolutionExplorer
     {
         None,
         NameChanged,
+        OpenFloder,
     }
 
     internal class PortHub
     {
-        [OutputPortDesc((int)ID.NameChanged,Arg1 = Arg.Str)]
+        [OutputPortDesc((int)ID.NameChanged, Arg1 = Arg.Str)]
         internal static Port_String ClickNode = new Port_String();
+
+        [OutputPortDesc((int)ID.OpenFloder, Arg1 = Arg.Str)]
+        public static Port_String OnOpenFloder = new Port_String();
     }
 }

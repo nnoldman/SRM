@@ -72,8 +72,8 @@ namespace GameAssist
             dlg.SelectedPath = Center.Option.Solution.LastSolutionPath;
             var result = dlg.ShowDialog();
 
-            if (result == System.Windows.Forms.DialogResult.OK)
-                Center.OnOpenFloder.value = dlg.SelectedPath;
+            //if (result == System.Windows.Forms.DialogResult.OK)
+            //    Center.OnOpenFloder.value = dlg.SelectedPath;
         }
 
         static void CreateInstance()
@@ -96,17 +96,6 @@ namespace GameAssist
                 Instance.Dispose();
                 Instance = null;
             }
-        }
-
-        [ATrigger.Receiver((int)DataType.OpenFloder)]
-        void OnOpenFloder()
-        {
-            string floderName = Center.OnOpenFloder.value;
-
-            if (!Directory.Exists(floderName))
-                return;
-            Center.Option.Solution.LastSolutionPath = floderName;
-            DoOpen();
         }
 
         void DoOpen()

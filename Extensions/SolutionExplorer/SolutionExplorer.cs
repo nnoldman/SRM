@@ -76,7 +76,7 @@ namespace SolutionExplorer
             var result = dlg.ShowDialog();
 
             if (result == System.Windows.Forms.DialogResult.OK)
-                Center.OnOpenFloder.value = dlg.SelectedPath;
+                PortHub.OnOpenFloder.Value = dlg.SelectedPath;
         }
 
         static void CreateInstance()
@@ -101,10 +101,10 @@ namespace SolutionExplorer
             }
         }
 
-        [ATrigger.Receiver((int)DataType.OpenFloder)]
+        [Watcher((int)ID.OpenFloder)]
         void OnOpenFloder()
         {
-            string floderName = Center.OnOpenFloder.value;
+            string floderName = PortHub.OnOpenFloder.Value;
 
             if (!Directory.Exists(floderName))
                 return;

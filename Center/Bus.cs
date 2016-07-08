@@ -110,7 +110,7 @@ namespace Core
         [Watcher((int)ID.OptionLoaded)]
         static void OnExtensionsLoaded()
         {
-
+            
         }
 
         static OutPortValue GetOutputPort(string asmout, string outputport)

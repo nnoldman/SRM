@@ -34,8 +34,7 @@ namespace Core
             
             if (!com)
             {
-                var tp = typeof(T).GetType();
-                var attrs = tp.GetCustomAttributes(typeof(AddOption), true);
+                var attrs = typeof(T).GetCustomAttributes(typeof(AddOption), true);
                 AddOption attr = (AddOption)attrs[0];
                 
                 Core.Object child = FindChildByName(attr.Cate);
@@ -44,6 +43,7 @@ namespace Core
                 {
                     child = new Object();
                     child.Name = attr.Cate;
+                    Children.Add(child);
                 }
                 com = child.AddComponent<T>();
             }
