@@ -97,6 +97,7 @@
             this.splitContainer1.SplitterDistance = 438;
             this.splitContainer1.SplitterWidth = 100;
             this.splitContainer1.TabIndex = 0;
+            this.splitContainer1.Paint += new System.Windows.Forms.PaintEventHandler(this.splitContainer1_Paint);
             // 
             // Headerquater
             // 
