@@ -119,8 +119,11 @@ namespace SolutionExplorer
 
         void AddFiles(TreeNode parent, string floderName)
         {
-            var dirInfo = new DirectoryInfo(floderName);
+            if (!Directory.Exists(floderName))
+                return;
 
+            var dirInfo = new DirectoryInfo(floderName);
+     
             var files = dirInfo.GetFiles();
 
             var dirs = dirInfo.GetDirectories();

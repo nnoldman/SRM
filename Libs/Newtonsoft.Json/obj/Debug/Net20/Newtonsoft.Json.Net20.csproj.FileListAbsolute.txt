@@ -1,0 +1,1 @@
+H:\src\SRM\Libs\Newtonsoft.Json\obj\Debug\Net20\Newtonsoft.Json.Net20.csprojResolveAssemblyReference.cache
