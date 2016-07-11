@@ -1,0 +1,7 @@
+D:\src\SRM\Diagrament\bin\Debug\Diagrament.dll
+D:\src\SRM\Diagrament\bin\Debug\Diagrament.pdb
+D:\src\SRM\Diagrament\obj\Debug\Diagrament.csprojResolveAssemblyReference.cache
+D:\src\SRM\Diagrament\obj\Debug\Diagrament.Canvas.resources
+D:\src\SRM\Diagrament\obj\Debug\Diagrament.csproj.GenerateResource.Cache
+D:\src\SRM\Diagrament\obj\Debug\Diagrament.dll
+D:\src\SRM\Diagrament\obj\Debug\Diagrament.pdb
