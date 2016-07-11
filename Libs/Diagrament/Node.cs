@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace Diagrament
 {
-    public enum Align
+    public enum AlignStyle
     {
         Left,
         Center,
@@ -16,15 +16,16 @@ namespace Diagrament
     }
     public class Node
     {
-        protected Size mSize = new Size(50,20);
+        protected Size mSize = new Size(100,20);
         public Point Position = new Point(100, 100);
         protected Pen mMainPen = new Pen(Color.Green);
         protected Pin mPin = new Pin();
 
-        public Align mAlign = Align.Center;
+        protected AlignStyle mAlign = AlignStyle.Left;
 
         public bool ShowPin { get; set; }
         public bool ShowEdage { get; set; }
+        public int Margin = 3;
 
         public Node()
         {

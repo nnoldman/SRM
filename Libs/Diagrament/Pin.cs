@@ -19,7 +19,7 @@ namespace Diagrament
         {
             if(Owner!=null)
                 graphics.DrawArc(mMainPen,
-                Owner.Position.X + this.Position.X - mSize.Width * 0.5f,
+                Owner.Position.X + this.Position.X - mSize.Width,
                 Owner.Position.Y + Position.Y - mSize.Height * 0.5f,
                mSize.Width, mSize.Height, 0, 360);
         }
